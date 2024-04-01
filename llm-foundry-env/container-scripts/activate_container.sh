@@ -5,7 +5,7 @@
 set -euo pipefail
 
 _curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
-_curr_dir="$(dirname "$curr_file")"
+_curr_dir="$(dirname "$_curr_file")"
 source "$_curr_dir"/../configuration.sh
 
 # HuggingFace libraries cache configuration
