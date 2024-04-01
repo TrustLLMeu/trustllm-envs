@@ -22,7 +22,9 @@ if [ "$#" -eq 0 ] || ! [ "$1" = setup ]; then
     # If the `venv` directory exists, source from it, otherwise
     # complain.
     if ! [ -d "$venv_dir" ]; then
-        echo "Please execute \`bash set_up.sh\`."
+        echo 'Cannot find Python virtual environment. Please execute' \
+             "\`bash outside-container-scripts/set_up_apptainer.sh\` or" \
+             'similar.'
         exit 1
     else
         # Deactivate any existing `venv` activation.
