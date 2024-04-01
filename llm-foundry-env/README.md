@@ -7,6 +7,9 @@ scripts for JSC systems.
 
 ### Quickstart
 
+This will set up the software stack, preprocess data, and run a
+training.
+
 1. SSH onto a GPU-focused supercomputer such as JUWELS Booster for
    setting up.
 1. `git clone` this repository if it does not exist yet:
