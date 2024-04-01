@@ -69,7 +69,9 @@ CPU-intensive tasks such as large-scale data preprocessing, because
 they have CPU-only nodes so we don't waste our GPU budget (in the case
 of JUWELS Cluster also optionally a few nodes with higher RAM).
 
-1. `sbatch preprocess_data.sbatch`
+```shell
+sbatch jsc/preprocess_data_jwc.sbatch
+```
 
 ### Training
 
@@ -77,7 +79,9 @@ We prefer to use GPU supercomputers like JUWELS Booster for
 GPU-intensive tasks such as model training, because they have
 (stronger) graphics cards.
 
-1. `sbatch preprocess_data.sbatch`
+```shell
+sbatch jsc/run_training_jwb.sbatch
+```
 
 ### Caveats
 
