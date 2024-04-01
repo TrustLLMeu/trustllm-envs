@@ -33,3 +33,5 @@ if [ "$#" -eq 0 ] || ! [ "$1" = setup ]; then
         source "$venv_dir"/bin/activate
     fi
 fi
+
+export _ACTIVATED_CONTAINER=1

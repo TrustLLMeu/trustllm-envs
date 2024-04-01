@@ -5,9 +5,11 @@
 
 set -euo pipefail
 
-curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
-curr_dir="$(dirname "$curr_file")"
-source "$curr_dir"/../container-scripts/activate_container.sh
+if ! ((_ACTIVATED_CONTAINER)); then
+    echo 'Container has not been activated; please use' \
+         "\`bash apptainer_run.sh\` or similar to run container scripts."
+    exit 1
+fi
 
 # -----
 
