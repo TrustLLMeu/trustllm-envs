@@ -18,7 +18,7 @@ else
     source "$venv_dir"/bin/activate
 fi
 
-mkdir -p "$(dirname "$repo_dir")"
+mkdir -p "$(dirname "$ext_repo_dir")"
 for _repo_uri in "${!repos[@]}"; do
     # Take last part of URI, stripping ".git" at the end if it exists.
     _curr_repo_dir="$(basename "$_repo_uri" .git)"

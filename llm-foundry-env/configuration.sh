@@ -28,7 +28,7 @@ project_dir="$base_project_dir"/"$env_name"
 
 # Where external repositories will be installed (such as llm-foundry
 # itself).
-repo_dir="$project_dir"/repos
+ext_repo_dir="$project_dir"/repos
 # List of repositories to clone and naïvely `pip install` (i.e., `cd`
 # into the repo, then execute `pip install -e .`, optionally with
 # extra features as specified in `install_features`).

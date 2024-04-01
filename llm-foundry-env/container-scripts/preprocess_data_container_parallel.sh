@@ -16,7 +16,7 @@ fi
 # Make sure the repo script files can be imported (could also adjust
 # `PYTHONPATH` but this way it's more similar to the non-parallel
 # script).
-cd "$repo_dir"/llm-foundry/scripts/data_prep
+cd "$ext_repo_dir"/llm-foundry/scripts/data_prep
 
 # Below is the llm-foundry `scripts/data_prep` README JSON data
 # example, modified to

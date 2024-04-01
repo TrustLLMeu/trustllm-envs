@@ -16,7 +16,7 @@ fi
 [ -z "$TRAIN_NUM_WORKERS" ] && TRAIN_NUM_WORKERS=0
 [ -z "$EVAL_NUM_WORKERS" ] && EVAL_NUM_WORKERS=0
 
-cd "$repo_dir"/llm-foundry/scripts
+cd "$ext_repo_dir"/llm-foundry/scripts
 
 # Below is the llm-foundry README quickstart example, modified to
 # - run multi-node,
