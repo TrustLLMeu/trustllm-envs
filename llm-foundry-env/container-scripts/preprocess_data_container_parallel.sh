@@ -28,10 +28,10 @@ cd "$repo_dir"/llm-foundry/scripts/data_prep
 
 # Convert json dataset to StreamingDataset format
 # Alternatively, you can use
-# `"$curr_dir"/../py-scripts/convert_dataset_json_parallel_patching.py`
+# `"$_curr_dir"/../py-scripts/convert_dataset_json_parallel_patching.py`
 # for a version that should benefit from small-scale changes to the
 # underlying llm-foundry code.
-python "$curr_dir"/../py-scripts/convert_dataset_json_parallel.py \
+python "$_curr_dir"/../py-scripts/convert_dataset_json_parallel.py \
   --path "$INPUT_DATA_PATH" \
   --out_root "$OUTPUT_DATA_ROOT" --split train \
   --concat_tokens 2048 --tokenizer "$TOKENIZER_DIR" --eos_text '<|endoftext|>'

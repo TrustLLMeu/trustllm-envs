@@ -15,8 +15,8 @@
 
 set -euo pipefail
 
-curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
-curr_dir="$(dirname "$curr_file")"
+_curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
+_curr_dir="$(dirname "$_curr_file")"
 
 export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
@@ -26,11 +26,11 @@ export OUTPUT_DATA_ROOT="$data_dir"/my-tiny-c4
 
 srun bash -c "
     export WORLD_SIZE=\$SLURM_NTASKS; export RANK=\$SLURM_PROCID;
-    ${curr_dir@Q}/../container_run.sh
+    ${_curr_dir@Q}/../apptainer_run.sh
         bash ${parallel_preprocessing_script@Q}
 "
 
 # Probably safer to do this as an interactive run so we don't run into
 # time limit problems. May also not be necessary depending on the
 # number of files we obtain.
-# python "$curr_dir"/../py-scripts/merge_dataset.py --out_root "$OUTPUT_DATA_ROOT"
+# python "$_curr_dir"/../py-scripts/merge_dataset.py --out_root "$OUTPUT_DATA_ROOT"

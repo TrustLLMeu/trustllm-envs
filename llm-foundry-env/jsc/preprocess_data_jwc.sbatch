@@ -15,8 +15,8 @@
 
 set -euo pipefail
 
-curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
-curr_dir="$(dirname "$curr_file")"
+_curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
+_curr_dir="$(dirname "$_curr_file")"
 
 export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
@@ -24,5 +24,5 @@ export INPUT_DATA_FILE=/p/scratch/trustllm/example-data/tiny-c4-100k.jsonl
 export TOKENIZER_DIR=/p/scratch/trustllm/example-data/gpt2-tokenizer
 export OUTPUT_DATA_ROOT="$data_dir"/my-tiny-c4
 
-srun "$curr_dir"/../container_run.sh \
+srun "$_curr_dir"/../apptainer_run.sh \
      bash "$preprocessing_script"

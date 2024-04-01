@@ -13,9 +13,9 @@
 
 set -euo pipefail
 
-curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
-curr_dir="$(dirname "$curr_file")"
-source "$curr_dir"/../global_configuration.sh
+_curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
+_curr_dir="$(dirname "$_curr_file")"
+source "$_curr_dir"/../global_configuration.sh
 
 env_name=llm-foundry
 
@@ -75,10 +75,10 @@ container_file="$scratch_dir"/llm-foundry-latest.sif
 # This directory
 
 # Container script used for data preprocessing.
-preprocessing_script="$curr_dir"/container-scripts/preprocess_data_container.sh
+preprocessing_script="$_curr_dir"/container-scripts/preprocess_data_container.sh
 
 # Container script used for parallel data preprocessing.
-parallel_preprocessing_script="$curr_dir"/container-scripts/preprocess_data_container_parallel.sh
+parallel_preprocessing_script="$_curr_dir"/container-scripts/preprocess_data_container_parallel.sh
 
 # Container script used for training runs.
-training_script="$curr_dir"/container-scripts/run_training_container.sh
+training_script="$_curr_dir"/container-scripts/run_training_container.sh

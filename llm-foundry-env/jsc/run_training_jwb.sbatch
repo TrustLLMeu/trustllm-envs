@@ -15,8 +15,8 @@
 
 set -euo pipefail
 
-curr_file="$(scontrol show job "$SLURM_JOB_ID" | grep '^[[:space:]]*Command=' | head -n 1 | cut -d '=' -f 2-)"
-curr_dir="$(dirname "$curr_file")"
+_curr_file="$(scontrol show job "$SLURM_JOB_ID" | grep '^[[:space:]]*Command=' | head -n 1 | cut -d '=' -f 2-)"
+_curr_dir="$(dirname "$_curr_file")"
 
 export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
@@ -37,5 +37,5 @@ export DEVICES_PER_NODE=4
 export TRAIN_NUM_WORKERS=8
 export EVAL_NUM_WORKERS=3
 
-srun "$curr_dir"/../container_run.sh \
+srun "$_curr_dir"/../apptainer_run.sh \
      bash "$training_script"

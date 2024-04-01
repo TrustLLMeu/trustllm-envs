@@ -8,9 +8,9 @@ module purge
 module load Stages/2024
 module load GCC Apptainer-Tools NCCL
 
-curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
-curr_dir="$(dirname "$curr_file")"
-source "$curr_dir"/../configuration.sh
+_curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
+_curr_dir="$(dirname "$_curr_file")"
+source "$_curr_dir"/../configuration.sh
 
 # HuggingFace libraries cache configuration
-source "$curr_dir"/../../configure_hf_caches.sh
+source "$_curr_dir"/../../configure_hf_caches.sh
