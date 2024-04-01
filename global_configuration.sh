@@ -14,6 +14,10 @@ base_scratch_dir=/p/scratch/trustllm/"$USER"
 # Where cache files are stored.
 cache_dir="$base_scratch_dir"/.cache
 
+# Which container library is used. Currently supported options:
+# - "apptainer"
+container_library=apptainer
+
 # Where Apptainer cache and temporary files will be stored
 apptainer_cache_dir="$cache_dir"/apptainer
 apptainer_tmp_dir="$cache_dir"/apptainer-tmp

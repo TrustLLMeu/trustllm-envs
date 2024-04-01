@@ -10,7 +10,8 @@ source "$_curr_dir"/outside-container-scripts/activate.sh
 
 if ! [ -f "$apptainer_file" ]; then
     echo 'Cannot find Apptainer container file; please run' \
-         "\`bash outside-container-scripts/build_apptainer.sh\`."
+         "\`bash outside-container-scripts/build_apptainer.sh" \
+         "&& bash move_built_container_to_active.sh\`."
     exit 1
 fi
 if ! [ -f "$scratch_dir"/triton-build-patch.py ]; then

@@ -1,6 +1,6 @@
 # TrustLLM llm-foundry environment
 
-The Apptainer-based environment on using llm-foundry, with example
+The container-based environment on using llm-foundry, with example
 scripts for JSC systems.
 
 ## Usage
@@ -26,10 +26,10 @@ training.
    ```shell
    cd trustllm-envs/llm-foundry-env
    ```
-1. Build the llm-foundry Apptainer container:
+1. Build the llm-foundry container:
 
    ```shell
-   nice bash outside-container-scripts/build_apptainer.sh
+   nice bash build_container.sh
    ```
 1. To prevent overwriting the actively used container, we use a
    different path to build the container. This means we have to move
@@ -37,12 +37,12 @@ training.
    container to be:
 
    ```shell
-   bash -c 'source configuration.sh && mv "$apptainer_build_file" "$apptainer_file"'
+   bash move_built_container_to_active.sh
    ```
 1. Set up the rest of the software stack:
 
    ```shell
-   nice bash outside-container-scripts/set_up_apptainer.sh
+   nice bash set_up_container.sh
    ```
 1. SSH onto a CPU-focused supercomputer such as JUWELS Cluster for CPU
    tasks.
@@ -89,7 +89,7 @@ To do that, simply start up a shell in the container, then
 pre-download whatever you need:
 
 ```shell
-bash apptainer_run.sh bash
+bash container_run.sh bash
 
 # Now inside the container:
 # Make sure we are in "online" mode.
