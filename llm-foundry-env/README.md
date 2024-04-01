@@ -31,7 +31,7 @@ scripts for JSC systems.
 1. Set up the rest of the software stack:
 
    ```shell
-   nice bash outside-container-scripts/set_up.sh
+   nice bash outside-container-scripts/set_up_apptainer.sh
    ```
 1. SSH onto a CPU-focused supercomputer such as JUWELS Cluster for CPU
    tasks.
@@ -78,7 +78,7 @@ To do that, simply start up a shell in the container, then
 pre-download whatever you need:
 
 ```shell
-bash container_run.sh bash
+bash apptainer_run.sh bash
 
 # Now inside the container:
 # Make sure we are in "online" mode.
