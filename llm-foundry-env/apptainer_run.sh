@@ -10,7 +10,7 @@ source "$_curr_dir"/outside-container-scripts/activate.sh
 
 apptainer run --nv --env PYTHONPATH= \
           --bind "$scratch_dir"/triton-build-patch.py:/usr/lib/python3/dist-packages/triton/common/build.py \
-          "$container_file" bash -c "
+          "$apptainer_file" bash -c "
               source ${_curr_dir@Q}/container-scripts/activate_container.sh \
               && ${*@Q}
 "

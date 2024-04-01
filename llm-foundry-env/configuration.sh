@@ -64,11 +64,14 @@ venv_dir="$scratch_dir"/env
 data_dir="$scratch_dir"/data
 
 # Which container to build.
-# container_uri='docker://docker.io/mosaicml/llm-foundry:2.2.1_cu121_flash2-latest'
-# TODO below has flash attn too, so use that instead
-container_uri='docker://docker.io/mosaicml/pytorch:2.2.1_cu121-python3.11-ubuntu20.04'
-# Where to store the container.
-container_file="$scratch_dir"/llm-foundry-latest.sif
+docker_image_uri='docker://docker.io/mosaicml/pytorch:2.2.1_cu121-python3.11-ubuntu20.04'
+# Which file to build the container in. The default settings
+# automatically grab the information from the tail of the URI.
+apptainer_build_file="$scratch_dir"/apptainers/build/llm-foundry_"$(basename "$docker_image_uri" | tr ':' '_')".sif
+# Which container to use. Ideally keep this different from the above
+# build paths so the actively used container is not overwritten by
+# accident.
+apptainer_file="$scratch_dir"/apptainers/llm-foundry_"$(basename "$docker_image_uri" | tr ':' '_')".sif
 
 # ---
 

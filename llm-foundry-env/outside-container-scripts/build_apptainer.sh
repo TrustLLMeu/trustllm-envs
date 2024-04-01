@@ -10,4 +10,4 @@ source "$_curr_dir"/../outside-container-scripts/activate.sh
 
 source "$_curr_dir"/../../configure_apptainer.sh
 
-apptainer pull "$container_file" "$container_uri"
+apptainer pull "$apptainer_build_file" "$docker_image_uri"

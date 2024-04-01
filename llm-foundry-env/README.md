@@ -28,6 +28,14 @@ scripts for JSC systems.
    ```shell
    nice bash outside-container-scripts/build_apptainer.sh
    ```
+1. To prevent overwriting the actively used container, we use a
+   different path to build the container. This means we have to move
+   the container to another location, where we expect the active
+   container to be:
+
+   ```shell
+   bash -c 'source configuration.sh && mv "$apptainer_build_file" "$apptainer_file"'
+   ```
 1. Set up the rest of the software stack:
 
    ```shell
