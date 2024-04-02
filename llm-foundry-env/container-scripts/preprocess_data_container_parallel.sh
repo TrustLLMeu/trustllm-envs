@@ -32,6 +32,6 @@ cd "$ext_repo_dir"/llm-foundry/scripts/data_prep
 # for a version that should benefit from small-scale changes to the
 # underlying llm-foundry code.
 python "$_curr_dir"/../py-scripts/convert_dataset_json_parallel.py \
-  --path "$INPUT_DATA_PATH" \
-  --out_root "$OUTPUT_DATA_ROOT" --split train \
+  --path "$INPUT_DATA_FILE" \
+  --out_root "$OUTPUT_DATA_ROOT_DIR" --split train \
   --concat_tokens 2048 --tokenizer "$TOKENIZER_DIR" --eos_text '<|endoftext|>'

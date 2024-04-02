@@ -24,8 +24,8 @@ cd "$ext_repo_dir"/llm-foundry/scripts/data_prep
 
 # Convert json dataset to StreamingDataset format
 python convert_dataset_json.py \
-  --path "$INPUT_DATA_PATH" \
-  --out_root "$OUTPUT_DATA_ROOT" --split train \
+  --path "$INPUT_DATA_FILE" \
+  --out_root "$OUTPUT_DATA_ROOT_DIR" --split train \
   --concat_tokens 2048 --tokenizer "$TOKENIZER_DIR" --eos_text '<|endoftext|>'
 
 # Below is the llm-foundry README quickstart example, modified to
