@@ -32,7 +32,7 @@ for _repo_uri in "${!repos[@]}"; do
     # Take last part of URI, stripping ".git" at the end if it exists.
     _curr_repo_dir="$(basename "$_repo_uri" .git)"
     if ! [ -d "$_curr_repo_dir" ]; then
-        git clone "$_repo_uri" "$_curr_repo_dir"
+        git clone "$_repo_uri" "$ext_repo_dir"/"$_curr_repo_dir"
     fi
     cd "$_curr_repo_dir"
     # We do not pull so that software state is completely under user
