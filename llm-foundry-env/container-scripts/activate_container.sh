@@ -27,8 +27,7 @@ if [ "$#" -eq 0 ] || ! [ "$1" = setup ]; then
     # complain.
     if ! [ -d "$venv_dir" ]; then
         echo 'Cannot find Python virtual environment. Please execute' \
-             "\`bash outside-container-scripts/set_up_apptainer.sh\` or" \
-             'similar.'
+             "\`nice bash set_up.sh\`."
         pop_curr_file
         exit 1
     else

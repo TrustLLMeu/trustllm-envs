@@ -6,7 +6,7 @@ set -euo pipefail
 
 if ! ((_ACTIVATED_CONTAINER)); then
     echo 'Container has not been activated; please use' \
-         "\`bash apptainer_run.sh\` or similar to run container scripts."
+         "\`bash container_run.sh\` to run container scripts."
     exit 1
 fi
 

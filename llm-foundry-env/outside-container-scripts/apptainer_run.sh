@@ -14,14 +14,14 @@ source "$(get_curr_dir)"/activate.sh
 
 if ! [ -f "$apptainer_file" ]; then
     echo 'Cannot find Apptainer container file; please run' \
-         "\`bash outside-container-scripts/build_apptainer.sh" \
+         "\`nice bash build_container.sh" \
          "&& bash move_built_container_to_active.sh\`."
     pop_curr_file
     exit 1
 fi
 if ! [ -f "$scratch_dir"/triton-build-patch.py ]; then
     echo 'Cannot find necessary patch file; please run' \
-         "\`bash outside-container-scripts/set_up_apptainer.sh\`."
+         "\`nice bash set_up.sh\`."
     pop_curr_file
     exit 1
 fi

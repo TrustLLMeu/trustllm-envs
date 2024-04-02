@@ -43,7 +43,7 @@ training.
 1. Set up the rest of the software stack:
 
    ```shell
-   nice bash set_up_container.sh
+   nice bash set_up.sh
    ```
 1. SSH onto a CPU-focused supercomputer such as JUWELS Cluster for CPU
    tasks.
