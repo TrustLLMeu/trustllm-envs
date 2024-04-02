@@ -5,9 +5,13 @@
 
 set -euo pipefail
 
+# Do not use these variables; they may be overwritten. Instead, use
+# `get_curr_file` or `get_curr_dir` after sourcing `get_curr_file.sh`.
 _curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
 _curr_dir="$(dirname "$_curr_file")"
-source "$_curr_dir"/global_configuration.sh
+source "$_curr_dir"/global-scripts/get_curr_file.sh "$_curr_file"
+
+source "$(get_curr_dir)"/global_configuration.sh
 
 # HuggingFace libraries cache configuration
 mkdir -p "$hf_cache_dir"
@@ -23,3 +27,5 @@ export HF_MODULES_CACHE="$hf_cache_dir"/modules
 export HUGGINGFACE_ASSETS_CACHE="$hf_cache_dir"/assets
 export HUGGINGFACE_HUB_CACHE="$hf_cache_dir"/hub
 export TRANSFORMERS_CACHE="$hf_cache_dir"/hub
+
+pop_curr_file

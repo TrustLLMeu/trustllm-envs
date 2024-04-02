@@ -13,9 +13,13 @@
 
 set -euo pipefail
 
+# Do not use these variables; they may be overwritten. Instead, use
+# `get_curr_file` or `get_curr_dir` after sourcing `get_curr_file.sh`.
 _curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
 _curr_dir="$(dirname "$_curr_file")"
-source "$_curr_dir"/../global_configuration.sh
+source "$_curr_dir"/../global-scripts/get_curr_file.sh "$_curr_file"
+
+source "$(get_curr_dir)"/../global_configuration.sh
 
 env_name=llm-foundry
 
@@ -78,10 +82,12 @@ apptainer_file="$scratch_dir"/apptainers/llm-foundry_"$(basename "$docker_image_
 # This directory
 
 # Container script used for data preprocessing.
-preprocessing_script="$_curr_dir"/container-scripts/preprocess_data_container.sh
+preprocessing_script="$(get_curr_dir)"/container-scripts/preprocess_data_container.sh
 
 # Container script used for parallel data preprocessing.
-parallel_preprocessing_script="$_curr_dir"/container-scripts/preprocess_data_container_parallel.sh
+parallel_preprocessing_script="$(get_curr_dir)"/container-scripts/preprocess_data_container_parallel.sh
 
 # Container script used for training runs.
-training_script="$_curr_dir"/container-scripts/run_training_container.sh
+training_script="$(get_curr_dir)"/container-scripts/run_training_container.sh
+
+pop_curr_file

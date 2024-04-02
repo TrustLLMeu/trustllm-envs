@@ -6,9 +6,13 @@
 
 set -euo pipefail
 
+# Do not use these variables; they may be overwritten. Instead, use
+# `get_curr_file` or `get_curr_dir` after sourcing `get_curr_file.sh`.
 _curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
 _curr_dir="$(dirname "$_curr_file")"
-source "$_curr_dir"/../container-scripts/activate_container.sh setup
+source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
+
+source "$(get_curr_dir)"/../container-scripts/activate_container.sh setup
 
 if ! [ -d "$venv_dir" ]; then
     python -m venv --system-site-packages "$venv_dir"
@@ -34,3 +38,5 @@ for _repo_uri in "${!repos[@]}"; do
 done
 
 sed 's|libs = subprocess\..*$|libs = "/usr/local/cuda/lib64/stubs/libcuda.so"|g' /usr/lib/python3/dist-packages/triton/common/build.py > "$scratch_dir"/triton-build-patch.py
+
+pop_curr_file
