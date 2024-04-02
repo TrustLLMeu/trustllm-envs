@@ -13,6 +13,7 @@ source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
 source "$(get_curr_dir)"/../configuration.sh
 
 if [ "$container_library" = apptainer ]; then
+    mkdir -p "$(dirname "$apptainer_file")"
     mv -i "$apptainer_build_file" "$apptainer_file"
 else
     echo "Unknown container library \"$container_library\"."
