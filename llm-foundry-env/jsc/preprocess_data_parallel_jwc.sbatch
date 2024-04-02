@@ -34,8 +34,8 @@ export OUTPUT_DATA_ROOT_DIR="$data_dir"/my-tiny-c4
 _curr_dir="$(get_curr_dir)"
 
 srun bash -c "
-    export WORLD_SIZE=\"\$SLURM_NTASKS\"; export RANK=\"\$SLURM_PROCID\";
-    bash ${_curr_dir@Q}/../container_run.sh
+    export WORLD_SIZE=\"\$SLURM_NTASKS\"; export RANK=\"\$SLURM_PROCID\"; \\
+    bash ${_curr_dir@Q}/../container_run.sh \\
         bash ${parallel_preprocessing_script@Q}
 "
 
