@@ -12,7 +12,7 @@ if [ "$#" -lt 1 ]; then
 fi
 
 # Define the stack variable if it doesn't exist.
-declare _curr_files
+_curr_files="${_curr_files:-}"
 
 pop_curr_file() {
     _curr_files="$(echo "$_curr_files" | cut -d ':' -f 2-)"
