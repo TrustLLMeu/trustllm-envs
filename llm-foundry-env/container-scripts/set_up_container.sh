@@ -34,12 +34,13 @@ for _repo_uri in "${!repos[@]}"; do
     if ! [ -d "$_curr_repo_dir" ]; then
         git clone "$_repo_uri" "$_curr_repo_dir"
     fi
-    cd "$_curr_repo_dir"
+    pushd "$_curr_repo_dir"
     # We do not pull so that software state is completely under user
     # control.
 
     _repo_pip_install_features="${repos["$_repo_uri"]}"
     python -m pip install -e ."$_repo_pip_install_features"
+    popd
 done
 
 pop_curr_file
