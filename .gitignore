@@ -1,0 +1,33 @@
+# Slurm logs
+*.out
+*.err
+
+# Archives
+*.tar
+*.gz
+*.xz
+*.bz2
+*.zip
+
+# Images
+*.jpg
+*.jpeg
+*.png
+
+# Documents
+*.pdf
+
+# Binary files
+*.bin
+
+# Python bytecode
+*.pyc
+
+# Jupyter Notebooks
+*.ipynb
+
+# External repos
+repos/
+
+# Misc
+.DS_Store
