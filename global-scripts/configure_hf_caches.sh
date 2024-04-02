@@ -9,9 +9,9 @@ set -euo pipefail
 # `get_curr_file` or `get_curr_dir` after sourcing `get_curr_file.sh`.
 _curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
 _curr_dir="$(dirname "$_curr_file")"
-source "$_curr_dir"/global-scripts/get_curr_file.sh "$_curr_file"
+source "$_curr_dir"/get_curr_file.sh "$_curr_file"
 
-source "$(get_curr_dir)"/global_configuration.sh
+source "$(get_curr_dir)"/../global_configuration.sh
 
 # HuggingFace libraries cache configuration
 mkdir -p "$hf_cache_dir"
