@@ -32,7 +32,7 @@ fi
 if [ "$#" -eq 0 ]; then
     args=(
         env
-        BASH_ENV="$(pwd)"/"$(get_curr_dir)"/../container-scripts/activate_container.sh
+        BASH_ENV'='"$(get_curr_dir)"/../container-scripts/activate_container.sh
         bash
         --init-file
         "$(get_curr_dir)"/../container-scripts/activate_container.sh
@@ -41,7 +41,7 @@ if [ "$#" -eq 0 ]; then
 elif [ "$#" -gt 0 ] && [ "$(basename "$1")" = bash ]; then
     args=(
         env
-        BASH_ENV="$(pwd)"/"$(get_curr_dir)"/../container-scripts/activate_container.sh
+        BASH_ENV'='"$(get_curr_dir)"/../container-scripts/activate_container.sh
         bash
         --init-file
         "$(get_curr_dir)"/../container-scripts/activate_container.sh
@@ -50,7 +50,7 @@ elif [ "$#" -gt 0 ] && [ "$(basename "$1")" = bash ]; then
 else
     args=(
         env
-        BASH_ENV="$(pwd)"/"$(get_curr_dir)"/../container-scripts/activate_container.sh
+        BASH_ENV'='"$(get_curr_dir)"/../container-scripts/activate_container.sh
         bash
         --init-file
         "$(get_curr_dir)"/../container-scripts/activate_container.sh
