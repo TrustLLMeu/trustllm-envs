@@ -20,7 +20,10 @@ if ! [ -f "$apptainer_file" ]; then
     exit 1
 fi
 
-apptainer run --nv --env PYTHONPATH= "$apptainer_file" \
-          bash "$(get_curr_dir)"/../container-scripts/set_up_container.sh
+# We unset a bunch of environment variables so they don't disturb our Apptainer.
+env -u CC -u CFLAGS -u CMAKE_LIBRARY_PATH -u CMAKE_PREFIX_PATH -u CXX \
+    -u CXXFLAGS -u CPATH -u PYTHONPATH \
+    apptainer run --nv "$apptainer_file" \
+    bash "$(get_curr_dir)"/../container-scripts/set_up_container.sh
 
 pop_curr_file
