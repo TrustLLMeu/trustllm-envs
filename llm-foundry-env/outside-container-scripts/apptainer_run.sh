@@ -41,6 +41,7 @@ elif [ "$#" -gt 0 ] && [ "$(basename "$1")" = bash ]; then
         bash
         --init-file
         "$(get_curr_dir)"/../container-scripts/activate_container.sh
+        -i
         "${@:2}"
     )
 else
