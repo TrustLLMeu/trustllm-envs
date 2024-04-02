@@ -30,30 +30,6 @@ env_name=llm-foundry
 # `base_project_dir` is configured in `../global_configuration.sh`.
 project_dir="$base_project_dir"/"$env_name"
 
-# Where external repositories will be installed (such as llm-foundry
-# itself).
-ext_repo_dir="$project_dir"/repos
-# List of repositories to clone and naïvely `pip install` (i.e., `cd`
-# into the repo, then execute `pip install -e .`, optionally with
-# extra features as specified in `install_features`).
-declare -A repos
-# Repository to clone and additional `pip install` features to install
-# (set as empty string (`''`) for default features, see example
-# below).
-# Data processing/format library.
-repos['https://github.com/mosaicml/streaming.git']=''
-# Trainer library.
-repos['https://github.com/mosaicml/composer.git']='[nlp,tensorboard,wandb]'
-# Main framework.
-# The feature "gpu" is the same as "gpu-flash2", but we currently keep
-# the latter explicit specification because that is a very recent
-# change.
-# This would execute `python -m pip install -e '.[gpu-flash2,tensorboard]'`
-repos['https://github.com/mosaicml/llm-foundry.git']='[gpu-flash2,tensorboard]'
-# For example, this would clone a repo and do a standard
-# `pip install -e .`:
-# repos['https://github.com/github/example-repo.git']=''
-
 # ---
 
 # SCRATCH directory (short-term storage)
@@ -84,6 +60,30 @@ apptainer_file="$scratch_dir"/apptainers/llm-foundry_"$(basename "$docker_image_
 
 # This directory
 
+# Where external repositories will be installed (such as llm-foundry
+# itself).
+ext_repo_dir="$(get_curr_dir)"/repos
+# List of repositories to clone and naïvely `pip install` (i.e., `cd`
+# into the repo, then execute `pip install -e .`, optionally with
+# extra features as specified in `install_features`).
+declare -A repos
+# Repository to clone and additional `pip install` features to install
+# (set as empty string (`''`) for default features, see example
+# below).
+# Data processing/format library.
+repos['https://github.com/mosaicml/streaming.git']=''
+# Trainer library.
+repos['https://github.com/mosaicml/composer.git']='[nlp,tensorboard,wandb]'
+# Main framework.
+# The feature "gpu" is the same as "gpu-flash2", but we currently keep
+# the latter explicit specification because that is a very recent
+# change.
+# This would execute `python -m pip install -e '.[gpu-flash2,tensorboard]'`
+repos['https://github.com/mosaicml/llm-foundry.git']='[gpu-flash2,tensorboard]'
+# For example, this would clone a repo and do a standard
+# `pip install -e .`:
+# repos['https://github.com/github/example-repo.git']=''
+
 # Container script used for data preprocessing.
 preprocessing_script="$(get_curr_dir)"/container-scripts/preprocess_data_container.sh
 
@@ -92,5 +92,7 @@ parallel_preprocessing_script="$(get_curr_dir)"/container-scripts/preprocess_dat
 
 # Container script used for training runs.
 training_script="$(get_curr_dir)"/container-scripts/run_training_container.sh
+
+# ---
 
 pop_curr_file
