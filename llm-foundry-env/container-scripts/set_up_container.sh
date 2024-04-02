@@ -14,6 +14,8 @@ source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
 
 source "$(get_curr_dir)"/../container-scripts/activate_container.sh setup
 
+sed 's|libs = subprocess\..*$|libs = "/usr/local/cuda/lib64/stubs/libcuda.so"|g' /usr/lib/python3/dist-packages/triton/common/build.py > "$scratch_dir"/triton-build-patch.py
+
 if ! [ -d "$venv_dir" ]; then
     python -m venv --system-site-packages "$venv_dir"
     source "$venv_dir"/bin/activate
@@ -36,7 +38,5 @@ for _repo_uri in "${!repos[@]}"; do
     _repo_pip_install_features="${repos["$_repo_uri"]}"
     python -m pip install -e ."$_repo_pip_install_features"
 done
-
-sed 's|libs = subprocess\..*$|libs = "/usr/local/cuda/lib64/stubs/libcuda.so"|g' /usr/lib/python3/dist-packages/triton/common/build.py > "$scratch_dir"/triton-build-patch.py
 
 pop_curr_file
