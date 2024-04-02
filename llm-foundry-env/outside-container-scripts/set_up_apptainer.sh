@@ -12,6 +12,14 @@ source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
 
 source "$(get_curr_dir)"/activate.sh
 
+if ! [ -f "$apptainer_file" ]; then
+    echo 'Cannot find Apptainer container file; please run' \
+         "\`nice bash build_container.sh" \
+         "&& bash move_built_container_to_active.sh\`."
+    pop_curr_file
+    exit 1
+fi
+
 apptainer run --nv --env PYTHONPATH= "$apptainer_file" \
           bash "$(get_curr_dir)"/../container-scripts/set_up_container.sh
 
