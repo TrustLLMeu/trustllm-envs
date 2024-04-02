@@ -22,6 +22,7 @@ cd "$ext_repo_dir"/llm-foundry/scripts
 # Below is the llm-foundry README quickstart example, modified to
 # - run multi-node,
 # - use local preprocessed data from SCRATCH,
+# - use a local tokenizer,
 # - use multiple CPUs for data processing (variables defined outside
 #   script),
 # - use FlashAttention-2,
@@ -36,6 +37,7 @@ python -m composer \
     train/train.py \
     train/yamls/pretrain/mpt-125m.yaml \
     data_local="$data_dir"/my-tiny-c4 \
+    tokenizer.name="$TOKENIZER_DIR" \
     train_loader.num_workers="$TRAIN_NUM_WORKERS" \
     train_loader.dataset.split=train_small \
     eval_loader.num_workers="$EVAL_NUM_WORKERS" \
