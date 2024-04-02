@@ -34,14 +34,14 @@ export OUTPUT_DATA_ROOT="$data_dir"/my-tiny-c4
 _curr_dir="$(get_curr_dir)"
 
 srun bash -c "
-    export WORLD_SIZE=\$SLURM_NTASKS; export RANK=\$SLURM_PROCID;
-    ${_curr_dir@Q}/../apptainer_run.sh
+    export WORLD_SIZE=\"\$SLURM_NTASKS\"; export RANK=\"\$SLURM_PROCID\";
+    ${_curr_dir@Q}/../container_run.sh
         bash ${parallel_preprocessing_script@Q}
 "
 
 # Probably safer to do this as an interactive run so we don't run into
 # time limit problems. May also not be necessary depending on the
 # number of files we obtain.
-# python "$_curr_dir"/../py-scripts/merge_dataset.py --out_root "$OUTPUT_DATA_ROOT"
+# python "$(get_curr_dir)"/../py-scripts/merge_dataset.py --out_root "$OUTPUT_DATA_ROOT"
 
 pop_curr_file
