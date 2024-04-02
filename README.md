@@ -58,7 +58,7 @@ python -c 'import evaluate; evaluate.load("accuracy")'
 python -c 'from datasets import load_metric; load_metric("accuracy")'
 ```
 
-# License
+## License
 
 Copyright 2024 Jan Ebert
 
