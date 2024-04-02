@@ -31,8 +31,8 @@ cd "$ext_repo_dir"/llm-foundry/scripts
 
 # Train an MPT-125m model for 10 batches
 python -m composer \
-    --world_size="$((SLURM_JOB_NUM_NODES * DEVICES_PER_NODE))" \
-    --node_rank="$SLURM_NODEID" \
+    --world_size="$WORLD_SIZE" \
+    --node_rank="$NODE_RANK" \
     --master_addr="$MASTER_ADDR" \
     --master_port="$MASTER_PORT" \
     train/train.py \

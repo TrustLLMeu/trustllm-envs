@@ -44,7 +44,15 @@ export EVAL_NUM_WORKERS=3
 
 export TOKENIZER_DIR=/p/scratch/trustllm/example-data/gpt2-tokenizer
 
-srun bash "$(get_curr_dir)"/../container_run.sh \
-     bash "$training_script"
+# We assign to a variable again so Bash can do the quoted
+# interpolation.
+_curr_dir="$(get_curr_dir)"
+
+srun bash -c "
+    export WORLD_SIZE=\"\$((SLURM_JOB_NUM_NODES * DEVICES_PER_NODE))\"; \\
+    export NODE_RANK=\"\$SLURM_NODEID\"; \\
+    bash ${_curr_dir@Q}/../container_run.sh \\
+        bash ${training_script@Q}
+"
 
 pop_curr_file
