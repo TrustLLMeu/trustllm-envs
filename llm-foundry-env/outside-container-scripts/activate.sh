@@ -13,4 +13,4 @@ _curr_dir="$(dirname "$_curr_file")"
 source "$_curr_dir"/../configuration.sh
 
 # HuggingFace libraries cache configuration
-source "$_curr_dir"/../../configure_hf_caches.sh
+source "$_curr_dir"/../../global-scripts/configure_hf_caches.sh
