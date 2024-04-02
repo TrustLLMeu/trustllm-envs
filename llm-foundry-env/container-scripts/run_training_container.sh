@@ -23,6 +23,7 @@ cd "$ext_repo_dir"/llm-foundry/scripts
 # - run multi-node,
 # - use local preprocessed data from SCRATCH,
 # - use a local tokenizer,
+# - use the name of the dataset as splits,
 # - use multiple CPUs for data processing (variables defined outside
 #   script),
 # - use FlashAttention-2,
@@ -36,12 +37,12 @@ python -m composer \
     --master_port="$MASTER_PORT" \
     train/train.py \
     train/yamls/pretrain/mpt-125m.yaml \
-    data_local="$data_dir"/my-tiny-c4 \
+    data_local="$data_dir" \
     tokenizer.name="$TOKENIZER_DIR" \
     train_loader.num_workers="$TRAIN_NUM_WORKERS" \
-    train_loader.dataset.split=train_small \
+    train_loader.dataset.split=my-tiny-c4 \
     eval_loader.num_workers="$EVAL_NUM_WORKERS" \
-    eval_loader.dataset.split=val_small \
+    eval_loader.dataset.split=my-tiny-c4 \
     model.attn_config.attn_impl=flash \
     max_duration=10ba \
     eval_interval=0 \
