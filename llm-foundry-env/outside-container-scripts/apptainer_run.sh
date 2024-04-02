@@ -26,18 +26,38 @@ if ! [ -f "$scratch_dir"/triton-build-patch.py ]; then
     exit 1
 fi
 
-# We assign to a variable again so Bash can do the quoted
-# interpolation.
-_curr_dir="$(get_curr_dir)"
+# If the user does not supply an argument, drop them into an
+# interactive shell. Similarly, if they try to execute `bash`, handle
+# this specifically so we're still in the `venv`.
+if [ "$#" -eq 0 ]; then
+    args=(
+        bash
+        --init-file
+        "$(get_curr_dir)"/../container-scripts/activate_container.sh
+        -i
+    )
+elif [ "$#" -gt 0 ] && [ "$(basename "$1")" = bash ]; then
+    args=(
+        bash
+        --init-file
+        "$(get_curr_dir)"/../container-scripts/activate_container.sh
+        "${@:2}"
+    )
+else
+    args=(
+        bash
+        --init-file
+        "$(get_curr_dir)"/../container-scripts/activate_container.sh
+        -ic
+        "${*@Q}"
+    )
+fi
 
 # We unset a bunch of environment variables so they don't disturb our Apptainer.
 env -u CC -u CFLAGS -u CMAKE_LIBRARY_PATH -u CMAKE_PREFIX_PATH -u CXX \
     -u CXXFLAGS -u CPATH -u PYTHONPATH \
     apptainer run --nv \
     --bind "$scratch_dir"/triton-build-patch.py:/usr/lib/python3/dist-packages/triton/common/build.py \
-    "$apptainer_file" bash -c "
-        source ${_curr_dir@Q}/../container-scripts/activate_container.sh \\
-        && ${*@Q}
-"
+    "$apptainer_file" "${args[@]}"
 
 pop_curr_file
