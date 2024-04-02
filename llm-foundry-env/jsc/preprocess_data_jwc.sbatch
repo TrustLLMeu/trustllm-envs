@@ -29,7 +29,7 @@ export INPUT_DATA_FILE=/p/scratch/trustllm/example-data/tiny-c4-100k.jsonl
 export TOKENIZER_DIR=/p/scratch/trustllm/example-data/gpt2-tokenizer
 export OUTPUT_DATA_ROOT="$data_dir"/my-tiny-c4
 
-srun "$(get_curr_dir)"/../container_run.sh \
+srun bash "$(get_curr_dir)"/../container_run.sh \
      bash "$preprocessing_script"
 
 pop_curr_file

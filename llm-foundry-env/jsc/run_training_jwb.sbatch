@@ -42,7 +42,7 @@ export DEVICES_PER_NODE=4
 export TRAIN_NUM_WORKERS=8
 export EVAL_NUM_WORKERS=3
 
-srun "$(get_curr_dir)"/../container_run.sh \
+srun bash "$(get_curr_dir)"/../container_run.sh \
      bash "$training_script"
 
 pop_curr_file

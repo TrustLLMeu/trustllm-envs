@@ -35,7 +35,7 @@ _curr_dir="$(get_curr_dir)"
 
 srun bash -c "
     export WORLD_SIZE=\"\$SLURM_NTASKS\"; export RANK=\"\$SLURM_PROCID\";
-    ${_curr_dir@Q}/../container_run.sh
+    bash ${_curr_dir@Q}/../container_run.sh
         bash ${parallel_preprocessing_script@Q}
 "
 
