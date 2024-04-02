@@ -14,8 +14,8 @@ fi
 # -----
 
 # Set defaults for number of workers if not given.
-[ -z "$TRAIN_NUM_WORKERS" ] && TRAIN_NUM_WORKERS=0
-[ -z "$EVAL_NUM_WORKERS" ] && EVAL_NUM_WORKERS=0
+TRAIN_NUM_WORKERS="${TRAIN_NUM_WORKERS:-0}"
+EVAL_NUM_WORKERS="${EVAL_NUM_WORKERS:-0}"
 
 cd "$ext_repo_dir"/llm-foundry/scripts
 
