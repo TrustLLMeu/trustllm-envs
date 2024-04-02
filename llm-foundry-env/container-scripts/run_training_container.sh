@@ -42,7 +42,7 @@ python -m composer \
     model.attn_config.attn_impl=flash \
     max_duration=10ba \
     eval_interval=0 \
-    save_folder="$scratch_dir"/experiments/mpt-125m
+    save_folder="$checkpoint_dir"/mpt-125m
 
 # # Convert the model to HuggingFace format
 # python inference/convert_composer_to_hf.py \

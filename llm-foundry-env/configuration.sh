@@ -67,6 +67,9 @@ venv_dir="$scratch_dir"/env
 # Where to store preprocessed datasets.
 data_dir="$scratch_dir"/data
 
+# Where to store model checkpoints.
+checkpoint_dir="$scratch_dir"/experiments
+
 # Which container to build.
 docker_image_uri='docker://docker.io/mosaicml/pytorch:2.2.1_cu121-python3.11-ubuntu20.04'
 # Which file to build the container in. The default settings
