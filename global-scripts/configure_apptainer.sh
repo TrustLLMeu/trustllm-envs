@@ -5,9 +5,9 @@
 
 set -euo pipefail
 
-curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
-curr_dir="$(dirname "$curr_file")"
-source "$curr_dir"/global_configuration.sh
+_curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
+_curr_dir="$(dirname "$_curr_file")"
+source "$_curr_dir"/global_configuration.sh
 
 mkdir -p "$apptainer_cache_dir"
 export APPTAINER_CACHEDIR="$(mktemp -d -p "$apptainer_cache_dir")"
