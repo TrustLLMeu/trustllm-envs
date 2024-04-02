@@ -14,8 +14,10 @@ source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
 
 source "$(get_curr_dir)"/../container-scripts/activate_container.sh setup
 
+# Create the patched Triton file.
 sed 's|libs = subprocess\..*$|libs = "/usr/local/cuda/lib64/stubs/libcuda.so"|g' /usr/lib/python3/dist-packages/triton/common/build.py > "$scratch_dir"/triton-build-patch.py
 
+# Create or activate the Python virtual environment
 if ! [ -d "$venv_dir" ]; then
     python -m venv --system-site-packages "$venv_dir"
     source "$venv_dir"/bin/activate
@@ -24,6 +26,7 @@ else
     source "$venv_dir"/bin/activate
 fi
 
+# Clone and install the external repositories
 mkdir -p "$(dirname "$ext_repo_dir")"
 for _repo_uri in "${!repos[@]}"; do
     # Take last part of URI, stripping ".git" at the end if it exists.
