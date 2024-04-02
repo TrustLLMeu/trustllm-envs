@@ -21,6 +21,8 @@ _curr_file="$(scontrol show job "$SLURM_JOB_ID" | grep '^[[:space:]]*Command=' |
 _curr_dir="$(dirname "$_curr_file")"
 source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
 
+source "$(get_curr_dir)"/../configuration.sh
+
 export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
 export INPUT_DATA_FILE=/p/scratch/trustllm/example-data/tiny-c4-100k.jsonl
