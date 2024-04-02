@@ -14,9 +14,9 @@ source "$_curr_dir"/get_curr_file.sh "$_curr_file"
 source "$(get_curr_dir)"/../global_configuration.sh
 
 mkdir -p "$apptainer_cache_dir"
-export APPTAINER_CACHEDIR="$(mktemp -d -p "$apptainer_cache_dir")"
+export APPTAINER_CACHEDIR="$apptainer_cache_dir"
 
 mkdir -p "$apptainer_tmp_dir"
-export APPTAINER_TMPDIR="$(mktemp -d -p "$apptainer_tmp_dir")"
+export APPTAINER_TMPDIR="$apptainer_tmp_dir"
 
 pop_curr_file
