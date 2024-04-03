@@ -42,6 +42,8 @@ srun bash -c "
 # Probably safer to do this as an interactive run so we don't run into
 # time limit problems, since it is a destructive operation. However,
 # for convenience, this is included here for now.
-python "$(get_curr_dir)"/../py-scripts/merge_dataset.py --out_root "$OUTPUT_DATA_ROOT_DIR"
+bash "$(get_curr_dir)"/../container_run.sh \
+     python "$(get_curr_dir)"/../py-scripts/merge_dataset.py \
+         --out_root "$OUTPUT_DATA_ROOT_DIR"
 
 pop_curr_file
