@@ -5,6 +5,10 @@
 
 set -euo pipefail
 
+_curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
+_curr_dir="$(dirname "$_curr_file")"
+source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
+
 _activated_container="${_ACTIVATED_CONTAINER:-0}"
 if ! ((_activated_container)); then
     echo 'Container has not been activated; please use' \
@@ -29,10 +33,12 @@ cd "$ext_repo_dir"/llm-foundry/scripts/data_prep
 
 # Convert json dataset to StreamingDataset format
 # Alternatively, you can use
-# `"$_curr_dir"/../py-scripts/convert_dataset_json_parallel_patching.py`
+# `"$(get_curr_dir)"/../py-scripts/convert_dataset_json_parallel_patching.py`
 # for a version that should benefit from small-scale changes to the
 # underlying llm-foundry code.
-python "$_curr_dir"/../py-scripts/convert_dataset_json_parallel.py \
+python "$(get_curr_dir)"/../py-scripts/convert_dataset_json_parallel.py \
   --path "$INPUT_DATA_FILE" \
   --out_root "$OUTPUT_DATA_ROOT_DIR" --split train \
   --concat_tokens 2048 --tokenizer "$TOKENIZER_DIR" --eos_text '<|endoftext|>'
+
+pop_curr_file
