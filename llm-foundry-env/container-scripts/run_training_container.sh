@@ -31,6 +31,7 @@ cd "$ext_repo_dir"/llm-foundry/scripts
 
 # Train an MPT-125m model for 10 batches
 python -m composer \
+    --nproc="$DEVICES_PER_NODE" \
     --world_size="$WORLD_SIZE" \
     --node_rank="$NODE_RANK" \
     --master_addr="$MASTER_ADDR" \
