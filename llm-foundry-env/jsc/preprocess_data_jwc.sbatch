@@ -4,7 +4,7 @@
 
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=48
+#SBATCH --cpus-per-task=48  # 48 physical cores per node.
 #SBATCH --hint=nomultithread  # Use only physical CPU cores.
 #SBATCH --time 00:20:00
 #SBATCH --account=trustllm
