@@ -59,7 +59,12 @@ if __name__ == '__main__':
 
     args = convert_dataset_json.parse_args()
 
-    patch_load_hf_dataset(path=args.path, split=args.split, world_size=world_size, rank=rank)
+    patch_load_hf_dataset(
+        path=args.path,
+        split=args.split,
+        world_size=world_size,
+        rank=rank,
+    )
     # Give each process its own output directory
     args.out_root = os.path.join(args.out_root, str(rank))
 
