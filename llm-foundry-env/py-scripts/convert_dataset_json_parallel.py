@@ -180,7 +180,7 @@ def main(args: Namespace) -> None:
         tokenizer = None
         columns = {'text': 'str'}
 
-    if 'WORLD_SIZE' not in os.getenv or 'RANK' not in os.getenv:
+    if 'WORLD_SIZE' not in os.environ or 'RANK' not in os.environ:
         print(
             'The `WORLD_SIZE` and `RANK` environment variables need to be '
             'defined for parallel data processing, where `WORLD_SIZE` is the '
