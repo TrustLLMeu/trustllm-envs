@@ -47,13 +47,24 @@ training.
    ```
 1. SSH onto a CPU-focused supercomputer such as JUWELS Cluster for CPU
    tasks.
-1. Preprocess the training data, tokenizing it and converting it to
+1. Preprocess the validation data, tokenizing it and converting it to
    the binary format used by llm-foundry. Here is an example assuming
    you're on JUWELS Cluster:
 
    ```shell
    sbatch jsc/preprocess_data_jwc.sbatch
    ```
+1. You can also preprocess data in parallel; we will do this for the
+   training data. Here is an example, again assuming you're on JUWELS
+   Cluster:
+
+   ```shell
+   sbatch jsc/preprocess_data_parallel_jwc.sbatch
+   ```
+
+   You need to execute both, the parallel and non-parallel
+   preprocessing examples, for the training example to work, because
+   they create different splits (train and validation, respectively).
 1. SSH onto the GPU-focused supercomputer such as JUWELS Booster for
    GPU tasks.
 1. Run a pre-training task. Here is an example assuming you're on

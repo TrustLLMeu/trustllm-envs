@@ -38,12 +38,12 @@ python -m composer \
     --master_port="$MASTER_PORT" \
     train/train.py \
     train/yamls/pretrain/mpt-125m.yaml \
-    data_local="$data_dir" \
+    data_local="$data_dir"/my-tiny-c4-gpt2tok \
     tokenizer.name="$TOKENIZER_DIR" \
     train_loader.num_workers="$TRAIN_NUM_WORKERS" \
-    train_loader.dataset.split=my-tiny-c4 \
+    train_loader.dataset.split=train \
     eval_loader.num_workers="$EVAL_NUM_WORKERS" \
-    eval_loader.dataset.split=my-tiny-c4 \
+    eval_loader.dataset.split=val \
     model.attn_config.attn_impl=flash \
     max_duration=10ba \
     eval_interval=0 \
