@@ -7,6 +7,7 @@ Parallel streaming dataset conversion scripts for JSON files.
 """
 
 import functools
+import itertools
 import os
 
 import convert_dataset_json
@@ -18,7 +19,7 @@ def patch_build_hf_dataset(world_size: int, rank: int) -> None:
     @functools.wraps(old_build_hf_dataset)
     def new_build_hf_dataset(*args, **kwargs):
         dataset = old_build_hf_dataset(*args, **kwargs)
-        dataset = dataset.shard(num_shards=world_size, index=rank)
+        dataset = itertools.islice(dataset, rank, None, world_size)
         return dataset
 
     convert_dataset_json.build_hf_dataset = new_build_hf_dataset

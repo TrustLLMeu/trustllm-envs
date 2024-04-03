@@ -11,6 +11,7 @@ import os
 from argparse import ArgumentParser, Namespace
 from enum import Enum
 from glob import glob
+import itertools
 from typing import Dict, Iterable, Optional
 
 import datasets as hf_datasets
@@ -200,7 +201,7 @@ def main(args: Namespace) -> None:
                                eos_text=args.eos_text,
                                no_wrap=args.no_wrap,
                                tokenizer=tokenizer)
-    dataset = dataset.shard(num_shards=world_size, index=rank)
+    dataset = itertools.islice(dataset, rank, None, world_size)
 
     print('here')
 
