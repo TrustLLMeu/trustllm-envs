@@ -32,28 +32,28 @@ fi
 if [ "$#" -eq 0 ]; then
     args=(
         env
-        BASH_ENV'='"$(get_curr_dir)"/../container-scripts/activate_container.sh
+        BASH_ENV'='"$(get_curr_dir)"/../container-scripts/activate_interactive_container.sh
         bash
         --init-file
-        "$(get_curr_dir)"/../container-scripts/activate_container.sh
+        "$(get_curr_dir)"/../container-scripts/activate_interactive_container.sh
         -i
     )
 elif [ "$#" -gt 0 ] && [ "$(basename "$1")" = bash ]; then
     args=(
         env
-        BASH_ENV'='"$(get_curr_dir)"/../container-scripts/activate_container.sh
+        BASH_ENV'='"$(get_curr_dir)"/../container-scripts/activate_interactive_container.sh
         bash
         --init-file
-        "$(get_curr_dir)"/../container-scripts/activate_container.sh
+        "$(get_curr_dir)"/../container-scripts/activate_interactive_container.sh
         "${@:2}"
     )
 else
     args=(
         env
-        BASH_ENV'='"$(get_curr_dir)"/../container-scripts/activate_container.sh
+        BASH_ENV'='"$(get_curr_dir)"/../container-scripts/activate_interactive_container.sh
         bash
         --init-file
-        "$(get_curr_dir)"/../container-scripts/activate_container.sh
+        "$(get_curr_dir)"/../container-scripts/activate_interactive_container.sh
         -c
         "${*@Q}"
     )
