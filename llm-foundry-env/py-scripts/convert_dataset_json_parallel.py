@@ -50,9 +50,6 @@ def parse_args() -> Namespace:
     parser.add_argument('--eos_text', type=str, required=False, default=None)
     parser.add_argument('--no_wrap', default=False, action='store_true')
 
-    parser.add_argument('--world_size', type=int, default=1)
-    parser.add_argument('--rank', type=int, default=0)
-
     parsed = parser.parse_args()
 
     if os.path.isdir(parsed.out_root) and len(
