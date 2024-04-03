@@ -32,10 +32,9 @@ python convert_dataset_json.py \
 # Below is the llm-foundry README quickstart example, modified to
 # - be executed from the `scripts/data_prep` directory,
 # - write data to SCRATCH,
-# - use a local tokenizer.
 
 # # Convert C4 dataset to StreamingDataset format
 # python convert_dataset_hf.py \
 #   --dataset c4 --data_subset en \
 #   --out_root "$data_dir"/my-copy-c4 --splits train_small val_small \
-#   --concat_tokens 2048 --tokenizer "$TOKENIZER_DIR" --eos_text '<|endoftext|>'
+#   --concat_tokens 2048 --tokenizer EleutherAI/gpt-neox-20b --eos_text '<|endoftext|>'
