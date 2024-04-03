@@ -7,22 +7,42 @@ Parallel streaming dataset conversion scripts for JSON files.
 """
 
 import functools
-import itertools
+import glob
 import os
+
+import datasets
 
 import convert_dataset_json
 
 
-def patch_build_hf_dataset(world_size: int, rank: int) -> None:
-    old_build_hf_dataset = convert_dataset_json.build_hf_dataset
+def patch_load_hf_dataset(
+        path: str,
+        split: str,
+        world_size: int,
+        rank: int,
+) -> None:
+    old_load_hf_dataset = datasets.load_dataset
 
-    @functools.wraps(old_build_hf_dataset)
-    def new_build_hf_dataset(*args, **kwargs):
-        dataset = old_build_hf_dataset(*args, **kwargs)
-        dataset = itertools.islice(dataset, rank, None, world_size)
-        return dataset
+    @functools.wraps(old_load_hf_dataset)
+    def new_load_hf_dataset(*args, **kwargs):
+        hf_dataset = old_load_hf_dataset(*args, **kwargs)
 
-    convert_dataset_json.build_hf_dataset = new_build_hf_dataset
+        # Try to prevent us from messing with the dataset in unrelated
+        # calls.
+        if os.path.isdir(path):
+            data_files = glob.glob(f'{path}/*')
+        else:
+            data_files = path
+        if (
+                args[0] == 'json'
+                and kwargs['data_files'] == data_files
+                and kwargs['split'] == split
+        ):
+            hf_dataset = hf_dataset.shard(num_shards=world_size, index=rank)
+
+        return hf_dataset
+
+    datasets.load_dataset = new_load_hf_dataset
 
 
 if __name__ == '__main__':
@@ -36,9 +56,10 @@ if __name__ == '__main__':
 
     world_size = int(os.environ['WORLD_SIZE'])
     rank = int(os.environ['RANK'])
-    patch_build_hf_dataset(world_size=world_size, rank=rank)
 
     args = convert_dataset_json.parse_args()
+
+    patch_load_hf_dataset(path=args.path, split=args.split, world_size=world_size, rank=rank)
     # Give each process its own output directory
     args.out_root = os.path.join(args.out_root, str(rank))
 

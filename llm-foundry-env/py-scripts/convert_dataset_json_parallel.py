@@ -11,7 +11,6 @@ import os
 from argparse import ArgumentParser, Namespace
 from enum import Enum
 from glob import glob
-import itertools
 from typing import Dict, Iterable, Optional
 
 import datasets as hf_datasets
@@ -105,9 +104,13 @@ def build_hf_dataset(
     else:
         data_files = path
 
+    world_size = int(os.environ['WORLD_SIZE'])
+    rank = int(os.environ['RANK'])
+
     hf_dataset = hf_datasets.load_dataset('json',
                                           data_files=data_files,
                                           split=split)
+    hf_dataset = hf_dataset.shard(num_shards=world_size, index=rank)
 
     if mode == ConcatMode.NO_CONCAT:
         dataset = NoConcatDataset(hf_dataset)
@@ -186,7 +189,6 @@ def main(args: Namespace) -> None:
         )
         exit(1)
 
-    world_size = int(os.environ['WORLD_SIZE'])
     rank = int(os.environ['RANK'])
 
     # Get samples
@@ -198,7 +200,6 @@ def main(args: Namespace) -> None:
                                eos_text=args.eos_text,
                                no_wrap=args.no_wrap,
                                tokenizer=tokenizer)
-    dataset = itertools.islice(dataset, rank, None, world_size)
 
     print('here')
 
