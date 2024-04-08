@@ -21,7 +21,7 @@ sed 's|root_node = \(self\.resolve_root_node_address(.*)\)$|root_node = os.geten
 
 # Create or activate the Python virtual environment
 if ! [ -d "$venv_dir" ]; then
-    python -m venv --system-site-packages "$venv_dir"
+    python -m venv --system-site-packages --without-pip "$venv_dir"
     source "$venv_dir"/bin/activate
     python -m pip install -U pip
 else
