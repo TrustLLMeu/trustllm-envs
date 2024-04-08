@@ -22,5 +22,8 @@ container_library=apptainer
 apptainer_cache_dir="$cache_dir"/apptainer
 apptainer_tmp_dir="$cache_dir"/apptainer-tmp
 
+# Root directory for caches of PyTorch, such as for its Hub.
+torch_cache_dir="$cache_dir"/torch
+
 # Root directory for caches of various HuggingFace libraries.
 hf_cache_dir="$cache_dir"/huggingface
