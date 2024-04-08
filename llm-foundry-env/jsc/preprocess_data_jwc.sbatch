@@ -27,7 +27,7 @@ export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
 export INPUT_DATA_FILE=/p/scratch/trustllm/example-data/tiny-c4-10k.jsonl
 export TOKENIZER_DIR=/p/scratch/trustllm/example-data/gpt2-tokenizer
-export OUTPUT_DATA_ROOT_DIR="$data_dir"/my-tiny-c4-gpt2tok/val
+export OUTPUT_DATA_DIR="$data_dir"/my-tiny-c4-gpt2-tok/val
 
 srun bash "$(get_curr_dir)"/../container_run.sh \
      bash "$preprocessing_script"

@@ -39,7 +39,7 @@ cd "$ext_repo_dir"/llm-foundry/scripts/data_prep
 # underlying llm-foundry code.
 python -u "$(get_curr_dir)"/../py-scripts/convert_dataset_json_parallel.py \
   --path "$INPUT_DATA_FILE" \
-  --out_root "$OUTPUT_DATA_ROOT_DIR" --split train \
+  --out_root "$OUTPUT_DATA_DIR" --split train \
   --concat_tokens 2048 --tokenizer "$TOKENIZER_DIR" --eos_text '<|endoftext|>'
 
 pop_curr_file

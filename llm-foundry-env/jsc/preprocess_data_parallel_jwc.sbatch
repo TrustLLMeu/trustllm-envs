@@ -27,7 +27,7 @@ export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
 export INPUT_DATA_FILE=/p/scratch/trustllm/example-data/tiny-c4-100k.jsonl
 export TOKENIZER_DIR=/p/scratch/trustllm/example-data/gpt2-tokenizer
-export OUTPUT_DATA_ROOT_DIR="$data_dir"/my-tiny-c4-gpt2tok/train
+export OUTPUT_DATA_DIR="$data_dir"/my-tiny-c4-gpt2-tok/train
 
 # We assign to a variable again so Bash can do the quoted
 # interpolation.
@@ -44,6 +44,6 @@ srun bash -c "
 # for convenience, this is included here for now.
 bash "$(get_curr_dir)"/../container_run.sh \
      python -u "$(get_curr_dir)"/../py-scripts/merge_dataset.py \
-         --out_root "$OUTPUT_DATA_ROOT_DIR"
+         --out_root "$OUTPUT_DATA_DIR"
 
 pop_curr_file
