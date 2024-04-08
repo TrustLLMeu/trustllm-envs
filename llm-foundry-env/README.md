@@ -5,7 +5,7 @@ scripts for JSC systems.
 
 ## Usage
 
-### Quickstart
+### Setting up
 
 This will set up the software stack, preprocess data, and run a
 training.
