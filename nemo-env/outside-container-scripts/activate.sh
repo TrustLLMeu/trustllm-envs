@@ -17,6 +17,6 @@ source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
 source "$(get_curr_dir)"/../configuration.sh
 
 # HuggingFace libraries cache configuration
-source "$(get_curr_dir)"/../../global-scripts/configure_hf_caches.sh
+source "$(get_curr_dir)"/../../global-scripts/configure_caches.sh
 
 pop_curr_file
