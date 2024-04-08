@@ -19,8 +19,8 @@ cd "$ext_repo_dir"/llm-foundry/scripts/data_prep
 # Below is the llm-foundry `scripts/data_prep` README JSON data
 # example, modified to
 # - not buffer output,
-# - use an example tiny C4 dataset,
-# - write data to scratch,
+# - use a local dataset,
+# - write data to SCRATCH,
 # - use a local tokenizer,
 # - do not compress the resulting binary file.
 
