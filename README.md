@@ -24,6 +24,32 @@ here:
    container library to use to your liking in
    `trustllm-envs/global_configuration.sh`.
 
+### Interactive use
+
+Any interaction with the environment, that especially means code
+execution, should be started from inside the container, after sourcing
+the Python virtual environment inside the container. Because this is
+very error-prone, we provide the `container_run.sh` script that
+handles this for you. Any arguments supplied will be forwarded to be
+executed inside the container with the appropriate environment setup.
+For example:
+
+```shell
+# Execute a Bash script.
+bash container_run.sh bash <example.sh>
+
+# Run a Python script.
+bash container_run.sh python <example.py>
+
+# With no arguments: start an interactive shell.
+bash container_run.sh
+```
+
+It is especially important that you install Python packages only after
+using `container_run.sh`, for example by starting an interactive shell
+(by executing `bash container_run.sh`) and then running `python -m pip
+install <package-name>`.
+
 ### Caveats
 
 We do not have internet access on JSC systems' compute nodes. If you
