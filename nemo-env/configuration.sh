@@ -44,7 +44,9 @@ repos['https://github.com/NVIDIA/Megatron-LM.git']=''
 # Main framework.
 # This would execute `python -m pip install -e '.[all]'`
 repos['https://github.com/NVIDIA/NeMo.git']='[all]'
-# Launcher library.
+# Launcher library (this one is hardcoded to execute `python -m pip
+# install -r requirements.txt` because it does not support the other
+# installation method).
 repos['https://github.com/NVIDIA/NeMo-Megatron-Launcher.git']=''
 # Alignment library.
 repos['https://github.com/NVIDIA/NeMo-Aligner.git']=''

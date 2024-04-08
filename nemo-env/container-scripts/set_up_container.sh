@@ -41,7 +41,13 @@ for _repo_uri in "${!repos[@]}"; do
     # control.
 
     _repo_pip_install_features="${repos["$_repo_uri"]}"
-    python -m pip install -e ."$_repo_pip_install_features"
+    # NeMo-Megatron-Launcher does not support our standard
+    # installation method, so we hardcode this exception.
+    if [ "$_repo_uri" = 'https://github.com/NVIDIA/NeMo-Megatron-Launcher.git' ]; then
+        python -m pip install -r requirements.txt
+    else
+        python -m pip install -e ."$_repo_pip_install_features"
+    fi
     popd
 done
 
