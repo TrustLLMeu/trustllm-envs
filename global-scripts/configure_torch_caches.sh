@@ -17,8 +17,6 @@ source "$(get_curr_dir)"/../global_configuration.sh
 mkdir -p "$torch_cache_dir"
 
 export TORCH_HOME="$torch_cache_dir"/hub
-# Only set this if necessary because the default of `tmp` will
-# probably be faster.
-# export TORCH_EXTENSIONS_DIR="$torch_cache_dir"/torch_extensions
+export TORCH_EXTENSIONS_DIR="$torch_cache_dir"/torch_extensions
 
 pop_curr_file
