@@ -20,6 +20,7 @@ EVAL_NUM_WORKERS="${EVAL_NUM_WORKERS:-0}"
 cd "$ext_repo_dir"/llm-foundry/scripts
 
 # Below is the llm-foundry README quickstart example, modified to
+# - not buffer output,
 # - run multi-node,
 # - use local preprocessed data from SCRATCH,
 # - use a local tokenizer,
@@ -30,7 +31,7 @@ cd "$ext_repo_dir"/llm-foundry/scripts
 # - save checkpoints to SCRATCH.
 
 # Train an MPT-125m model for 10 batches
-python -m composer \
+python -u -m composer \
     --nproc="$DEVICES_PER_NODE" \
     --world_size="$WORLD_SIZE" \
     --node_rank="$NODE_RANK" \

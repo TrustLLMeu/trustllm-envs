@@ -43,7 +43,7 @@ srun bash -c "
 # time limit problems, since it is a destructive operation. However,
 # for convenience, this is included here for now.
 bash "$(get_curr_dir)"/../container_run.sh \
-     python "$(get_curr_dir)"/../py-scripts/merge_dataset.py \
+     python -u "$(get_curr_dir)"/../py-scripts/merge_dataset.py \
          --out_root "$OUTPUT_DATA_ROOT_DIR"
 
 pop_curr_file

@@ -18,13 +18,14 @@ cd "$ext_repo_dir"/llm-foundry/scripts/data_prep
 
 # Below is the llm-foundry `scripts/data_prep` README JSON data
 # example, modified to
+# - not buffer output,
 # - use an example tiny C4 dataset,
 # - write data to scratch,
 # - use a local tokenizer,
 # - do not compress the resulting binary file.
 
 # Convert json dataset to StreamingDataset format
-python convert_dataset_json.py \
+python -u convert_dataset_json.py \
   --path "$INPUT_DATA_FILE" \
   --out_root "$OUTPUT_DATA_ROOT_DIR" --split train \
   --concat_tokens 2048 --tokenizer "$TOKENIZER_DIR" --eos_text '<|endoftext|>'
