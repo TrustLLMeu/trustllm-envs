@@ -31,7 +31,7 @@ cd "$ext_repo_dir"/llm-foundry/scripts
 # - use FlashAttention-2,
 # - save checkpoints to SCRATCH.
 
-# Train an MPT-125m model for 10 batches
+# Train a model for 10 batches
 python -u -m composer \
     --nproc="$DEVICES_PER_NODE" \
     --world_size="$WORLD_SIZE" \
