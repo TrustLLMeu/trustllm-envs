@@ -42,7 +42,10 @@ export DEVICES_PER_NODE=4
 export TRAIN_NUM_WORKERS=8
 export EVAL_NUM_WORKERS=3
 
+export TRAIN_CONFIG_YAML_FILE=train/yamls/pretrain/mpt-125m.yaml
+export INPUT_DATA_ROOT_DIR="$data_dir"/my-tiny-c4-gpt2-tok
 export TOKENIZER_DIR=/p/scratch/trustllm/example-data/gpt2-tokenizer
+export MODEL_CHECKPOINT_DIR="$checkpoint_dir"/mpt-125m
 
 # We assign to a variable again so Bash can do the quoted
 # interpolation.

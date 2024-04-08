@@ -22,6 +22,7 @@ cd "$ext_repo_dir"/llm-foundry/scripts
 # Below is the llm-foundry README quickstart example, modified to
 # - not buffer output,
 # - run multi-node,
+# - use a variable YAML file,
 # - use local preprocessed data from SCRATCH,
 # - use a local tokenizer,
 # - use the name of the dataset as splits,
@@ -38,8 +39,8 @@ python -u -m composer \
     --master_addr="$MASTER_ADDR" \
     --master_port="$MASTER_PORT" \
     train/train.py \
-    train/yamls/pretrain/mpt-125m.yaml \
-    data_local="$data_dir"/my-tiny-c4-gpt2tok \
+    "$TRAIN_CONFIG_YAML_FILE" \
+    data_local="$INPUT_DATA_ROOT_DIR" \
     tokenizer.name="$TOKENIZER_DIR" \
     train_loader.num_workers="$TRAIN_NUM_WORKERS" \
     train_loader.dataset.split=train \
@@ -48,7 +49,7 @@ python -u -m composer \
     model.attn_config.attn_impl=flash \
     max_duration=10ba \
     eval_interval=0 \
-    save_folder="$checkpoint_dir"/mpt-125m
+    save_folder="$MODEL_CHECKPOINT_DIR"
 
 # # Convert the model to HuggingFace format
 # python inference/convert_composer_to_hf.py \
