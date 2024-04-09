@@ -33,17 +33,20 @@ python -c 'from transformers import AutoTokenizer; list(AutoTokenizer.from_pretr
 
 # Clone and install the external repositories
 mkdir -p "$(dirname "$ext_repo_dir")"
-for _repo_uri in "${!repos[@]}"; do
+for _repo_tuple in "${repos[@]}"; do
+    _repo_uri="$(echo "$_repo_tuple" | cut -d ' ' -f 1)"
+    _repo_commit="$(echo "$_repo_tuple" | cut -d ' ' -f 2)"
+    _repo_pip_install_features="$(echo "$_repo_tuple" | cut -d ' ' -f 3)"
+
     # Take last part of URI, stripping ".git" at the end if it exists.
     _curr_repo_dir="$ext_repo_dir"/"$(basename "$_repo_uri" .git)"
     if ! [ -d "$_curr_repo_dir" ]; then
-        git clone "$_repo_uri" "$_curr_repo_dir"
+        git clone "$_repo_uri" --branch "$_repo_commit" "$_curr_repo_dir"
     fi
     pushd "$_curr_repo_dir"
     # We do not pull so that software state is completely under user
     # control.
 
-    _repo_pip_install_features="${repos["$_repo_uri"]}"
     # NeMo-Megatron-Launcher does not support our standard
     # installation method, so we hardcode this exception.
     if [ "$_repo_uri" = 'https://github.com/NVIDIA/NeMo-Megatron-Launcher.git' ]; then

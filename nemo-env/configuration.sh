@@ -32,24 +32,26 @@ project_dir="$base_project_dir"/"$env_name"
 
 # Where external repositories will be installed (such as NeMo itself).
 ext_repo_dir="$project_dir"/repos
-# Dictionary of repositories to clone and naïvely `pip install` (i.e.,
-# `cd` into the repo, then execute `pip install -e .`, optionally with
-# extra features as specified in the value for each repo key).
-declare -A repos
-# Repository to clone and additional `pip install` features to install
-# (set as empty string (`''`) for default features, see example
-# below).
+# List of repositories and their tag to clone and naïvely `pip
+# install` (i.e., `cd` into the repo, then execute `pip install -e .`,
+# optionally with extra features as specified in the value for each
+# repo key). The three entries (repository, tag, `pip install`
+# features) are separated by spaces.
+repos=()
+# Repository to clone, the commit to clone, and additional `pip
+# install` features to install (leave out for default features, see
+# example below); separated by spaces.
 # Backend library.
-repos['https://github.com/NVIDIA/Megatron-LM.git']=''
+repos+=( 'https://github.com/NVIDIA/Megatron-LM.git core_v0.5.0' )
 # Main framework.
 # This would execute `python -m pip install -e '.[all]'`
-repos['https://github.com/NVIDIA/NeMo.git']='[all]'
+repos+=( 'https://github.com/NVIDIA/NeMo.git 8f3855f241099a83b405d2057998d628789ec73b [all]' )
 # Launcher library (this one is hardcoded to execute `python -m pip
 # install -r requirements.txt` because it does not support the other
 # installation method).
-repos['https://github.com/NVIDIA/NeMo-Megatron-Launcher.git']=''
+repos+=( 'https://github.com/NVIDIA/NeMo-Megatron-Launcher.git 6cdd33614134879048e13ae9f1d180f50d202a3d' )
 # Alignment library.
-repos['https://github.com/NVIDIA/NeMo-Aligner.git']=''
+repos+=( 'https://github.com/NVIDIA/NeMo-Aligner.git 2de2f184fcc7c9bafcdd871f2657f74ef43ea3df' )
 # For example, this would clone a repo and do a standard
 # `pip install -e .`:
 # repos['https://github.com/github/example-repo.git']=''
