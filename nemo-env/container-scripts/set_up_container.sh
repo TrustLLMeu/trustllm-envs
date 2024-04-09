@@ -28,9 +28,6 @@ else
     source "$venv_dir"/bin/activate
 fi
 
-# Download all HuggingFace tokenizers, that NeMo can use.
-python -c 'from transformers import AutoTokenizer; list(AutoTokenizer.from_pretrained(tok_name) for tok_name in ["gpt2", "bert-large-uncased", "bert-large-cased"])'
-
 # Clone and install the external repositories
 mkdir -p "$(dirname "$ext_repo_dir")"
 for _repo_tuple in "${repos[@]}"; do
@@ -56,5 +53,8 @@ for _repo_tuple in "${repos[@]}"; do
     fi
     popd
 done
+
+# Download all HuggingFace tokenizers that NeMo can use.
+python -c 'from transformers import AutoTokenizer; list(AutoTokenizer.from_pretrained(tok_name) for tok_name in ["gpt2", "bert-large-uncased", "bert-large-cased"])'
 
 pop_curr_file
