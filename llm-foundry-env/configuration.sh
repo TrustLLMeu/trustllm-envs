@@ -42,11 +42,12 @@ repos=()
 # Repository to clone, the commit to clone, and additional `pip
 # install` features to install (leave out for default features, see
 # example below); separated by spaces.
-# Data processing/format library.
+# Data processing/format library. Latest version specified in
+# `llm-foundry/setup.py`.
 repos+=( 'https://github.com/mosaicml/streaming.git v0.7.5' )
-# Trainer library.
+# Trainer library. Latest version specified in `llm-foundry/setup.py`.
 repos+=( 'https://github.com/mosaicml/composer.git v0.21.2 [nlp,tensorboard,wandb]' )
-# Main framework.
+# Main framework. Latest release version.
 # The feature "gpu" is the same as "gpu-flash2", but we currently keep
 # the latter explicit specification because that is a very recent
 # change.
