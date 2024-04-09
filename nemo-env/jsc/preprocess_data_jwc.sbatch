@@ -36,8 +36,8 @@ export TOKENIZER_MERGE_FILE=/p/scratch/trustllm/example-data/gpt2-tokenizer/merg
 # desired.
 export TOKENIZER_MODEL_FILE=/p/scratch/trustllm/example-data/t5-small-tokenizer/spiece.model
 
-export OUTPUT_DATA_PREFIX="$data_dir"/my-tiny-c4-gpt2-tok/train/text_document
-# export OUTPUT_DATA_PREFIX="$data_dir"/my-tiny-c4-t5-small-tok/train/text_document
+export OUTPUT_DATA_PREFIX="$data_dir"/my-tiny-c4-gpt2-tok/train
+# export OUTPUT_DATA_PREFIX="$data_dir"/my-tiny-c4-t5-small-tok/train
 
 srun bash "$(get_curr_dir)"/../container_run.sh \
      bash "$preprocessing_script"

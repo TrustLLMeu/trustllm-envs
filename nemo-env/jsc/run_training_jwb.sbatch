@@ -54,7 +54,22 @@ export TRAIN_CONFIG_YAML_DIR="$ext_repo_dir"/NeMo/examples/nlp/language_modeling
 # `TRAIN_CONFIG_YAML_DIR`, without the ".yaml" extension.
 export TRAIN_CONFIG_YAML_NAME=megatron_llama_config
 
-export TRAIN_DATA_PREFIX="$data_dir"/my-tiny-c4-gpt2tok/train/text_document
+# These prefixes are slightly different from the ones for data
+# preprocessing. These also include the JSON key used for querying the
+# text (usually "text") and the hierarchical level of processing
+# (usually "document").
+# In the usual case, the following conversion example should work:
+#
+# ```
+# # This variable is given for preprocessing
+# OUTPUT_DATA_PREFIX="$data_dir"/my-data/train
+# # This variable is given for training
+# TRAIN_DATA_PREFIX="$data_dir"/my-data/train_text_document
+# ```
+#
+# If you are unsure, you can always manually check which files the
+# preprocessing created.
+export TRAIN_DATA_PREFIX="$data_dir"/my-tiny-c4-gpt2tok/train_text_document
 # We simply use the train set for all of training, evaluation, and
 # testing in the example. Of course, this is redundant, but makes it
 # easier to change the example include real validation and test sets.
