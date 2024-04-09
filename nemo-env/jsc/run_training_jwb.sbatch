@@ -69,7 +69,7 @@ export TRAIN_CONFIG_YAML_NAME=megatron_llama_config
 #
 # If you are unsure, you can always manually check which files the
 # preprocessing created.
-export TRAIN_DATA_PREFIX="$data_dir"/my-tiny-c4-gpt2tok/train_text_document
+export TRAIN_DATA_PREFIX="$data_dir"/my-tiny-c4-gpt2-tok/train_text_document
 # We simply use the train set for all of training, evaluation, and
 # testing in the example. Of course, this is redundant, but makes it
 # easier to change the example include real validation and test sets.
