@@ -55,10 +55,11 @@ export TRAIN_CONFIG_YAML_DIR="$ext_repo_dir"/NeMo/examples/nlp/language_modeling
 export TRAIN_CONFIG_YAML_NAME=megatron_llama_config
 
 export TRAIN_DATA_PREFIX="$data_dir"/my-tiny-c4-gpt2tok/train/text_document
-# We simply use the train set for both training and evaluation in the
-# example. Of course, this is redundant, but makes it easier to
-# include a real validation set.
-export EVAL_DATA_PREFIX="$data_dir"/my-tiny-c4-gpt2tok/train/text_document
+# We simply use the train set for all of training, evaluation, and
+# testing in the example. Of course, this is redundant, but makes it
+# easier to change the example include real validation and test sets.
+export EVAL_DATA_PREFIX="$TRAIN_DATA_PREFIX"
+export TEST_DATA_PREFIX="$TRAIN_DATA_PREFIX"
 
 export TOKENIZER_VOCAB_FILE=/p/scratch/trustllm/example-data/gpt2-tokenizer/vocab.json
 export TOKENIZER_MERGE_FILE=/p/scratch/trustllm/example-data/gpt2-tokenizer/merges.txt
