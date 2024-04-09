@@ -53,7 +53,7 @@ python -u \
     model.tensor_model_parallel_size=1 \
     model.pipeline_model_parallel_size=1 \
     model.sequence_parallel=False \
-    model.use_flash_attention=True \
+    +model.use_flash_attention=True \
     model.tokenizer.library=megatron \
     model.tokenizer.type=GPT2BPETokenizer \
     model.tokenizer.model=null \
