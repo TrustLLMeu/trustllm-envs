@@ -54,7 +54,7 @@ repos+=( 'https://github.com/NVIDIA/NeMo-Megatron-Launcher.git 6cdd3361413487904
 repos+=( 'https://github.com/NVIDIA/NeMo-Aligner.git 2de2f184fcc7c9bafcdd871f2657f74ef43ea3df' )
 # For example, this would clone a repo and do a standard
 # `pip install -e .`:
-# repos['https://github.com/github/example-repo.git']=''
+# repos+=( 'https://github.com/github/example-repo.git v0.0.1' )
 
 # ---
 
