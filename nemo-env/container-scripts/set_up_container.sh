@@ -38,9 +38,14 @@ for _repo_tuple in "${repos[@]}"; do
     # Take last part of URI, stripping ".git" at the end if it exists.
     _curr_repo_dir="$ext_repo_dir"/"$(basename "$_repo_uri" .git)"
     if ! [ -d "$_curr_repo_dir" ]; then
-        git clone "$_repo_uri" --branch "$_repo_commit" "$_curr_repo_dir"
+        git clone "$_repo_uri" "$_curr_repo_dir"
+        pushd "$_curr_repo_dir"
+        git checkout "$_repo_commit"
+    else
+        # We do not check out when the repo already exists so that
+        # software state is completely under user control.
+        pushd "$_curr_repo_dir"
     fi
-    pushd "$_curr_repo_dir"
     # We do not pull so that software state is completely under user
     # control.
 
