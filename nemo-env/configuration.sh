@@ -42,7 +42,7 @@ repos=()
 # install` features to install (leave out for default features, see
 # example below); separated by spaces.
 # Backend library.
-repos+=( 'https://github.com/NVIDIA/Megatron-LM.git core_v0.5.0' )
+repos+=( 'https://github.com/NVIDIA/Megatron-LM.git ad53b1e38689a0ceed75ade7821f4e6c7554abb4' )
 # Main framework.
 # This would execute `python -m pip install -e '.[all]'`
 repos+=( 'https://github.com/NVIDIA/NeMo.git 8f3855f241099a83b405d2057998d628789ec73b [all]' )
