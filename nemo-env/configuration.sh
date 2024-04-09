@@ -32,7 +32,7 @@ project_dir="$base_project_dir"/"$env_name"
 
 # Where external repositories will be installed (such as NeMo itself).
 ext_repo_dir="$project_dir"/repos
-# List of repositories and their tag to clone and naïvely `pip
+# Array of repositories and their tag to clone and naïvely `pip
 # install` (i.e., `cd` into the repo, then execute `pip install -e .`,
 # optionally with extra features as specified in the value for each
 # repo key). The three entries (repository, tag, `pip install`
