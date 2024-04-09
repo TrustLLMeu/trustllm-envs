@@ -24,6 +24,7 @@ nemo_repo_dir="$ext_repo_dir"/NeMo
 # - run multi-node,
 # - run for only 10 steps,
 # - use BF16 precision,
+# - use smaller micro and global batch sizes,
 # - use FSDP as the sole parallelization strategy,
 # - use FlashAttention-2 (unless `model.mcore_gpt=True`),
 # - use a local tokenizer,
@@ -43,8 +44,8 @@ python -u \
     trainer.val_check_interval=10 \
     +trainer.num_sanity_val_steps=0 \
     trainer.precision=bf16-mixed \
-    model.micro_batch_size=2 \
-    model.global_batch_size=1024 \
+    model.micro_batch_size=1 \
+    model.global_batch_size=8 \
     model.mcore_gpt=False \
     +model.fsdp=True \
     +model.fsdp_sharding_strategy=full \
@@ -75,8 +76,8 @@ python -u \
 #     trainer.val_check_interval=10 \
 #     +trainer.num_sanity_val_steps=0 \
 #     trainer.precision=bf16-mixed \
-#     model.micro_batch_size=2 \
-#     model.global_batch_size=1024 \
+#     model.micro_batch_size=1 \
+#     model.global_batch_size=8 \
 #     model.mcore_gpt=False \
 #     +model.fsdp=True \
 #     +model.fsdp_sharding_strategy=full \
