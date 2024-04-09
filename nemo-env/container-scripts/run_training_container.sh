@@ -25,7 +25,7 @@ nemo_repo_dir="$ext_repo_dir"/NeMo
 # - run for only 10 steps,
 # - use BF16 precision,
 # - use FSDP as the sole parallelization strategy,
-# - use FlashAttention-2,
+# - use FlashAttention-2 (unless `model.mcore_gpt=True`),
 # - use a local tokenizer,
 # - use local preprocessed data from SCRATCH,
 # - use multiple CPUs for data processing (variables defined outside
