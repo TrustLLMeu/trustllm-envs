@@ -2,7 +2,7 @@
 
 # Run a model training on JUWELS Booster.
 
-#SBATCH --nodes=1
+#SBATCH --nodes=2
 #SBATCH --ntasks-per-node=4
 #SBATCH --cpus-per-task=12  # 48 physical cores per node.
 #SBATCH --hint=nomultithread  # Use only physical CPU cores.
