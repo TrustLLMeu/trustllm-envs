@@ -85,7 +85,7 @@ python -u \
 #     model.tensor_model_parallel_size=1 \
 #     model.pipeline_model_parallel_size=1 \
 #     model.sequence_parallel=False \
-#     model.use_flash_attention=True \
+#     +model.use_flash_attention=True \
 #     model.tokenizer.library=sentencepiece \
 #     model.tokenizer.model="$TOKENIZER_MODEL_FILE" \
 #     +model.data.data_prefix=\{train:\[1.0,"$TRAIN_DATA_PREFIX"\],validation:\[1.0,"$EVAL_DATA_PREFIX"\]\} \
