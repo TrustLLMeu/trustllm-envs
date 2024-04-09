@@ -33,26 +33,28 @@ project_dir="$base_project_dir"/"$env_name"
 # Where external repositories will be installed (such as llm-foundry
 # itself).
 ext_repo_dir="$project_dir"/repos
-# Dictionary of repositories to clone and naïvely `pip install` (i.e.,
-# `cd` into the repo, then execute `pip install -e .`, optionally with
-# extra features as specified in the value for each repo key).
-declare -A repos
-# Repository to clone and additional `pip install` features to install
-# (set as empty string (`''`) for default features, see example
-# below).
+# List of repositories and their tag to clone and naïvely `pip
+# install` (i.e., `cd` into the repo, then execute `pip install -e .`,
+# optionally with extra features as specified in the value for each
+# repo key). The three entries (repository, tag, `pip install`
+# features) are separated by spaces.
+repos=()
+# Repository to clone, the commit to clone, and additional `pip
+# install` features to install (leave out for default features, see
+# example below); separated by spaces.
 # Data processing/format library.
-repos['https://github.com/mosaicml/streaming.git']=''
+repos+=( 'https://github.com/mosaicml/streaming.git v0.7.5' )
 # Trainer library.
-repos['https://github.com/mosaicml/composer.git']='[nlp,tensorboard,wandb]'
+repos+=( 'https://github.com/mosaicml/composer.git v0.21.2 [nlp,tensorboard,wandb]' )
 # Main framework.
 # The feature "gpu" is the same as "gpu-flash2", but we currently keep
 # the latter explicit specification because that is a very recent
 # change.
 # This would execute `python -m pip install -e '.[gpu-flash2,tensorboard]'`
-repos['https://github.com/mosaicml/llm-foundry.git']='[gpu-flash2,tensorboard]'
-# For example, this would clone a repo and do a standard
+repos+=( 'https://github.com/mosaicml/llm-foundry.git v0.7.0 [gpu-flash2,tensorboard]' )
+# For example, this would clone a repo at tag v0.0.1 and do a standard
 # `pip install -e .`:
-# repos['https://github.com/github/example-repo.git']=''
+# repos+=( 'https://github.com/github/example-repo.git v0.0.1' )
 
 # ---
 

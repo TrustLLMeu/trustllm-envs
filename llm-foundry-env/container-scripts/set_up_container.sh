@@ -28,17 +28,25 @@ fi
 
 # Clone and install the external repositories
 mkdir -p "$(dirname "$ext_repo_dir")"
-for _repo_uri in "${!repos[@]}"; do
+for _repo_tuple in "${repos[@]}"; do
+    _repo_uri="$(echo "$_repo_tuple" | tr -s ' ' | cut -d ' ' -f 1)"
+    _repo_commit="$(echo "$_repo_tuple" | tr -s ' ' | cut -d ' ' -f 2)"
+    _repo_pip_install_features="$(echo "$_repo_tuple" | tr -s ' ' | cut -d ' ' -f 3)"
+
     # Take last part of URI, stripping ".git" at the end if it exists.
     _curr_repo_dir="$ext_repo_dir"/"$(basename "$_repo_uri" .git)"
     if ! [ -d "$_curr_repo_dir" ]; then
         git clone "$_repo_uri" "$_curr_repo_dir"
+        pushd "$_curr_repo_dir"
+        git checkout "$_repo_commit"
+    else
+        # We do not check out when the repo already exists so that
+        # software state is completely under user control.
+        pushd "$_curr_repo_dir"
     fi
-    pushd "$_curr_repo_dir"
     # We do not pull so that software state is completely under user
     # control.
 
-    _repo_pip_install_features="${repos["$_repo_uri"]}"
     python -m pip install -e ."$_repo_pip_install_features"
     popd
 done
