@@ -41,16 +41,21 @@ repos=()
 # Repository to clone, the commit to clone, and additional `pip
 # install` features to install (leave out for default features, see
 # example below); separated by spaces.
-# Backend library.
+# Backend library. Commit specified in `NeMo/Dockerfile` (and checked
+# using recursive `diff`).
 repos+=( 'https://github.com/NVIDIA/Megatron-LM.git ad53b1e38689a0ceed75ade7821f4e6c7554abb4' )
-# Main framework.
+# Main framework. Commit taken from container
+# `/opt/NeMo/.git/logs/HEAD`.
 # This would execute `python -m pip install -e '.[all]'`
 repos+=( 'https://github.com/NVIDIA/NeMo.git 8f3855f241099a83b405d2057998d628789ec73b [all]' )
-# Launcher library (this one is hardcoded to execute `python -m pip
-# install -r requirements.txt` because it does not support the other
-# installation method).
+# Launcher library. Commit taken from container
+# `/opt/NeMo-Megatron-Launcher/.git/logs/HEAD`.
+# This one is hardcoded to execute `python -m pip install -r
+# requirements.txt` because it does not support the other installation
+# method.
 repos+=( 'https://github.com/NVIDIA/NeMo-Megatron-Launcher.git 6cdd33614134879048e13ae9f1d180f50d202a3d' )
-# Alignment library.
+# Alignment library. Commit taken from container
+# `/opt/NeMo-Aligner/.git/logs/HEAD`.
 repos+=( 'https://github.com/NVIDIA/NeMo-Aligner.git 2de2f184fcc7c9bafcdd871f2657f74ef43ea3df' )
 # For example, this would clone a repo and do a standard
 # `pip install -e .`:
