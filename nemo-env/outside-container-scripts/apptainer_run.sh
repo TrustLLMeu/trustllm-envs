@@ -19,13 +19,6 @@ if ! [ -f "$apptainer_file" ]; then
     pop_curr_file
     exit 1
 fi
-if ! [ -f "$scratch_dir"/triton-build-patch.py ] \
-        || ! [ -f "$scratch_dir"/slurm-master-addr-patch.py ]; then
-    echo 'Cannot find necessary patch files; please run' \
-         "\`nice bash set_up.sh\`."
-    pop_curr_file
-    exit 1
-fi
 
 # If the user does not supply an argument, drop them into an
 # interactive shell. Similarly, if they try to execute `bash`, handle
@@ -64,7 +57,6 @@ fi
 env -u BASH_ENV -u CC -u CFLAGS -u CMAKE_LIBRARY_PATH -u CMAKE_PREFIX_PATH \
     -u CPATH -u CXX -u CXXFLAGS -u LESSOPEN -u PYTHONPATH \
     apptainer run --nv \
-    --bind "$scratch_dir"/triton-build-patch.py:/usr/local/lib/python3.10/dist-packages/triton/common/build.py \
     --bind "$scratch_dir"/slurm-master-addr-patch.py:/usr/local/lib/python3.10/dist-packages/lightning_fabric/plugins/environments/slurm.py \
     "$apptainer_file" "${args[@]}"
 

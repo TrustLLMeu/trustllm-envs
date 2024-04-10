@@ -14,11 +14,6 @@ source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
 
 source "$(get_curr_dir)"/../container-scripts/activate_container.sh setup
 
-# Create the patched Triton file.
-sed 's|libs = subprocess\..*$|libs = "/usr/local/cuda/lib64/stubs/libcuda.so"|g' /usr/local/lib/python3.10/dist-packages/triton/common/build.py > "$scratch_dir"/triton-build-patch.py
-# Create the patched Lightning file.
-sed 's|root_node = \(self\.resolve_root_node_address(.*)\)$|root_node = os.getenv("MASTER_ADDR", \1)|g' /usr/local/lib/python3.10/dist-packages/lightning_fabric/plugins/environments/slurm.py  > "$scratch_dir"/slurm-master-addr-patch.py
-
 # Create or activate the Python virtual environment
 if ! [ -d "$venv_dir" ]; then
     python -m venv --system-site-packages --without-pip "$venv_dir"
@@ -58,6 +53,24 @@ for _repo_tuple in "${repos[@]}"; do
     fi
     popd
 done
+
+# Explicitly install Megatron-LM repo last again. We do this in such a
+# complicated way so that the extra install features are found.
+for _repo_tuple in "${repos[@]}"; do
+    _repo_uri="$(echo "$_repo_tuple" | tr -s ' ' | cut -d ' ' -f 1)"
+    if [ "$_repo_uri" = 'https://github.com/NVIDIA/Megatron-LM.git' ]; then
+        continue
+    fi
+    _repo_pip_install_features="$(echo "$_repo_tuple" | tr -s ' ' | cut -d ' ' -f 3)"
+
+    _curr_repo_dir="$ext_repo_dir"/"$(basename "$_repo_uri" .git)"
+    pushd "$_curr_repo_dir"
+    python -m pip install -e ."$_repo_pip_install_features"
+    popd
+done
+
+# Create the patched Lightning file.
+sed 's|root_node = \(self\.resolve_root_node_address(.*)\)$|root_node = os.getenv("MASTER_ADDR", \1)|g' "$venv_dir"/lib/python3.10/site-packages/lightning_fabric/plugins/environments/slurm.py  > "$scratch_dir"/slurm-master-addr-patch.py
 
 # Download all HuggingFace tokenizers that NeMo can use.
 python -c 'from transformers import AutoTokenizer; list(AutoTokenizer.from_pretrained(tok_name) for tok_name in ["gpt2", "bert-large-uncased", "bert-large-cased"])'
