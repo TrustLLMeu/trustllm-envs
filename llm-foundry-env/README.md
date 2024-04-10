@@ -81,11 +81,11 @@ execution, should be started from inside the container, after sourcing
 the Python virtual environment inside the container. Because this is
 very error-prone, we provide the `container_run.sh` script that
 handles this for you. Any arguments supplied will be forwarded to be
+executed inside the container with the appropriate environment setup.
 Note, however, that this argument passing is not perfect due to some
 container start scripts messing with the arguments. To be absolutely
 sure that a command with complex quoting is executed correctly, please
 use the container in an interactive session.
-executed inside the container with the appropriate environment setup.
 For example:
 
 ```shell
