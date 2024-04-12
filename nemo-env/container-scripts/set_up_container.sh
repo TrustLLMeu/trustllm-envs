@@ -58,7 +58,7 @@ done
 # complicated way so that the extra install features are found.
 for _repo_tuple in "${repos[@]}"; do
     _repo_uri="$(echo "$_repo_tuple" | tr -s ' ' | cut -d ' ' -f 1)"
-    if [ "$_repo_uri" = 'https://github.com/NVIDIA/Megatron-LM.git' ]; then
+    if [ "$_repo_uri" != 'https://github.com/NVIDIA/Megatron-LM.git' ]; then
         continue
     fi
     _repo_pip_install_features="$(echo "$_repo_tuple" | tr -s ' ' | cut -d ' ' -f 3)"
