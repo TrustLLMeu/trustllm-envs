@@ -53,7 +53,7 @@ repos+=( 'https://github.com/NVIDIA/NeMo.git 8f3855f241099a83b405d2057998d628789
 # This one is hardcoded to execute `python -m pip install -r
 # requirements.txt` because it does not support the other installation
 # method.
-repos+=( 'https://github.com/NVIDIA/NeMo-Megatron-Launcher.git 6cdd33614134879048e13ae9f1d180f50d202a3d' )
+repos+=( 'https://github.com/NVIDIA/NeMo-Framework-Launcher.git 6cdd33614134879048e13ae9f1d180f50d202a3d' )
 # Alignment library. Commit taken from old NeMo container
 # `/opt/NeMo-Aligner/.git/logs/HEAD`.
 repos+=( 'https://github.com/NVIDIA/NeMo-Aligner.git 2de2f184fcc7c9bafcdd871f2657f74ef43ea3df' )
