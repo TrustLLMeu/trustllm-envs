@@ -44,9 +44,9 @@ for _repo_tuple in "${repos[@]}"; do
     # We do not pull so that software state is completely under user
     # control.
 
-    # NeMo-Megatron-Launcher does not support our standard
+    # NeMo-Framework-Launcher does not support our standard
     # installation method, so we hardcode this exception.
-    if [ "$_repo_uri" = 'https://github.com/NVIDIA/NeMo-Megatron-Launcher.git' ]; then
+    if [ "$_repo_uri" = 'https://github.com/NVIDIA/NeMo-Framework-Launcher.git' ]; then
         python -m pip install -r requirements.txt
     else
         python -m pip install -e ."$_repo_pip_install_features"
