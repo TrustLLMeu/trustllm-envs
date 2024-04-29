@@ -6,11 +6,11 @@ set -euo pipefail
 
 # Directory where the environment's permanent files will be set up
 # (e.g. code or included repositories).
-base_project_dir=/p/project/trustllm/"$USER"
+base_project_dir=/p/project/trustllm-eu/"$USER"
 
 # Directory where the environment's non-permanent files (e.g. Python
 # `venv`, container, ...) will be set up.
-base_scratch_dir=/p/scratch/trustllm/"$USER"
+base_scratch_dir=/p/scratch/trustllm-eu/"$USER"
 # Where cache files are stored.
 cache_dir="$base_scratch_dir"/.cache
 

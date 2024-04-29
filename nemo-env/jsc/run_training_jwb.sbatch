@@ -78,12 +78,12 @@ export TRAIN_DATA_PREFIX="$data_dir"/my-tiny-c4-gpt2-tok/train_text_document
 export EVAL_DATA_PREFIX="$TRAIN_DATA_PREFIX"
 export TEST_DATA_PREFIX="$TRAIN_DATA_PREFIX"
 
-export TOKENIZER_VOCAB_FILE=/p/scratch/trustllm/example-data/gpt2-tokenizer/vocab.json
-export TOKENIZER_MERGE_FILE=/p/scratch/trustllm/example-data/gpt2-tokenizer/merges.txt
+export TOKENIZER_VOCAB_FILE=/p/scratch/trustllm-eu/example-data/gpt2-tokenizer/vocab.json
+export TOKENIZER_MERGE_FILE=/p/scratch/trustllm-eu/example-data/gpt2-tokenizer/merges.txt
 # The SentencePiece tokenizer is not used by default in the example,
 # but we include and export it here just so it's available when
 # desired.
-export TOKENIZER_MODEL_FILE=/p/scratch/trustllm/example-data/t5-small-tokenizer/spiece.model
+export TOKENIZER_MODEL_FILE=/p/scratch/trustllm-eu/example-data/t5-small-tokenizer/spiece.model
 
 export MODEL_CHECKPOINT_DIR="$checkpoint_dir"
 

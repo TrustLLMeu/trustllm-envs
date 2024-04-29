@@ -27,14 +27,14 @@ export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
 export NUM_WORKERS="$SRUN_CPUS_PER_TASK"
 
-export INPUT_DATA_FILE=/p/scratch/trustllm/example-data/tiny-c4-100k.jsonl
+export INPUT_DATA_FILE=/p/scratch/trustllm-eu/example-data/tiny-c4-100k.jsonl
 
-export TOKENIZER_VOCAB_FILE=/p/scratch/trustllm/example-data/gpt2-tokenizer/vocab.json
-export TOKENIZER_MERGE_FILE=/p/scratch/trustllm/example-data/gpt2-tokenizer/merges.txt
+export TOKENIZER_VOCAB_FILE=/p/scratch/trustllm-eu/example-data/gpt2-tokenizer/vocab.json
+export TOKENIZER_MERGE_FILE=/p/scratch/trustllm-eu/example-data/gpt2-tokenizer/merges.txt
 # The SentencePiece tokenizer is not used by default in the example,
 # but we include and export it here just so it's available when
 # desired.
-export TOKENIZER_MODEL_FILE=/p/scratch/trustllm/example-data/t5-small-tokenizer/spiece.model
+export TOKENIZER_MODEL_FILE=/p/scratch/trustllm-eu/example-data/t5-small-tokenizer/spiece.model
 
 export OUTPUT_DATA_PREFIX="$data_dir"/my-tiny-c4-gpt2-tok/train
 # export OUTPUT_DATA_PREFIX="$data_dir"/my-tiny-c4-t5-small-tok/train
