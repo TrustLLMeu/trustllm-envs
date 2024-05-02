@@ -8,7 +8,7 @@
 #SBATCH --hint=nomultithread  # Use only physical CPU cores.
 #SBATCH --gres=gpu:4
 #SBATCH --time 00:20:00
-#SBATCH --account=trustllm
+#SBATCH --account=trustllm-eu
 # Use `develbooster` for debugging, `booster` for "normal" jobs, and
 # `largebooster` for jobs on more than 256 nodes.
 #SBATCH --partition=develbooster
