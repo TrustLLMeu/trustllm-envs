@@ -14,6 +14,7 @@ from glob import glob
 from typing import Dict, Iterable, Optional
 
 import datasets as hf_datasets
+from datasets.distributed import split_dataset_by_node
 from streaming import MDSWriter
 from torch.utils.data import DataLoader, IterableDataset
 from tqdm import tqdm
@@ -109,8 +110,9 @@ def build_hf_dataset(
 
     hf_dataset = hf_datasets.load_dataset('json',
                                           data_files=data_files,
+                                          streaming=True,
                                           split=split)
-    hf_dataset = hf_dataset.shard(num_shards=world_size, index=rank)
+    hf_dataset = split_dataset_by_node(hf_dataset, rank=rank, world_size=world_size)
 
     if mode == ConcatMode.NO_CONCAT:
         dataset = NoConcatDataset(hf_dataset)

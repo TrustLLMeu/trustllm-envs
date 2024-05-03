@@ -11,6 +11,7 @@ import glob
 import os
 
 import datasets
+from datasets.distributed import split_dataset_by_node
 
 import convert_dataset_json
 
@@ -25,6 +26,8 @@ def patch_load_hf_dataset(
 
     @functools.wraps(old_load_hf_dataset)
     def new_load_hf_dataset(*args, **kwargs):
+        # Use "streaming" for lazy loading unless explicitly specified.
+        kwargs.setdefault('streaming', True)
         hf_dataset = old_load_hf_dataset(*args, **kwargs)
 
         # Try to prevent us from messing with the dataset in unrelated
@@ -38,7 +41,7 @@ def patch_load_hf_dataset(
                 and kwargs['data_files'] == data_files
                 and kwargs['split'] == split
         ):
-            hf_dataset = hf_dataset.shard(num_shards=world_size, index=rank)
+            hf_dataset = split_dataset_by_node(hf_dataset, rank=rank, world_size=world_size)
 
         return hf_dataset
 
