@@ -54,4 +54,12 @@ srun bash -c "
         bash ${parallel_preprocessing_script@Q}
 "
 
+# Probably safer to do this as an interactive run so we don't run into
+# time limit problems, since it is a destructive operation. However,
+# for convenience, this is included here for now.
+bash "$(get_curr_dir)"/../container_run.sh \
+     python -u "$(get_curr_dir)"/../py-scripts/merge_datasets.py \
+         --input="$OUTPUT_DATA_PREFIX" \
+         --output-prefix="$OUTPUT_DATA_PREFIX"
+
 pop_curr_file
