@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Preprocess data on JUWELS Cluster.
+# Preprocess data in parallel on JUWELS Cluster.
 
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
@@ -27,7 +27,12 @@ export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
 export NUM_WORKERS="$SRUN_CPUS_PER_TASK"
 
-export INPUT_DATA_FILE=/p/scratch/trustllm-eu/example-data/tiny-c4-10k.jsonl
+# Colon-separated list of JSON files to process. Set to empty
+# string ('') if not desired.
+export INPUT_DATA_FILES=/p/scratch/trustllm-eu/example-data/tiny-c4-100k.jsonl
+# Glob-expression of JSON files to process. Set to empty string ('')
+# if not desired.
+export INPUT_DATA_FILES_GLOB=''
 
 export TOKENIZER_VOCAB_FILE=/p/scratch/trustllm-eu/example-data/gpt2-tokenizer/vocab.json
 export TOKENIZER_MERGE_FILE=/p/scratch/trustllm-eu/example-data/gpt2-tokenizer/merges.txt
@@ -36,10 +41,17 @@ export TOKENIZER_MERGE_FILE=/p/scratch/trustllm-eu/example-data/gpt2-tokenizer/m
 # desired.
 export TOKENIZER_MODEL_FILE=/p/scratch/trustllm-eu/example-data/t5-small-tokenizer/spiece.model
 
-export OUTPUT_DATA_PREFIX="$data_dir"/my-tiny-c4-gpt2-tok/val
-# export OUTPUT_DATA_PREFIX="$data_dir"/my-tiny-c4-t5-small-tok/val
+export OUTPUT_DATA_PREFIX="$data_dir"/my-tiny-c4-gpt2-tok/train
+# export OUTPUT_DATA_PREFIX="$data_dir"/my-tiny-c4-t5-small-tok/train
 
-srun bash "$(get_curr_dir)"/../container_run.sh \
-     bash "$preprocessing_script"
+# We assign to a variable again so Bash can do the quoted
+# interpolation.
+_curr_dir="$(get_curr_dir)"
+
+srun bash -c "
+    export WORLD_SIZE=\"\$SLURM_NTASKS\"; export RANK=\"\$SLURM_PROCID\"; \\
+    bash ${_curr_dir@Q}/../container_run.sh \\
+        bash ${parallel_preprocessing_script@Q}
+"
 
 pop_curr_file

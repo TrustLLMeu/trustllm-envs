@@ -94,6 +94,9 @@ apptainer_file="$scratch_dir"/apptainers/nemo_"$(basename "$docker_image_uri" | 
 # Container script used for data preprocessing.
 preprocessing_script="$(get_curr_dir)"/container-scripts/preprocess_data_container.sh
 
+# Container script used for parallel data preprocessing.
+parallel_preprocessing_script="$(get_curr_dir)"/container-scripts/preprocess_data_parallel_container.sh
+
 # Container script used for training runs.
 training_script="$(get_curr_dir)"/container-scripts/run_training_container.sh
 

@@ -70,13 +70,13 @@ export TRAIN_CONFIG_YAML_NAME=megatron_llama_config
 # If you are unsure, you can always manually check which files the
 # preprocessing created.
 export TRAIN_DATA_PREFIX="$data_dir"/my-tiny-c4-gpt2-tok/train_text_document
-# We simply use the train set for all of training, evaluation, and
-# testing in the example. Of course, this is redundant, but makes it
-# easier to change the example to include real validation and test
-# sets. Also, we need to supply a validation and test set assuming the
-# data argument is given like in the example.
-export EVAL_DATA_PREFIX="$TRAIN_DATA_PREFIX"
-export TEST_DATA_PREFIX="$TRAIN_DATA_PREFIX"
+# We simply use the validation set for both evaluation and testing in
+# the example. Of course, this is redundant, but makes it easier to
+# change the example to include a real test set. Also, we need to
+# supply a test set assuming the data argument is given like in the
+# example.
+export EVAL_DATA_PREFIX="$data_dir"/my-tiny-c4-gpt2-tok/val_text_document
+export TEST_DATA_PREFIX="$EVAL_DATA_PREFIX"
 
 export TOKENIZER_VOCAB_FILE=/p/scratch/trustllm-eu/example-data/gpt2-tokenizer/vocab.json
 export TOKENIZER_MERGE_FILE=/p/scratch/trustllm-eu/example-data/gpt2-tokenizer/merges.txt
