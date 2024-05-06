@@ -10,8 +10,9 @@ from llmfoundry.utils.data_prep_utils import merge_shard_groups
 def parse_args() -> Namespace:
     """Parse commandline arguments."""
     parser = ArgumentParser(
-        description=
-        'Merge different sub-dataset in MDS format into an overarching one'
+        description=(
+            'Merge different sub-dataset in MDS format into an overarching one'
+        ),
     )
     parser.add_argument('--out_root', type=str, required=True)
     parsed = parser.parse_args()
