@@ -26,9 +26,6 @@ class MMapIndexedDataset(_MMapIndexedDataset):
     def index(self):
         return self._index
 
-    def add_index(self, *args, **kwargs):
-        return self.merge_file_(*args, **kwargs)
-
 
 class MMapIndexedDatasetBuilder(_MMapIndexedDatasetBuilder):
     def __init__(
@@ -38,6 +35,9 @@ class MMapIndexedDatasetBuilder(_MMapIndexedDatasetBuilder):
             multimodal: bool = False,
     ):
         super().__init__(bin_path, dtype)
+
+    def add_index(self, *args, **kwargs):
+        return self.merge_file_(*args, **kwargs)
 
 
 def parse_args():
