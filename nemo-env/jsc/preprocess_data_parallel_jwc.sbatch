@@ -41,6 +41,9 @@ export TOKENIZER_MERGE_FILE=/p/scratch/trustllm-eu/example-data/gpt2-tokenizer/m
 # desired.
 export TOKENIZER_MODEL_FILE=/p/scratch/trustllm-eu/example-data/t5-small-tokenizer/spiece.model
 
+# For simplicity, the final data file this script will generate will
+# always end with "_text_document", even if it does not match given
+# the arguments.
 export OUTPUT_DATA_PREFIX="$data_dir"/my-tiny-c4-gpt2-tok/train
 # export OUTPUT_DATA_PREFIX="$data_dir"/my-tiny-c4-t5-small-tok/train
 
@@ -60,6 +63,6 @@ srun bash -c "
 bash "$(get_curr_dir)"/../container_run.sh \
      python -u "$(get_curr_dir)"/../py-scripts/merge_datasets.py \
          --input="$OUTPUT_DATA_PREFIX" \
-         --output-prefix="$OUTPUT_DATA_PREFIX"
+         --output-prefix="$OUTPUT_DATA_PREFIX"_text_document
 
 pop_curr_file
