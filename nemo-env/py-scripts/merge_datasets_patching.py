@@ -5,6 +5,7 @@
 from argparse import ArgumentParser
 import importlib
 import os
+import shutil
 import sys
 from typing import Type
 
@@ -35,6 +36,20 @@ class MMapIndexedDatasetBuilder(_MMapIndexedDatasetBuilder):
             multimodal: bool = False,
     ):
         super().__init__(bin_path, dtype)
+
+    def merge_file_(self, another_file):
+        # Concatenate index
+        index = MMapIndexedDataset.Index(get_idx_path(another_file))
+        assert index.dtype == self._dtype
+
+        offset = len(self._sizes)
+        for size in index.sizes:
+            self._sizes.append(size)
+        self._doc_idx.extend((offset + index.doc_idx)[1:])
+
+        # Concatenate data
+        with open(get_bin_path(another_file), 'rb') as f:
+            shutil.copyfileobj(f, self._data_file)
 
     def add_index(self, *args, **kwargs):
         return self.merge_file_(*args, **kwargs)

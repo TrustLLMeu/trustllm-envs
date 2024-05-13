@@ -7,13 +7,30 @@ import os
 import sys
 import json
 import argparse
+import shutil
 
 from nemo.collections.nlp.data.language_modeling.megatron.indexed_dataset import (
     MMapIndexedDataset,
-    MMapIndexedDatasetBuilder,
+    MMapIndexedDatasetBuilder as _MMapIndexedDatasetBuilder,
     data_file_path as get_bin_path,
     index_file_path as get_idx_path,
 )
+
+
+class MMapIndexedDatasetBuilder(_MMapIndexedDatasetBuilder):
+    def merge_file_(self, another_file):
+        # Concatenate index
+        index = MMapIndexedDataset.Index(get_idx_path(another_file))
+        assert index.dtype == self._dtype
+
+        offset = len(self._sizes)
+        for size in index.sizes:
+            self._sizes.append(size)
+        self._doc_idx.extend((offset + index.doc_idx)[1:])
+
+        # Concatenate data
+        with open(get_bin_path(another_file), 'rb') as f:
+            shutil.copyfileobj(f, self._data_file)
 
 
 def get_args():
