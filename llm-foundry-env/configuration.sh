@@ -52,7 +52,7 @@ repos+=( 'https://github.com/mosaicml/composer.git v0.21.2 [nlp,tensorboard,wand
 # the latter explicit specification because that is a very recent
 # change.
 # This would execute `python -m pip install -e '.[gpu-flash2,tensorboard]'`
-repos+=( 'https://github.com/mosaicml/llm-foundry.git v0.7.0 [gpu-flash2,tensorboard]' )
+repos+=( 'https://github.com/mosaicml/llm-foundry.git v0.7.0 [gpu-flash2,openai,tensorboard]' )
 # For example, this would clone a repo at tag v0.0.1 and do a standard
 # `pip install -e .`:
 # repos+=( 'https://github.com/github/example-repo.git v0.0.1' )
