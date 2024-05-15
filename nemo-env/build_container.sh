@@ -20,4 +20,8 @@ else
     exit 1
 fi
 
+echo "Please don't forget to move the container to the appropriate location " \
+     "using \`bash $(get_curr_dir)/move_built_container_to_active.sh\`. " \
+     "Be careful, since this will overwrite the old active container."
+
 pop_curr_file
