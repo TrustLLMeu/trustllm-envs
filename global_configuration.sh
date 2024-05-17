@@ -27,3 +27,6 @@ torch_cache_dir="$cache_dir"/torch
 
 # Root directory for caches of various HuggingFace libraries.
 hf_cache_dir="$cache_dir"/huggingface
+
+# Root directory for caches of Triton.
+triton_cache_dir="$cache_dir"/triton
