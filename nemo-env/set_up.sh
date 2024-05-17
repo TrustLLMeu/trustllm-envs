@@ -13,7 +13,7 @@ source "$_curr_dir"/../global-scripts/get_curr_file.sh "$_curr_file"
 source "$(get_curr_dir)"/../global_configuration.sh
 
 if [ "$container_library" = apptainer ]; then
-    source "$(get_curr_dir)"/outside-container-scripts/set_up_apptainer.sh
+    source "$(get_curr_dir)"/outside-container-scripts/set_up_apptainer.sh "$@"
 else
     echo "Unknown container library \"$container_library\"."
     pop_curr_file

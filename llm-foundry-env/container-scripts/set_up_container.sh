@@ -40,9 +40,30 @@ for _repo_tuple in "${repos[@]}"; do
         pushd "$_curr_repo_dir"
         git checkout "$_repo_commit"
     else
-        # We do not check out when the repo already exists so that
-        # software state is completely under user control.
+        # By default, we do not check out when the repo already exists
+        # so that software state is completely under user control.
         pushd "$_curr_repo_dir"
+        if [ "$#" -gt 0 ] && [ "$1" = update ]; then
+            # Check whether we have something to stash:
+            # Check for staged changes.
+            git diff-index --quiet --cached HEAD --
+            _is_dirty="$?"
+            # Check for unstaged changes.
+            git diff-files --quiet
+            _is_dirty="$((_is_dirty + $?))"
+
+            git fetch --tags
+            if [ -n "$_is_dirty" ]; then
+                git stash push -m "Update setup at $(date)"
+            fi
+            git checkout "$_repo_commit"
+            if [ -n "$_is_dirty" ]; then
+                # The reason we do all of the above is that we want
+                # this command to be able to fail, so that updating
+                # stops when a user needs to resolve conflicts.
+                git stash pop
+            fi
+        fi
     fi
     # We do not pull so that software state is completely under user
     # control.

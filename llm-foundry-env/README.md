@@ -126,6 +126,32 @@ GPU-intensive tasks such as model training, because they have
 sbatch jsc/run_training_jwb.sbatch
 ```
 
+### Updating
+
+Update your local copy of this repository with new changes:
+
+```shell
+git stash push -m "Update setup at $(date)"
+git pull --rebase
+git stash pop
+```
+
+If necessary, build the updated container and move it to the active
+one:
+
+```shell
+nice bash build_container.sh
+bash move_built_container_to_active.sh
+```
+
+For updating external repositories, we save all changes in them and
+will try to re-apply those changes on top. If this fails, updating
+stops and you have to manually resolve Git conflicts.
+
+```shell
+nice bash set_up.bash update
+```
+
 ### Caveats
 
 We do not have internet access on JSC systems' compute nodes. If you
