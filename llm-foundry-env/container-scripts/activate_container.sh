@@ -15,6 +15,9 @@ source "$(get_curr_dir)"/../configuration.sh
 # HuggingFace libraries cache configuration
 source "$(get_curr_dir)"/../../global-scripts/configure_caches.sh
 
+# Build GPU kernels for a certain set of relevant architectures.
+source "$(get_curr_dir)"/../../global-scripts/configure_gpu_arch.sh
+
 # If we are _not_ doing the setup, we want some extra behavior:
 # 1. Put HuggingFace libraries into offline mode because of JSC system
 #    compute nodes not having internet access.

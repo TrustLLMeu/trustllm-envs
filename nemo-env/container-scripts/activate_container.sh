@@ -15,6 +15,9 @@ source "$(get_curr_dir)"/../configuration.sh
 # HuggingFace libraries cache configuration
 source "$(get_curr_dir)"/../../global-scripts/configure_caches.sh
 
+# Build GPU kernels for a certain set of relevant architectures.
+source "$(get_curr_dir)"/../../global-scripts/configure_gpu_arch.sh
+
 # Have to explicitly give Triton the directory containing
 # `libcuda.so`.
 export TRITON_LIBCUDA_PATH=/usr/local/cuda/lib64/stubs
