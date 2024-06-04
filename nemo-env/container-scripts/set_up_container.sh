@@ -90,6 +90,9 @@ for _repo_tuple in "${repos[@]}"; do
     popd
 done
 
+# Install grouped GEMM for optional MoE functionality.
+python -m pip install git+https://github.com/fanshiqing/grouped_gemm@v1.0
+
 # Create the patched Lightning file.
 sed 's|root_node = \(self\.resolve_root_node_address(.*)\)$|root_node = os.getenv("MASTER_ADDR", \1)|g' "$venv_dir"/lib/python3.10/site-packages/lightning_fabric/plugins/environments/slurm.py  > "$scratch_dir"/slurm-master-addr-patch.py
 
