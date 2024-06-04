@@ -19,7 +19,7 @@ EVAL_NUM_WORKERS="${EVAL_NUM_WORKERS:-0}"
 
 cd "$ext_repo_dir"/llm-foundry/scripts
 
-# Below is the llm-foundry README quickstart example, modified to
+# Below is the LLM Foundry README quickstart example, modified to
 # - not buffer output,
 # - run multi-node,
 # - use a variable YAML file,

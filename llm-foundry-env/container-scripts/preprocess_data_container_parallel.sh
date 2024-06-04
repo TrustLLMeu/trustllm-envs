@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Start a parallel conversion from JSON data to the `streaming`
-# library's binary format. `streaming` is llm-foundry's data library.
+# library's binary format. `streaming` is LLM Foundry's data library.
 
 set -euo pipefail
 
@@ -23,7 +23,7 @@ fi
 # script).
 cd "$ext_repo_dir"/llm-foundry/scripts/data_prep
 
-# Below is the llm-foundry `scripts/data_prep` README JSON data
+# Below is the LLM Foundry `scripts/data_prep` README JSON data
 # example, modified to
 # - not buffer output,
 # - use a local script for parallel processing,
@@ -36,7 +36,7 @@ cd "$ext_repo_dir"/llm-foundry/scripts/data_prep
 # Alternatively, you can use
 # `"$(get_curr_dir)"/../py-scripts/convert_dataset_json_parallel_patching.py`
 # for a version that should benefit from small-scale changes to the
-# underlying llm-foundry code.
+# underlying LLM Foundry code.
 python -u "$(get_curr_dir)"/../py-scripts/convert_dataset_json_parallel.py \
   --path "$INPUT_DATA_FILE" \
   --out_root "$OUTPUT_DATA_DIR" --split train \

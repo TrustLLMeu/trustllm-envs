@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# This script contains configuration specific to the llm-foundry
+# This script contains configuration specific to the LLM Foundry
 # environment. It is split into three sections:
 #
 # 1. configuration for the PROJECT directory, meaning long-term
@@ -30,7 +30,7 @@ env_name=llm-foundry
 # `base_project_dir` is configured in `../global_configuration.sh`.
 project_dir="$base_project_dir"/"$env_name"
 
-# Where external repositories will be installed (such as llm-foundry
+# Where external repositories will be installed (such as LLM Foundry
 # itself).
 ext_repo_dir="$project_dir"/repos
 # Array of repositories and their tag to clone and naïvely `pip

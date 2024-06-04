@@ -1,6 +1,6 @@
-# TrustLLM llm-foundry environment
+# TrustLLM LLM Foundry environment
 
-The container-based environment on using llm-foundry, with example
+The container-based environment on using LLM Foundry, with example
 scripts for JSC systems.
 
 ## Usage
@@ -20,14 +20,14 @@ training.
 1. Configure project-global paths and – most importantly – the
    container library to use to your liking in
    `trustllm-envs/global_configuration.sh`.
-1. Configure paths concerning the llm-foundry environment to your
+1. Configure paths concerning the LLM Foundry environment to your
    liking in `trustllm-envs/llm-foundry-env/configuration.sh`.
-1. Switch into the llm-foundry environment's directory:
+1. Switch into the LLM Foundry environment's directory:
 
    ```shell
    cd trustllm-envs/llm-foundry-env
    ```
-1. Build the llm-foundry container:
+1. Build the LLM Foundry container:
 
    ```shell
    nice bash build_container.sh
@@ -48,7 +48,7 @@ training.
 1. SSH onto a CPU-focused supercomputer such as JUWELS Cluster for CPU
    tasks.
 1. Preprocess the validation data, tokenizing it and converting it to
-   the binary format used by llm-foundry. Here is an example assuming
+   the binary format used by LLM Foundry. Here is an example assuming
    you're on JUWELS Cluster:
 
    ```shell
