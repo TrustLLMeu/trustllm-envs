@@ -53,11 +53,11 @@ for _repo_tuple in "${repos[@]}"; do
             _is_dirty="$((_is_dirty + $?))"
 
             git fetch --tags -f
-            if [ -n "$_is_dirty" ]; then
+            if ((_is_dirty)); then
                 git stash push -m "Update setup at $(date)"
             fi
             git checkout "$_repo_commit"
-            if [ -n "$_is_dirty" ]; then
+            if ((_is_dirty)); then
                 # The reason we do all of the above is that we want
                 # this command to be able to fail, so that updating
                 # stops when a user needs to resolve conflicts.
