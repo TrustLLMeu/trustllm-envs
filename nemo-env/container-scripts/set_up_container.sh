@@ -49,7 +49,7 @@ for _repo_tuple in "${repos[@]}"; do
             git diff-files --quiet
             _is_dirty="$((_is_dirty + $?))"
 
-            git fetch --tags
+            git fetch --tags -f
             if [ -n "$_is_dirty" ]; then
                 git stash push -m "Update setup at $(date)"
             fi
