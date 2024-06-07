@@ -74,19 +74,22 @@ export HF_EVALUATE_OFFLINE=0
 export HF_HUB_OFFLINE=0
 export TRANSFORMERS_OFFLINE=0
 
+# Whether to trust remote code; needs to be 1 for custom assets on the hub.
+export TRUST_REMOTE_CODE=0
+
 # Pre-download an example model.
-python -c 'from transformers import AutoModel; AutoModel.from_pretrained("gpt2")'
+python -c 'import os; from transformers import AutoModel; AutoModel.from_pretrained("gpt2", trust_remote_code=bool(os.getenv("TRUST_REMOTE_CODE", 0)))'
 
 # Pre-download an example tokenizer; once with `tokenizers` package, once with `transformers` package.
 python -c 'from tokenizers import Tokenizer; Tokenizer.from_pretrained("gpt2")'
-python -c 'from transformers import AutoTokenizer; AutoTokenizer.from_pretrained("gpt2")'
+python -c 'import os; from transformers import AutoTokenizer; AutoTokenizer.from_pretrained("gpt2", trust_remote_code=bool(os.getenv("TRUST_REMOTE_CODE", 0)))'
 
 # Pre-download an example dataset.
-python -c 'from datasets import load_dataset; load_dataset("wikitext", "wikitext-103-raw-v1")'
+python -c 'import os; from datasets import load_dataset; load_dataset("wikitext", "wikitext-103-raw-v1", trust_remote_code=bool(os.getenv("TRUST_REMOTE_CODE", 0)))'
 
 # Pre-download an example metric; once with `evaluate` package, once with `datasets` package (deprecated).
 python -c 'import evaluate; evaluate.load("accuracy")'
-python -c 'from datasets import load_metric; load_metric("accuracy")'
+python -c 'import os; from datasets import load_metric; load_metric("accuracy", trust_remote_code=bool(os.getenv("TRUST_REMOTE_CODE", 0)))'
 ```
 
 ## License
