@@ -11,9 +11,10 @@ _curr_dir="$(dirname "$_curr_file")"
 source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
 
 # JSC machine activation steps
-if [ "$SYSTEMNAME" = juwelsbooster ] \
-       || [ "$SYSTEMNAME" = juwels ] \
-       || [ "$SYSTEMNAME" = jurecadc ]; then
+if [ "$machine_name" = jsc ] \
+       || [ "$machine_name" = jwb ] \
+       || [ "$machine_name" = jwc ] \
+       || [ "$machine_name" = jrc ]; then
     source "$(get_curr_dir)"/../jsc/_activate.sh
 fi
 

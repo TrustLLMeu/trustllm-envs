@@ -32,4 +32,6 @@ if [ "$(command -v nvcc)" ]; then
     elif [ "$_cuda_major_ver" -eq 11 ] && [ "$_cuda_minor_ver" -ge 8 ]; then
         TORCH_CUDA_ARCH_LIST="$TORCH_CUDA_ARCH_LIST;9.0"
     fi
+elif [ -n "$cuda_compute_capability" ]; then
+    export TORCH_CUDA_ARCH_LIST="$cuda_compute_capability"
 fi

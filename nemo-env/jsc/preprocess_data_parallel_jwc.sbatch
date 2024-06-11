@@ -29,17 +29,17 @@ export NUM_WORKERS="$SRUN_CPUS_PER_TASK"
 
 # Colon-separated list of JSON files to process. Set to empty
 # string ('') if not desired.
-export INPUT_DATA_FILES=/p/scratch/trustllm-eu/example-data/tiny-c4-100k.jsonl
+export INPUT_DATA_FILES="$root_scratch_dir"/"$project_name"/example-data/tiny-c4-100k.jsonl
 # Glob-expression of JSON files to process. Set to empty string ('')
 # if not desired.
 export INPUT_DATA_FILES_GLOB=''
 
-export TOKENIZER_VOCAB_FILE=/p/scratch/trustllm-eu/example-data/gpt2-tokenizer/vocab.json
-export TOKENIZER_MERGE_FILE=/p/scratch/trustllm-eu/example-data/gpt2-tokenizer/merges.txt
+export TOKENIZER_VOCAB_FILE="$root_scratch_dir"/"$project_name"/example-data/gpt2-tokenizer/vocab.json
+export TOKENIZER_MERGE_FILE="$root_scratch_dir"/"$project_name"/example-data/gpt2-tokenizer/merges.txt
 # The SentencePiece tokenizer is not used by default in the example,
 # but we include and export it here just so it's available when
 # desired.
-export TOKENIZER_MODEL_FILE=/p/scratch/trustllm-eu/example-data/t5-small-tokenizer/spiece.model
+export TOKENIZER_MODEL_FILE="$root_scratch_dir"/"$project_name"/example-data/t5-small-tokenizer/spiece.model
 
 # For simplicity, the final data files this script will generate will
 # always end with "_text_document", even if it does not match given
