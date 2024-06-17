@@ -15,8 +15,16 @@ source "$(get_curr_dir)"/../global_configuration.sh
 
 mkdir -p "$apptainer_cache_dir"
 export APPTAINER_CACHEDIR="$apptainer_cache_dir"
+if [ "$apptainer_bin" = singularity ]; then
+    # Also export old name for backward-compatibility.
+    export SINGULARITY_CACHEDIR="$APPTAINER_CACHEDIR"
+fi
 
 mkdir -p "$apptainer_tmp_dir"
 export APPTAINER_TMPDIR="$apptainer_tmp_dir"
+if [ "$apptainer_bin" = singularity ]; then
+    # Also export old name for backward-compatibility.
+    export SINGULARITY_TMPDIR="$APPTAINER_TMPDIR"
+fi
 
 pop_curr_file

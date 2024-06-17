@@ -23,7 +23,7 @@ fi
 # We unset a bunch of environment variables so they don't disturb our Apptainer.
 env -u BASH_ENV -u CC -u CFLAGS -u CMAKE_LIBRARY_PATH -u CMAKE_PREFIX_PATH \
     -u CPATH -u CXX -u CXXFLAGS -u LESSOPEN -u PYTHONPATH \
-    apptainer run --nv "$apptainer_file" \
+    "$apptainer_bin" run --nv "$apptainer_file" \
     bash "$(get_curr_dir)"/../container-scripts/set_up_container.sh "$@"
 
 pop_curr_file

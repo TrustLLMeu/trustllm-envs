@@ -20,7 +20,7 @@ if [ "$container_library" = apptainer ]; then
         echo "Could not find Singularity on BSC machine."
         exit 1
     fi
-    alias apptainer=singularity
+    apptainer_bin=singularity
 fi
 
 pop_curr_file

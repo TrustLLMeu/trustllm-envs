@@ -37,6 +37,9 @@ cache_dir="$base_scratch_dir"/.cache
 # `machine_data.csv`).
 # container_library=apptainer
 
+# Name of Apptainer binary (used for overwriting it if necessary)
+apptainer_bin="${apptainer_bin:-apptainer}"
+
 # Where Apptainer cache and temporary files will be stored
 apptainer_cache_dir="$cache_dir"/apptainer
 apptainer_tmp_dir="$cache_dir"/apptainer-tmp

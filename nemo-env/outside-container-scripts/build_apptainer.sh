@@ -15,6 +15,6 @@ source "$(get_curr_dir)"/activate.sh
 source "$(get_curr_dir)"/../../global-scripts/configure_apptainer.sh
 
 mkdir -p "$(dirname "$apptainer_build_file")"
-apptainer pull "$apptainer_build_file" "$docker_image_uri"
+"$apptainer_bin" pull "$apptainer_build_file" "$docker_image_uri"
 
 pop_curr_file
