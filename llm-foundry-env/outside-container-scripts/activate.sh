@@ -16,6 +16,9 @@ if [ "$machine_name" = jsc ] \
        || [ "$machine_name" = jwc ] \
        || [ "$machine_name" = jrc ]; then
     source "$(get_curr_dir)"/../jsc/_activate.sh
+elif [ "$machine_name" = bsc ] \
+       || [ "$machine_name" = mn5 ]; then
+    source "$(get_curr_dir)"/../bsc/_activate.sh
 fi
 
 source "$(get_curr_dir)"/../configuration.sh
