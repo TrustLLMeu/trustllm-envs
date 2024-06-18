@@ -10,6 +10,8 @@ _curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
 _curr_dir="$(dirname "$_curr_file")"
 source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
 
+source "$(get_curr_dir)"/../../global_configuration.sh
+
 # JSC machine activation steps
 if [ "$machine_name" = jsc ] \
        || [ "$machine_name" = jwb ] \
