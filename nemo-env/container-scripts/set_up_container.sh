@@ -124,6 +124,9 @@ done
 
 # Install grouped GEMM for optional MoE functionality.
 python -m pip "${_pip_install_args[@]}" git+https://github.com/fanshiqing/grouped_gemm@v1.0
+# Install HuggingFace Transformers again separately since newer
+# versions cause errors with NeMo.
+python -m pip "${_pip_install_args[@]}" 'transformers<4.41.0'
 
 if ((_is_installing)); then
     # Create the patched Lightning file.
