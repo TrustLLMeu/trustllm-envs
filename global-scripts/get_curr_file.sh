@@ -29,4 +29,8 @@ get_curr_dir() {
     dirname "$(get_curr_file)"
 }
 
-_curr_files="$1":"$_curr_files"
+_curr_file="$1"
+if [ "$(command -v realpath)" ]; then
+    _curr_file="$(realpath "$_curr_file")"
+fi
+_curr_files="$_curr_file":"$_curr_files"
