@@ -14,11 +14,27 @@ source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
 
 source "$(get_curr_dir)"/../container-scripts/activate_container.sh setup
 
+_pip_offline_dir="$scratch_dir"/pip-offline
+
+if [ "$#" -gt 0 ] && [ "$1" = download ]; then
+    _pip_install_args=( download -d "$_pip_offline_dir" )
+    _pip_install_upgrade_args=( "${_pip_install_args[@]}" )
+    _pip_install_editable_args=( "${_pip_install_args[@]}" )
+elif [ "$#" -gt 0 ] && [ "$1" = offline ]; then
+    _pip_install_args=( install --no-index --find-links file://"$_pip_offline_dir" )
+    _pip_install_upgrade_args=( "${_pip_install_args[@]}" )
+    _pip_install_editable_args=( "${_pip_install_args[@]}" -e )
+else
+    _pip_install_args=( install )
+    _pip_install_upgrade_args=( "${_pip_install_args[@]}" -U )
+    _pip_install_editable_args=( "${_pip_install_args[@]}" -e )
+fi
+
 # Create or activate the Python virtual environment
 if ! [ -d "$venv_dir" ]; then
     python -m venv --system-site-packages --without-pip "$venv_dir"
     source "$venv_dir"/bin/activate
-    python -m pip install -U pip
+    python -m pip "${_pip_install_upgrade_args[@]}" pip
 else
     source "$venv_dir"/bin/activate
 fi
@@ -68,9 +84,9 @@ for _repo_tuple in "${repos[@]}"; do
     # NeMo-Framework-Launcher does not support our standard
     # installation method, so we hardcode this exception.
     if [ "$_repo_uri" = 'https://github.com/NVIDIA/NeMo-Framework-Launcher.git' ]; then
-        python -m pip install -r requirements.txt
+        python -m pip "${_pip_install_args[@]}" -r requirements.txt
     else
-        python -m pip install -e ."$_repo_pip_install_features"
+        python -m pip "${_pip_install_editable_args[@]}" ."$_repo_pip_install_features"
     fi
     popd
 done
@@ -86,12 +102,12 @@ for _repo_tuple in "${repos[@]}"; do
 
     _curr_repo_dir="$ext_repo_dir"/"$(basename "$_repo_uri" .git)"
     pushd "$_curr_repo_dir"
-    python -m pip install -e ."$_repo_pip_install_features"
+    python -m pip "${_pip_install_editable_args[@]}" ."$_repo_pip_install_features"
     popd
 done
 
 # Install grouped GEMM for optional MoE functionality.
-python -m pip install git+https://github.com/fanshiqing/grouped_gemm@v1.0
+python -m pip "${_pip_install_args[@]}" git+https://github.com/fanshiqing/grouped_gemm@v1.0
 
 # Create the patched Lightning file.
 sed 's|root_node = \(self\.resolve_root_node_address(.*)\)$|root_node = os.getenv("MASTER_ADDR", \1)|g' "$venv_dir"/lib/python3.10/site-packages/lightning_fabric/plugins/environments/slurm.py  > "$scratch_dir"/slurm-master-addr-patch.py

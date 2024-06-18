@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 
 # Dispatch to the selected container library's software setup.
+#
+# If the first argument is given as "download", `pip` packages are
+# pre-downloaded instead of being installed.
+#
+# If the first argument is given as "offline", the pre-downloaded
+# packages are installed.
 
 set -euo pipefail
 

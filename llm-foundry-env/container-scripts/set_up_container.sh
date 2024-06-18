@@ -17,11 +17,27 @@ source "$(get_curr_dir)"/../container-scripts/activate_container.sh setup
 # Create the patched Triton file.
 sed 's|libs = subprocess\..*$|libs = "/usr/local/cuda/lib64/stubs/libcuda.so"|g' /usr/lib/python3/dist-packages/triton/common/build.py > "$scratch_dir"/triton-build-patch.py
 
+_pip_offline_dir="$scratch_dir"/pip-offline
+
+if [ "$#" -gt 0 ] && [ "$1" = download ]; then
+    _pip_install_args=( download -d "$_pip_offline_dir" )
+    _pip_install_upgrade_args=( "${_pip_install_args[@]}" )
+    _pip_install_editable_args=( "${_pip_install_args[@]}" )
+elif [ "$#" -gt 0 ] && [ "$1" = offline ]; then
+    _pip_install_args=( install --no-index --find-links file://"$_pip_offline_dir" )
+    _pip_install_upgrade_args=( "${_pip_install_args[@]}" )
+    _pip_install_editable_args=( "${_pip_install_args[@]}" -e )
+else
+    _pip_install_args=( install )
+    _pip_install_upgrade_args=( "${_pip_install_args[@]}" -U )
+    _pip_install_editable_args=( "${_pip_install_args[@]}" -e )
+fi
+
 # Create or activate the Python virtual environment
 if ! [ -d "$venv_dir" ]; then
     python -m venv --system-site-packages "$venv_dir"
     source "$venv_dir"/bin/activate
-    python -m pip install -U pip
+    python -m pip "${_pip_install_upgrade_args[@]}" pip
 else
     source "$venv_dir"/bin/activate
 fi
@@ -68,7 +84,7 @@ for _repo_tuple in "${repos[@]}"; do
     # We do not pull so that software state is completely under user
     # control.
 
-    python -m pip install -e ."$_repo_pip_install_features"
+    python -m pip "${_pip_install_editable_args[@]}" ."$_repo_pip_install_features"
     popd
 done
 
