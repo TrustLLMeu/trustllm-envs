@@ -35,7 +35,7 @@ elif [ "$#" -gt 0 ] && [ "$1" = offline ]; then
 
     _is_installing=1
     _is_offline=1
-    _pip_install_args=( install --no-index --find-links file://"$_pip_offline_dir" )
+    _pip_install_args=( install --no-build-isolation --no-index --find-links file://"$_pip_offline_dir" )
     _pip_install_upgrade_args=( "${_pip_install_args[@]}" )
     _pip_install_editable_args=( "${_pip_install_args[@]}" -e )
 else
