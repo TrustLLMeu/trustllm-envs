@@ -15,12 +15,15 @@ source "$(get_curr_dir)"/../../global_configuration.sh
 
 module purge
 if [ "$container_library" = apptainer ]; then
+    module load gcc
     module try-load singularity
     if ! [ "$(command -v singularity)" ]; then
         echo "Could not find Singularity on BSC machine."
         exit 1
     fi
     apptainer_bin=singularity
+    module try-load cuda
+    module try-load nccl
 fi
 
 pop_curr_file
