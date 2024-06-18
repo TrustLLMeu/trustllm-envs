@@ -20,14 +20,27 @@ sed 's|libs = subprocess\..*$|libs = "/usr/local/cuda/lib64/stubs/libcuda.so"|g'
 _pip_offline_dir="$scratch_dir"/pip-offline
 
 if [ "$#" -gt 0 ] && [ "$1" = download ]; then
+    mkdir -p "$pip_offline_dir"
+
+    _is_installing=0
+    _is_offline=0
     _pip_install_args=( download -d "$_pip_offline_dir" )
     _pip_install_upgrade_args=( "${_pip_install_args[@]}" )
     _pip_install_editable_args=( "${_pip_install_args[@]}" )
 elif [ "$#" -gt 0 ] && [ "$1" = offline ]; then
+    if ! [ -d "$pip_offline_dir" ]; then
+        echo "\`pip\` packages have not been pre-downloaded for offline" \
+             "installation. Please place them at \`$pip_offline_dir\`."
+    fi
+
+    _is_installing=1
+    _is_offline=1
     _pip_install_args=( install --no-index --find-links file://"$_pip_offline_dir" )
     _pip_install_upgrade_args=( "${_pip_install_args[@]}" )
     _pip_install_editable_args=( "${_pip_install_args[@]}" -e )
 else
+    _is_installing=1
+    _is_offline=0
     _pip_install_args=( install )
     _pip_install_upgrade_args=( "${_pip_install_args[@]}" -U )
     _pip_install_editable_args=( "${_pip_install_args[@]}" -e )
@@ -40,6 +53,9 @@ if ! [ -d "$venv_dir" ]; then
     python -m pip "${_pip_install_upgrade_args[@]}" pip
 else
     source "$venv_dir"/bin/activate
+    if (("$_is_installing")) && (("$_is_offline")); then
+        python -m pip "${_pip_install_upgrade_args[@]}" pip
+    fi
 fi
 
 # Clone and install the external repositories
