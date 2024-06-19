@@ -79,20 +79,22 @@ for _repo_tuple in "${repos[@]}"; do
         # so that software state is completely under user control.
         pushd "$_curr_repo_dir"
         if [ "$#" -gt 0 ] && [ "$1" = update ]; then
-            # Check whether we have something to stash:
+            # Check whether we have something to stash: (We have to do
+            # it so awkwardly so that Bash does not exit unsuccessful
+            # commands.)
             # Check for staged changes.
-            git diff-index --quiet --cached HEAD --
-            _is_dirty="$?"
+            ! git diff-index --quiet --cached HEAD --
+            _is_clean="$?"
             # Check for unstaged changes.
-            git diff-files --quiet
-            _is_dirty="$((_is_dirty + $?))"
+            ! git diff-files --quiet
+            _is_clean="$((_is_clean && $?))"
 
             git fetch --tags -f
-            if ((_is_dirty)); then
+            if ! ((_is_clean)); then
                 git stash push -m "Update setup at $(date)"
             fi
             git checkout "$_repo_commit"
-            if ((_is_dirty)); then
+            if ! ((_is_clean)); then
                 # The reason we do all of the above is that we want
                 # this command to be able to fail, so that updating
                 # stops when a user needs to resolve conflicts.
