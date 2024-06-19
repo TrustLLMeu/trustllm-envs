@@ -3,6 +3,11 @@
 # In this script, we set up our Python virtual environment, installing
 # the repositories specified in the `repos` variable in
 # `configuration.sh`.
+#
+# If the first argument is "download", the remaining arguments will be
+# passed as extra arguments to `pip download`. These can be used, for
+# example, to specify the `--platform` or `--python-version` to
+# download for.
 
 set -euo pipefail
 
@@ -17,14 +22,12 @@ source "$(get_curr_dir)"/../container-scripts/activate_container.sh setup
 # Create the patched Triton file.
 sed 's|libs = subprocess\..*$|libs = "/usr/local/cuda/lib64/stubs/libcuda.so"|g' /usr/lib/python3/dist-packages/triton/common/build.py > "$scratch_dir"/triton-build-patch.py
 
-_pip_offline_dir="$scratch_dir"/pip-offline
-
 if [ "$#" -gt 0 ] && [ "$1" = download ]; then
     mkdir -p "$pip_offline_dir"
 
     _is_installing=0
     _is_offline=0
-    _pip_install_args=( download -d "$_pip_offline_dir" )
+    _pip_install_args=( download -d "$pip_offline_dir" "${@:2}" )
     _pip_install_upgrade_args=( "${_pip_install_args[@]}" )
     _pip_install_editable_args=( "${_pip_install_args[@]}" )
 elif [ "$#" -gt 0 ] && [ "$1" = offline ]; then
@@ -35,7 +38,7 @@ elif [ "$#" -gt 0 ] && [ "$1" = offline ]; then
 
     _is_installing=1
     _is_offline=1
-    _pip_install_args=( install --no-build-isolation --no-index --find-links file://"$_pip_offline_dir" )
+    _pip_install_args=( install --no-build-isolation --no-index --find-links 'file://'"$pip_offline_dir" )
     _pip_install_upgrade_args=( "${_pip_install_args[@]}" )
     _pip_install_editable_args=( "${_pip_install_args[@]}" -e )
 else

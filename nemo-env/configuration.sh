@@ -86,6 +86,14 @@ apptainer_build_file="$scratch_dir"/apptainers/build/nemo_"$(basename "$docker_i
 # build paths so the actively used container is not overwritten by
 # accident.
 apptainer_file="$scratch_dir"/apptainers/nemo_"$(basename "$docker_image_uri" | tr ':' '_')".sif
+# Pre-dowloaded image used for offline building if requested. The
+# default setting uses the same location as `apptainer_build_file`,
+# with the `sif` file ending replaced by `tar`.
+apptainer_offline_build_file="$(dirname "$apptainer_build_file")"/"$(basename "$apptainer_build_file" .sif)".tar
+
+# Where `pip` packages will be stored/looked for for offline
+# installation.
+pip_offline_dir="$scratch_dir"/pip-offline
 
 # ---
 
