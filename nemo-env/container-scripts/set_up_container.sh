@@ -79,8 +79,8 @@ for _repo_tuple in "${repos[@]}"; do
         # For safety, we upgrade URI of `origin` to our fork.
         # Previously this was the upstream NVIDIA `origin`.
         if [ "$_repo_uri" = 'https://github.com/TrustLLMeu/NeMo.git' ] \
-           && [ "$(git remote get-url origin)" = 'https://github.com/NVIDIA/NeMo.git' ]; then
-            git remote add upstream 'https://github.com/NVIDIA/NeMo.git'
+           && [ "$(git remote get-url origin)" != "$_repo_uri" ]; then
+            git remote add prev-origin "$(git remote get-url origin)"
             git remote set-url origin "$_repo_uri"
             git remote update
         fi
