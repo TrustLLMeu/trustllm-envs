@@ -41,22 +41,25 @@ repos=()
 # Repository to clone, the commit to clone, and additional `pip
 # install` features to install (leave out for default features, see
 # example below); separated by spaces.
-# Backend library. Commit specified in `NeMo/Dockerfile` (and checked
-# using recursive `diff` in old NeMo container).
-repos+=( 'https://github.com/NVIDIA/Megatron-LM.git ad53b1e38689a0ceed75ade7821f4e6c7554abb4' )
+# Backend library. Commit found manually by checking using recursive
+# `diff` in old NeMo container (nvcr.io/nvidia/nemo:24.05). The exact
+# commit couldn't be reproduced.
+repos+=( 'https://github.com/NVIDIA/Megatron-LM.git a645f89671be698612170539f2089dc15db66a80' )
 # Main framework. Commit taken from old NeMo container
 # `/opt/NeMo/.git/logs/HEAD`.
 # This would execute `python -m pip install -e '.[all]'`
-repos+=( 'https://github.com/NVIDIA/NeMo.git 8f3855f241099a83b405d2057998d628789ec73b [all]' )
+repos+=( 'https://github.com/NVIDIA/NeMo.git 525604f6ec00624479ad458168923fb7a7ed0c67 [all]' )
 # Launcher library. Commit taken from old NeMo container
-# `/opt/NeMo-Megatron-Launcher/.git/logs/HEAD`.
+# `/opt/NeMo-Framework-Launcher/.git/logs/HEAD`.
 # This one is hardcoded to execute `python -m pip install -r
 # requirements.txt` because it does not support the other installation
 # method.
-repos+=( 'https://github.com/NVIDIA/NeMo-Framework-Launcher.git 6cdd33614134879048e13ae9f1d180f50d202a3d' )
+repos+=( 'https://github.com/NVIDIA/NeMo-Framework-Launcher.git 599ecfcbbd64fd2de02f2cc093b1610d73854022' )
 # Alignment library. Commit taken from old NeMo container
-# `/opt/NeMo-Aligner/.git/logs/HEAD`.
-repos+=( 'https://github.com/NVIDIA/NeMo-Aligner.git 2de2f184fcc7c9bafcdd871f2657f74ef43ea3df' )
+# `/opt/NeMo-Aligner/.git/logs/HEAD` with adjustments after manually
+# checking required changes (container's commit doesn't exist
+# anymore).
+repos+=( 'https://github.com/NVIDIA/NeMo-Aligner.git 0baba9939fef0fd37b89d019a9b6ef4fdfdc2c65' )
 # For example, this would clone a repo and do a standard
 # `pip install -e .`:
 # repos+=( 'https://github.com/github/example-repo.git v0.0.1' )
@@ -78,7 +81,7 @@ data_dir="$scratch_dir"/data
 checkpoint_dir="$scratch_dir"/experiments
 
 # Which container to build.
-docker_image_uri='docker://nvcr.io/nvidia/pytorch:24.03-py3'
+docker_image_uri='docker://nvcr.io/nvidia/pytorch:24.05-py3'
 # Which file to build the container in. The default settings
 # automatically grab the information from the tail of the URI.
 apptainer_build_file="$scratch_dir"/apptainers/build/nemo_"$(basename "$docker_image_uri" | tr ':' '_')".sif
