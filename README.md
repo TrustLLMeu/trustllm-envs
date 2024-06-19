@@ -20,8 +20,8 @@ here:
    ```shell
    [ -d trustllm-envs ] || git clone https://github.com/TrustLLMeu/trustllm-envs.git
    ```
-1. Configure project-global paths and – most importantly – the
-   container library to use to your liking in
+1. Configure project-global paths and – most importantly – the machine
+   name and container library to use to your liking in
    `trustllm-envs/global_configuration.sh`.
 
 ### Interactive use
