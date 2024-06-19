@@ -62,7 +62,7 @@ else
 fi
 
 # Clone and install the external repositories
-mkdir -p "$(dirname "$ext_repo_dir")"
+mkdir -p "$ext_repo_dir"
 for _repo_tuple in "${repos[@]}"; do
     _repo_uri="$(echo "$_repo_tuple" | tr -s ' ' | cut -d ' ' -f 1)"
     _repo_commit="$(echo "$_repo_tuple" | tr -s ' ' | cut -d ' ' -f 2)"
