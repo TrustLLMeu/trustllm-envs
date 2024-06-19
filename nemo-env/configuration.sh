@@ -111,6 +111,9 @@ parallel_preprocessing_script="$(get_curr_dir)"/container-scripts/preprocess_dat
 # Container script used for training runs.
 training_script="$(get_curr_dir)"/container-scripts/run_training_container.sh
 
+# Container script used for muTransfer runs.
+mup_training_script="$(get_curr_dir)"/container-scripts/run_mutransfer_training_container.sh
+
 # Container script used for HuggingFace training runs.
 hf_training_script="$(get_curr_dir)"/container-scripts/run_hf_training_container.sh
 
