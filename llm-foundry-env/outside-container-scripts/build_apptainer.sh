@@ -16,7 +16,18 @@ source "$(get_curr_dir)"/../../global-scripts/configure_apptainer.sh
 
 mkdir -p "$(dirname "$apptainer_build_file")"
 
-if [ "$#" -gt 0 ] && [ "$1" = offline ]; then
+if [ "$#" -gt 0 ] && [ "$1" = download ]; then
+    if [ "$(command -v docker)" ]; then
+        echo 'Docker is not available, but required for pre-downloading.'
+    fi
+
+    mkdir -p "$(dirname "$apptainer_offline_build_file")"
+
+    # Strip the URI protocol.
+    _docker_image="$(echo "$docker_image_uri" | cut -d / -f 3-)"
+    docker pull "$_docker_image"
+    docker save "$_docker_image" > "$apptainer_offline_build_file"
+elif [ "$#" -gt 0 ] && [ "$1" = offline ]; then
     if ! [ -f "$apptainer_offline_build_file" ]; then
         echo 'Container has not been pre-downloaded for offline building.' \
              "Please place it at \`$apptainer_offline_build_file\`."

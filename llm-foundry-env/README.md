@@ -197,18 +197,15 @@ offline installation.
 #### Pre-downloading
 
 For container images for the currently supported runtimes, we
-currently require Docker images to be pre-downloaded and saved. For
-example:
+currently require Docker for pre-downloading and saving images. To
+execute the pre-download:
 
 ```shell
-image_uri=...  # e.g. nvcr.io/nvidia/pytorch:24.05-py3
-image_save_file=...  # e.g. pytorch_24.05-py3.tar.gz
-
-docker pull "$image_uri"
-docker save "$image_uri" > "$image_save_file"
+nice bash build_container.sh download
 ```
 
-Then, transfer the file at `image_save_file` to the configured
+Then, transfer the local file at
+`<container-runtime>_offline_build_file` to the configured
 `<container-runtime>_offline_build_file` on the machine you want to
 build on.
 
