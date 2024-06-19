@@ -189,6 +189,64 @@ python -c 'import evaluate; evaluate.load("accuracy")'
 python -c 'import os; from datasets import load_metric; load_metric("accuracy", trust_remote_code=bool(os.getenv("TRUST_REMOTE_CODE", 0)))'
 ```
 
+### Offline installation
+
+Container images and `pip` packages can be downloaded in advance for
+offline installation.
+
+#### Pre-downloading
+
+For container images for the currently supported runtimes, we
+currently require Docker images to be pre-downloaded and saved. For
+example:
+
+```shell
+image_uri=...  # e.g. nvcr.io/nvidia/pytorch:24.05-py3
+image_save_file=...  # e.g. pytorch_24.05-py3.tar.gz
+
+docker pull "$image_uri"
+docker save "$image_uri" > "$image_save_file"
+```
+
+Then, transfer the file at `image_save_file` to the configured
+`<container-runtime>_offline_build_file` on the machine you want to
+build on.
+
+For `pip`, we assume that the container is available locally, so that
+correct package versions are automatically downloaded. Optionally,
+extra arguments to `pip download` (such as `--platform` or
+`--python-version`) can be given as extra arguments to `set_up.sh`. To
+pre-download into the configured `pip_offline_dir`:
+
+```shell
+nice bash set_up.sh download
+```
+
+Then, transfer the local `pip_offline_dir` to the configured
+`pip_offline_dir` on the machine you want to build on. In addition,
+you may want to transfer the local external repos from `ext_repo_dir`
+to the configured `ext_repo_dir` on the machine you want to build on,
+if the machine has no way to download external repos either.
+
+#### Installation of pre-downloaded content
+
+With the pre-downloaded container present at
+`<container-runtime>_offline_build_file`, containers can be built
+offline as follows:
+
+```shell
+nice bash build_container.sh offline
+# Afterwards, use `bash move_built_container_to_active.sh` to ready
+# the container for use if desired.
+```
+
+With the container ready and pre-downloaded packages present at
+`pip_offline_dir`, `pip` packages can be installed offline as follows:
+
+```shell
+nice bash set_up.sh offline
+```
+
 ## Background information
 
 This section is a work in progress. It will contain lower-level

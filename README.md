@@ -92,6 +92,14 @@ python -c 'import evaluate; evaluate.load("accuracy")'
 python -c 'import os; from datasets import load_metric; load_metric("accuracy", trust_remote_code=bool(os.getenv("TRUST_REMOTE_CODE", 0)))'
 ```
 
+### Offline installation
+
+Container images and `pip` packages can be downloaded in advance for
+offline installation.
+
+Please see the software-specific READMEs in their respective
+subdirectories.
+
 ## License
 
 Copyright 2024 Jan Ebert
