@@ -48,7 +48,7 @@ repos+=( 'https://github.com/NVIDIA/Megatron-LM.git a645f89671be698612170539f208
 # Main framework. Commit taken from old NeMo container
 # `/opt/NeMo/.git/logs/HEAD`.
 # This would execute `python -m pip install -e '.[all]'`
-repos+=( 'https://github.com/NVIDIA/NeMo.git 525604f6ec00624479ad458168923fb7a7ed0c67 [all]' )
+repos+=( 'https://github.com/TrustLLMeu/NeMo.git 1195bbcd9346fd1afa527a2610ee9c9676d9c3ee [all]' )
 # Launcher library. Commit taken from old NeMo container
 # `/opt/NeMo-Framework-Launcher/.git/logs/HEAD`.
 # This one is hardcoded to execute `python -m pip install -r
