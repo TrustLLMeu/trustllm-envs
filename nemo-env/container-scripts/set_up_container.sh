@@ -75,6 +75,16 @@ for _repo_tuple in "${repos[@]}"; do
         # By default, we do not check out when the repo already exists
         # so that software state is completely under user control.
         pushd "$_curr_repo_dir"
+
+        # For safety, we upgrade URI of `origin` to our fork.
+        # Previously this was the upstream NVIDIA `origin`.
+        if [ "$_repo_uri" = 'https://github.com/TrustLLMeu/NeMo.git' ] \
+           && [ "$(git remote get-url origin)" = 'https://github.com/NVIDIA/NeMo.git' ]; then
+            git remote add upstream 'https://github.com/NVIDIA/NeMo.git'
+            git remote set-url origin "$_repo_uri"
+            git remote update
+        fi
+
         if [ "$#" -gt 0 ] && [ "$1" = update ]; then
             # Check whether we have something to stash: (We have to do
             # it so awkwardly so that Bash does not exit unsuccessful
