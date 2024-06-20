@@ -143,14 +143,9 @@ python -m pip "${_pip_install_args[@]}" git+https://github.com/fanshiqing/groupe
 # versions cause errors with NeMo.
 python -m pip "${_pip_install_args[@]}" 'transformers<4.41.0'
 
-if ((_is_installing)); then
-    # Create the patched Lightning file.
-    sed 's|root_node = \(self\.resolve_root_node_address(.*)\)$|root_node = os.getenv("MASTER_ADDR", \1)|g' "$venv_dir"/lib/python3.10/site-packages/lightning_fabric/plugins/environments/slurm.py  > "$scratch_dir"/slurm-master-addr-patch.py
-
-    if ! ((_is_offline)); then
-        # Download all HuggingFace tokenizers that NeMo can use.
-        python -c 'from transformers import AutoTokenizer; list(AutoTokenizer.from_pretrained(tok_name) for tok_name in ["gpt2", "bert-large-uncased", "bert-large-cased"])'
-    fi
+if ((_is_installing)) && ! ((_is_offline)); then
+    # Download all HuggingFace tokenizers that NeMo can use.
+    python -c 'from transformers import AutoTokenizer; list(AutoTokenizer.from_pretrained(tok_name) for tok_name in ["gpt2", "bert-large-uncased", "bert-large-cased"])'
 fi
 
 pop_curr_file

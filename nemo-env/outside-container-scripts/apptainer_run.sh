@@ -57,7 +57,6 @@ fi
 env -u BASH_ENV -u CC -u CFLAGS -u CMAKE_LIBRARY_PATH -u CMAKE_PREFIX_PATH \
     -u CPATH -u CXX -u CXXFLAGS -u LESSOPEN -u PYTHONPATH \
     "$apptainer_bin" run --nv \
-    --bind "$scratch_dir"/slurm-master-addr-patch.py:/usr/local/lib/python3.10/dist-packages/lightning_fabric/plugins/environments/slurm.py \
     "$apptainer_file" "${args[@]}"
 
 pop_curr_file
