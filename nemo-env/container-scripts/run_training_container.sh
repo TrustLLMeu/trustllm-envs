@@ -62,6 +62,7 @@ python -u \
     model.tokenizer.merge_file="$TOKENIZER_MERGE_FILE" \
     +model.data.data_prefix=\{train:\[1.0,"$TRAIN_DATA_PREFIX"\],validation:\[1.0,"$EVAL_DATA_PREFIX"\],test:\[1.0,"$TEST_DATA_PREFIX"\]\} \
     model.data.num_workers="$PER_SPLIT_NUM_WORKERS" \
+    exp_manager.name="megatron_llama_my-tiny-c4-gpt2-tok_mcore-\${model.mcore_gpt}_te-\${model.transformer_engine}" \
     exp_manager.exp_dir="$MODEL_CHECKPOINT_DIR"
 
 # Same as above, but using SentencePiece tokenizer.
