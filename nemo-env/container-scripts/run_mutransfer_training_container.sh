@@ -26,7 +26,7 @@ nemo_repo_dir="$ext_repo_dir"/NeMo
 # - use BF16 precision,
 # - use smaller micro and global batch sizes,
 # - use FSDP as the sole parallelization strategy,
-# - use FlashAttention-2 (unless `model.mcore_gpt=True`),
+# - use FlashAttention-2 (only relevant if `model.mcore_gpt=False`),
 # - use a local tokenizer,
 # - use local preprocessed data from SCRATCH,
 # - use multiple CPUs for data processing (variables defined outside
