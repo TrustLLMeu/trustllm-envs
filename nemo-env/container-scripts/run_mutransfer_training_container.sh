@@ -42,7 +42,7 @@ te_value=True
 make_mup_value=True
 num_query_groups=4
 
-exp_name="megatron_llama_mutransfer_my-tiny-c4-gpt2-tok_lr-\${model.optim.lr}__mcore-\${model.mcore_gpt}_te-\${model.transformer_engine}"
+exp_name="megatron_llama_mutransfer_my-tiny-c4-gpt2-tok_lr-\${model.optim.lr}_mcore-\${model.mcore_gpt}_te-\${model.transformer_engine}"
 
 python -u \
     "$nemo_repo_dir"/examples/nlp/language_modeling/megatron_gpt_cal_shape.py  \
