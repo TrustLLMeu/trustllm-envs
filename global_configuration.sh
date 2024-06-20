@@ -12,7 +12,7 @@ source "$_curr_dir"/global-scripts/get_curr_file.sh "$_curr_file"
 
 # Which machine we are running on. Currently supported options:
 # - "jsc" (JUWELS Booster, JUWELS Cluster, JURECA-DC)
-# - "bsc" (MareNostrum 5)
+# - "bsc" (MareNostrum 5 ACC)
 machine_name=jsc
 
 # Set the following variables depending on the machine:

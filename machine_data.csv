@@ -4,4 +4,4 @@ jwb:/p/project1:/p/scratch:trustllm-eu:apptainer:8.0
 jwc:/p/project1:/p/scratch:trustllm-eu:apptainer:7.0
 jrc:/p/project1:/p/scratch:trustllm-eu:apptainer:8.0;9.0
 bsc:/gpfs/projects:/gpfs/scratch:ehpc09:apptainer:9.0
-mn5:/gpfs/projects:/gpfs/scratch:ehpc09:apptainer:9.0
+mn5a:/gpfs/projects:/gpfs/scratch:ehpc09:apptainer:9.0
