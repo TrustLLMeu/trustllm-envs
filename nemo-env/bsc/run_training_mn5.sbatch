@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-# Run a model training on MareNostrum 5.
+# Run a model training on MareNostrum 5 ACC.
 
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=4
-#SBATCH --cpus-per-task=16  # 64 physical cores per node.
+#SBATCH --cpus-per-task=20  # 80 physical cores per node.
 #SBATCH --hint=nomultithread  # Use only physical CPU cores.
 #SBATCH --gres=gpu:4
 #SBATCH --time=00:20:00
@@ -36,11 +36,11 @@ export DEVICES_PER_NODE=4
 
 export NUM_NODES="$SLURM_JOB_NUM_NODES"
 
-# We have 64 physical CPU cores on MareNostrum 5 nodes, so configure
-# 7 * 2 = 14 active data workers per GPU in total (that is, for the
-# "train" and "validation" split; we exclude the "test" split here);
-# this leaves one CPU for the main process.
-export PER_SPLIT_NUM_WORKERS=7
+# We have 80 physical CPU cores on MareNostrum 5 ACC nodes, so
+# configure 9 * 2 = 18 active data workers per GPU in total (that is,
+# for the "train" and "validation" split; we exclude the "test" split
+# here); this leaves one CPU for the main process.
+export PER_SPLIT_NUM_WORKERS=9
 
 export TRAIN_CONFIG_YAML_DIR="$ext_repo_dir"/NeMo/examples/nlp/language_modeling/conf
 # This is the name of the YAML file to use, contained in

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-# Preprocess data in parallel on MareNostrum 5.
+# Preprocess data in parallel on MareNostrum 5 ACC.
 
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=64  # 64 physical cores per node.
+#SBATCH --cpus-per-task=80  # 80 physical cores per node.
 #SBATCH --hint=nomultithread  # Use only physical CPU cores.
 #SBATCH --gres=gpu:0  # 4 GPUs per node
 #SBATCH --time=00:20:00
