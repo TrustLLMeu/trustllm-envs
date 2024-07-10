@@ -28,7 +28,8 @@ export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 export MASTER_ADDR="$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)"
 if [ "$SYSTEMNAME" = juwelsbooster ] \
        || [ "$SYSTEMNAME" = juwels ] \
-       || [ "$SYSTEMNAME" = jurecadc ]; then
+       || [ "$SYSTEMNAME" = jurecadc ] \
+       || [ "$SYSTEMNAME" = jusuf ]; then
     # Allow communication over InfiniBand cells on JSC machines.
     MASTER_ADDR="$MASTER_ADDR"i
 fi
