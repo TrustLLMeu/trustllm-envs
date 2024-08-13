@@ -29,7 +29,6 @@ def run_split(in_path, left_fmt, right_fmt, right_prob):
     right_path = right_fmt.format(in_path)
     right_builder = MMapIndexedDatasetBuilder(get_bin_path(right_path), dtype)
 
-    #for d in tqdm.tqdm(ds):
     for d in ds:
         if random.random() > right_prob:
             builder = left_builder
