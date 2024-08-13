@@ -5,7 +5,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=128  # 128 physical cores per node.
-#SBATCH --hint=nomultithread  # Use only physical CPU cores.
+#SBATCH --threads-per-core=1  # Use only physical CPU cores.
 #SBATCH --time=00:20:00
 #SBATCH --account=trustllm-eu
 # Use `dc-cpu-devel` for debugging, `dc-cpu` for "normal" jobs,

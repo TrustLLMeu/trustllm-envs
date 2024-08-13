@@ -5,7 +5,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=80  # 80 physical cores per node.
-#SBATCH --hint=nomultithread  # Use only physical CPU cores.
+#SBATCH --threads-per-core=1  # Use only physical CPU cores.
 #SBATCH --gres=gpu:0  # 4 GPUs per node
 #SBATCH --time=00:20:00
 #SBATCH --account=ehpc09

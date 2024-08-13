@@ -5,7 +5,7 @@
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=4
 #SBATCH --cpus-per-task=32  # 128 physical cores per node.
-#SBATCH --hint=nomultithread  # Use only physical CPU cores.
+#SBATCH --threads-per-core=1  # Use only physical CPU cores.
 #SBATCH --gres=gpu:4
 #SBATCH --time=00:20:00
 #SBATCH --account=trustllm-eu
