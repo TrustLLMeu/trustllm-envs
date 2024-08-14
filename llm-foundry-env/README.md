@@ -212,8 +212,8 @@ build on.
 For `pip`, we assume that the container is available locally, so that
 correct package versions are automatically downloaded. Optionally,
 extra arguments to `pip download` (such as `--platform` or
-`--python-version`) can be given as extra arguments to `set_up.sh`. To
-pre-download into the configured `pip_offline_dir`:
+`--python-version`) can be given as extra arguments to `set_up.sh
+download`. To pre-download into the configured `pip_offline_dir`:
 
 ```shell
 nice bash set_up.sh download
