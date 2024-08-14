@@ -54,7 +54,10 @@ def main():
         print('Processing', input_file)
         output_prefix = os.path.join(
             args.output_prefix,
-            f'{os.path.basename(args.output_prefix)}_{i:0{shard_size}}',
+            (
+                f'{os.path.basename(args.output_prefix)}'
+                f'_{i:0{len(str(len(input_files)))}}'
+            ),
         )
         sys.argv = sys.argv[:-2] + [
             f'--input={input_file}',
