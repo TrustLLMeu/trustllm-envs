@@ -40,6 +40,10 @@ export NUM_NODES="$SLURM_JOB_NUM_NODES"
 # configure 9 * 2 = 18 active data workers per GPU in total (that is,
 # for the "train" and "validation" split; we exclude the "test" split
 # here); this leaves one CPU for the main process.
+#
+# However, depending on the dataset used, this number of workers may
+# consume more RAM than available. Decrease this number until you find
+# a suitable value in that case.
 export PER_SPLIT_NUM_WORKERS=9
 
 export TRAIN_CONFIG_YAML_DIR="$ext_repo_dir"/NeMo/examples/nlp/language_modeling/conf
