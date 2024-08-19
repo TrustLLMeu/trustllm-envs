@@ -76,9 +76,16 @@ for _repo_tuple in "${repos[@]}"; do
         # so that software state is completely under user control.
         pushd "$_curr_repo_dir"
 
+        # Do we maybe have to change the repo's remote URI?
+        if [ "$_repo_uri" = 'https://github.com/TrustLLMeu/NeMo.git' ] \
+               || [ "$_repo_uri" = 'https://github.com/TrustLLMeu/Megatron-LM.git' ]; then
+            _forked_repo_uri=1
+        else
+            _forked_repo_uri=0
+        fi
         # For safety, we upgrade URI of `origin` to our fork.
         # Previously this was the upstream NVIDIA `origin`.
-        if [ "$_repo_uri" = 'https://github.com/TrustLLMeu/NeMo.git' ] \
+        if ((_forked_repo_uri)) \
            && [ "$(git remote get-url origin)" != "$_repo_uri" ]; then
             git remote add prev-origin "$(git remote get-url origin)"
             git remote set-url origin "$_repo_uri"
