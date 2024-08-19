@@ -633,12 +633,25 @@ class MMapIndexedDatasetBuilder(object):
 
 
 @click.command()
-@click.option('--in_path', required=True)
-@click.option('--left_path', default='train')
-@click.option('--right_path', default='valid')
-@click.option('--right_prob', default=1e-3)
-@click.option('--right_max', default=1000)
-@click.option('--seed', default=0x5eed)
+@click.option('--in_path', 
+              required=True, 
+              help='Input path (without file extensions .bin or .idx) for megatron data pair.')
+@click.option('--left_path',
+              default='train', 
+              help='Output path (without file extension .bin or .idx) for the left (default: train) split.')
+@click.option('--right_path', 
+              default='valid',
+              help='Output path (without file extension .bin or .idx) for the right (default: valid) split.')
+@click.option('--right_prob', 
+              default=1e-3,
+              help='Probability of a sample ending up in the right (valid) split. NOTE: The minimum (in expected number of samples) of right_prob and right_max is chosen during splitting.')
+@click.option('--right_max', 
+              default=1000,
+              help='Approximate number of samples that should end up in the right (valid) split. NOTE: The minimum (in expected number of samples) of right_prob and right_max is chosen during splitting.')
+@click.option('--seed', 
+              default=0x5eed,
+              help='Seed for the RNG'
+              )
 def run_split(in_path, left_path, right_path, right_prob, right_max, seed):
     ds = MMapIndexedDataset(in_path)
     dtype = ds._index.dtype
