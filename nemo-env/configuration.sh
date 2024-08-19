@@ -44,11 +44,11 @@ repos=()
 # Backend library. Commit found manually by checking using recursive
 # `diff` in old NeMo container (nvcr.io/nvidia/nemo:24.05). The exact
 # commit couldn't be reproduced.
-repos+=( 'https://github.com/TrustLLMeu/Megatron-LM.git a645f89671be698612170539f2089dc15db66a80' )
+repos+=( 'https://github.com/TrustLLMeu/Megatron-LM.git 145de4c331b5f38b9bbf40a10adb9555b422f32c' )
 # Main framework. Commit taken from old NeMo container
 # `/opt/NeMo/.git/logs/HEAD`.
 # This would execute `python -m pip install -e '.[all]'`
-repos+=( 'https://github.com/TrustLLMeu/NeMo.git 92ca94c0fa8b54df8d0cf38338d27261a49725a1 [all]' )
+repos+=( 'https://github.com/TrustLLMeu/NeMo.git ed73196867efca10da73077121001e4f5aa48298 [all]' )
 # Launcher library. Commit taken from old NeMo container
 # `/opt/NeMo-Framework-Launcher/.git/logs/HEAD`.
 # This one is hardcoded to execute `python -m pip install -r
