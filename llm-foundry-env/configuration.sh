@@ -44,17 +44,17 @@ repos=()
 # example below); separated by spaces.
 # Data processing/format library. Latest version specified in
 # `llm-foundry/setup.py`.
-repos+=( 'https://github.com/mosaicml/streaming.git v0.7.6' )
+repos+=( 'https://github.com/mosaicml/streaming.git v0.8.0' )
 # MoE library. Latest version specified in `llm-foundry/setup.py`.
 repos+=( 'https://github.com/databricks/megablocks.git v0.5.1' )
 # Trainer library. Latest version specified in `llm-foundry/setup.py`.
-repos+=( 'https://github.com/mosaicml/composer.git v0.22.0 [nlp,tensorboard,wandb]' )
+repos+=( 'https://github.com/mosaicml/composer.git v0.23.5 [nlp,tensorboard,wandb]' )
 # Main framework. Latest release version.
 # The feature "gpu" is the same as "gpu-flash2", but we currently keep
 # the latter explicit specification because that is a very recent
 # change.
 # This would execute `python -m pip install -e '.[gpu-flash2,tensorboard]'`
-repos+=( 'https://github.com/mosaicml/llm-foundry.git v0.8.0 [gpu-flash2,megablocks,openai,tensorboard]' )
+repos+=( 'https://github.com/mosaicml/llm-foundry.git v0.11.0 [gpu-flash2,megablocks,openai,tensorboard]' )
 # For example, this would clone a repo at tag v0.0.1 and do a standard
 # `pip install -e .`:
 # repos+=( 'https://github.com/github/example-repo.git v0.0.1' )
@@ -76,7 +76,7 @@ data_dir="$scratch_dir"/data
 checkpoint_dir="$scratch_dir"/experiments
 
 # Which container to build.
-docker_image_uri='docker://docker.io/mosaicml/pytorch:2.3.0_cu121-python3.11-ubuntu20.04'
+docker_image_uri='docker://docker.io/mosaicml/pytorch:2.3.1_cu121-python3.11-ubuntu20.04'
 # Which file to build the container in. The default settings
 # automatically grab the information from the tail of the URI.
 apptainer_build_file="$scratch_dir"/apptainers/build/llm-foundry_"$(basename "$docker_image_uri" | tr ':' '_')".sif
