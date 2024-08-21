@@ -5,7 +5,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=48  # 48 physical cores per node.
-#SBATCH --hint=nomultithread  # Use only physical CPU cores.
+#SBATCH --threads-per-core=1  # Use only physical CPU cores.
 #SBATCH --gres=gpu:4
 #SBATCH --time=00:20:00
 #SBATCH --account=trustllm-eu
@@ -28,7 +28,8 @@ export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 export MASTER_ADDR="$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)"
 if [ "$SYSTEMNAME" = juwelsbooster ] \
        || [ "$SYSTEMNAME" = juwels ] \
-       || [ "$SYSTEMNAME" = jurecadc ]; then
+       || [ "$SYSTEMNAME" = jurecadc ] \
+       || [ "$SYSTEMNAME" = jusuf ]; then
     # Allow communication over InfiniBand cells on JSC machines.
     MASTER_ADDR="$MASTER_ADDR"i
 fi

@@ -5,7 +5,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=48  # 1 task per core.
 #SBATCH --cpus-per-task=1  # 48 physical cores per node.
-#SBATCH --hint=nomultithread  # Use only physical CPU cores.
+#SBATCH --threads-per-core=1  # Use only physical CPU cores.
 #SBATCH --time=00:20:00
 #SBATCH --account=trustllm-eu
 # Use `devel` for debugging, `batch` for "normal" jobs, `mem192` for
