@@ -76,7 +76,7 @@ data_dir="$scratch_dir"/data
 checkpoint_dir="$scratch_dir"/experiments
 
 # Which container to build.
-docker_image_uri='docker://docker.io/mosaicml/pytorch:2.3.1_cu121-python3.11-ubuntu20.04'
+docker_image_uri='docker://docker.io/mosaicml/pytorch:2.3.0_cu121-python3.11-ubuntu20.04'
 # Which file to build the container in. The default settings
 # automatically grab the information from the tail of the URI.
 apptainer_build_file="$scratch_dir"/apptainers/build/llm-foundry_"$(basename "$docker_image_uri" | tr ':' '_')".sif
