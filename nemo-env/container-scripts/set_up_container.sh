@@ -93,6 +93,8 @@ for _repo_tuple in "${repos[@]}"; do
         fi
 
         if [ "$#" -gt 0 ] && [ "$1" = update ]; then
+            git fetch --tags -f
+
             # Check whether we have something to stash: (We have to do
             # it so awkwardly so that Bash does not exit unsuccessful
             # commands.)
@@ -103,7 +105,6 @@ for _repo_tuple in "${repos[@]}"; do
             ! git diff-files --quiet
             _is_clean="$((_is_clean && $?))"
 
-            git fetch --tags -f
             if ! ((_is_clean)); then
                 git stash push -m "Update setup at $(date)"
             fi
