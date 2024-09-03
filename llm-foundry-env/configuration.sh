@@ -45,16 +45,16 @@ repos=()
 # Data processing/format library. Latest version specified in
 # `llm-foundry/setup.py`.
 repos+=( 'https://github.com/mosaicml/streaming.git v0.8.0' )
-# MoE library. Latest version specified in `llm-foundry/setup.py`.
-repos+=( 'https://github.com/databricks/megablocks.git v0.5.1' )
-# Trainer library. Latest version specified in `llm-foundry/setup.py`.
-repos+=( 'https://github.com/mosaicml/composer.git v0.23.5 [nlp,tensorboard,wandb]' )
-# Main framework. Latest release version.
+# MoE library. Latest version specified in `llm-foundry/setup.py` (based on v0.5.1).
+repos+=( 'https://github.com/TrustLLMeu/megablocks.git e10559023f4734a17bc8d2fbbce4b98360a70363' )
+# Trainer library. Latest version specified in `llm-foundry/setup.py` (based on v0.23.5).
+repos+=( 'https://github.com/TrustLLMeu/composer.git e494f9b74f75dc0aba6249c15118f917a6a3bbfe [nlp,tensorboard,wandb]' )
+# Main framework. Latest release version (based on v0.11.0).
 # The feature "gpu" is the same as "gpu-flash2", but we currently keep
 # the latter explicit specification because that is a very recent
 # change.
 # This would execute `python -m pip install -e '.[gpu-flash2,tensorboard]'`
-repos+=( 'https://github.com/mosaicml/llm-foundry.git v0.11.0 [gpu-flash2,megablocks,openai,tensorboard]' )
+repos+=( 'https://github.com/TrustLLMeu/llm-foundry.git 197e4a1ab49cc44dcb2b44bce46081355dbfec4d [gpu-flash2,megablocks,openai,tensorboard]' )
 # For example, this would clone a repo at tag v0.0.1 and do a standard
 # `pip install -e .`:
 # repos+=( 'https://github.com/github/example-repo.git v0.0.1' )
