@@ -1,6 +1,6 @@
 # This patching version of parallel data processing was implemented on
 # top of `scripts/convert_dataset_json.py` at revision
-# 1ef7409c8fa8f8a4ece7dd5935ecb02a09f6044a.
+# 96dba068f5b7acb3246b4ee9749cf5ef1aad6ea1.
 
 """
 Parallel streaming dataset conversion scripts for JSON files.
@@ -12,6 +12,7 @@ import os
 
 import datasets
 from datasets.distributed import split_dataset_by_node
+from llmfoundry.command_utils import convert_dataset_json_from_args
 
 import convert_dataset_json
 
@@ -41,7 +42,11 @@ def patch_load_hf_dataset(
                 and kwargs['data_files'] == data_files
                 and kwargs['split'] == split
         ):
-            hf_dataset = split_dataset_by_node(hf_dataset, rank=rank, world_size=world_size)
+            hf_dataset = split_dataset_by_node(
+                hf_dataset,
+                rank=rank,
+                world_size=world_size,
+            )
 
         return hf_dataset
 
@@ -71,4 +76,16 @@ if __name__ == '__main__':
     # Give each process its own output directory
     args.out_root = os.path.join(args.out_root, str(rank))
 
-    convert_dataset_json.main(args)
+    convert_dataset_json_from_args(
+        path=args.path,
+        out_root=args.out_root,
+        compression=args.compression,
+        concat_tokens=args.concat_tokens,
+        split=args.split,
+        tokenizer=args.tokenizer,
+        bos_text=args.bos_text,
+        eos_text=args.eos_text,
+        no_wrap=args.no_wrap,
+        get_bos_token_id=args.get_bos_token_id,
+        get_eos_token_id=args.get_eos_token_id,
+    )
