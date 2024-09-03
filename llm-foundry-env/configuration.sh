@@ -48,7 +48,7 @@ repos+=( 'https://github.com/mosaicml/streaming.git v0.8.0' )
 # MoE library. Latest version specified in `llm-foundry/setup.py` (based on v0.5.1).
 repos+=( 'https://github.com/TrustLLMeu/megablocks.git e10559023f4734a17bc8d2fbbce4b98360a70363' )
 # Trainer library. Latest version specified in `llm-foundry/setup.py` (based on v0.23.5).
-repos+=( 'https://github.com/TrustLLMeu/composer.git e494f9b74f75dc0aba6249c15118f917a6a3bbfe [nlp,tensorboard,wandb]' )
+repos+=( 'https://github.com/TrustLLMeu/composer.git e494f9b74f75dc0aba6249c15118f917a6a3bbfe [mlflow,nlp,tensorboard,wandb]' )
 # Main framework. Latest release version (based on v0.11.0).
 # The feature "gpu" is the same as "gpu-flash2", but we currently keep
 # the latter explicit specification because that is a very recent
