@@ -75,13 +75,11 @@ def run_split(in_path, left_path, right_path, right_prob, right_max, seed):
                 columns=columns,
                 out=left_path,
                 compression=compression,
-                size_limit=None,
             ) as left_out,
             MDSWriter(
                 columns=columns,
                 out=right_path,
                 compression=compression,
-                size_limit=None,
             ) as right_out,
     ):
         rng = np.random.default_rng(seed)

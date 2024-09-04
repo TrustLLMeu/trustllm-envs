@@ -208,7 +208,6 @@ def convert_dataset_parquet(
         columns=columns,
         out=os.path.join(out_root, str(rank)),
         compression=compression,
-        size_limit=None,  # Do not split into shards.
     ) as out:
         # Can help to remove `tqdm`.
         # for sample in tqdm(dataset):
