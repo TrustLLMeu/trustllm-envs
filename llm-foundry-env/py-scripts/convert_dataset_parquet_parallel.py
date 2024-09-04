@@ -93,6 +93,10 @@ def build_hf_dataset(
         data_files=data_files,
         split=split,
         streaming=True,
+        # This has nothing to do with a SGD batch size, but is the
+        # number of samples in which shards of the underlying Parquet
+        # data are loaded.
+        batch_size=16384,
     )
     hf_dataset = split_dataset_by_node(
         hf_dataset,
