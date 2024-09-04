@@ -54,7 +54,7 @@ repos+=( 'https://github.com/TrustLLMeu/composer.git 68665ea38590e4df7b99aa1eb5a
 # the latter explicit specification because that is a very recent
 # change.
 # This would execute `python -m pip install -e '.[gpu-flash2,tensorboard]'`
-repos+=( 'https://github.com/TrustLLMeu/llm-foundry.git 169388435a443a11c966e0711922b1d367b01ad1 [gpu-flash2,megablocks,openai,tensorboard]' )
+repos+=( 'https://github.com/TrustLLMeu/llm-foundry.git b0fb7cd739371fc7c33a46016fa4c92a0a904987 [gpu-flash2,megablocks,openai,tensorboard]' )
 # For example, this would clone a repo at tag v0.0.1 and do a standard
 # `pip install -e .`:
 # repos+=( 'https://github.com/github/example-repo.git v0.0.1' )
