@@ -12,10 +12,13 @@ def main():
     parser = ArgumentParser()
     parser.add_argument(
         'tok_dir',
-        required=True,
         help='Directory to load the HuggingFace tokenizer from.',
     )
     args = parser.parse_args()
 
     vocab_size = get_vocab_size(args.tok_dir)
     print(vocab_size)
+
+
+if __name__ == '__main__':
+    main()
