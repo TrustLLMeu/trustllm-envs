@@ -23,7 +23,7 @@ fi
 TRAIN_NUM_WORKERS="${TRAIN_NUM_WORKERS:-0}"
 EVAL_NUM_WORKERS="${EVAL_NUM_WORKERS:-0}"
 
-vocab_size="$((python -u "$(get_curr_dir)"/../py-scripts/get_vocab_size.py "$TOKENIZER_DIR"))"
+vocab_size="$(python -u "$(get_curr_dir)"/../py-scripts/get_vocab_size.py "$TOKENIZER_DIR")"
 # Vocab size will be padded to a multiple of this value.
 pad_vocab_size_to=128
 if [ "$((vocab_size % pad_vocab_size_to))" -eq 0 ]; then
