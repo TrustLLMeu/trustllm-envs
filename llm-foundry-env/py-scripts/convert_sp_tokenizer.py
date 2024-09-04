@@ -1,3 +1,17 @@
+"""
+Convert a SentencePiece tokenizer to HuggingFace.
+
+Note that the "fast" versions are not compatible with the conversion
+because their implementation does not match. They will not be able to
+match the original SentencePiece tokenizer no matter which configuration
+is used. That makes it imperative to pass the `use_fast=False` argument
+to `AutoTokenizer.from_pretrained` when creating the tokenizer. If this
+is omitted, the tokenizer **will not work as it should**.
+
+Similarly, a `LlamaTokenizerFast` should never be instantiated manually
+from a converted tokenizer.
+"""
+
 from argparse import ArgumentParser
 
 import sentencepiece as spm
