@@ -43,4 +43,11 @@ python -u "$(get_curr_dir)"/../py-scripts/convert_dataset_json_parallel.py \
   --concat_tokens 2048 --tokenizer "$TOKENIZER_DIR" \
   --get_bos_token_id --get_eos_token_id
 
+# Convert raw Parquet data.
+# python -u "$(get_curr_dir)"/../py-scripts/convert_dataset_parquet_parallel.py \
+#   --path "$INPUT_DATA_FILE" \
+#   --out_root "$OUTPUT_DATA_DIR" --split train \
+#   --concat_tokens 2048 --tokenizer "$TOKENIZER_DIR" \
+#   --get_bos_token_id --get_eos_token_id --no_use_fast
+
 pop_curr_file
