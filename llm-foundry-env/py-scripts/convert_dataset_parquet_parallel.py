@@ -135,6 +135,7 @@ def convert_dataset_parquet(
     no_wrap: bool = False,
     get_bos_token_id: bool = False,
     get_eos_token_id: bool = False,
+    use_fast: bool = True,
     recurse: bool = False,
     num_workers: Optional[int] = None,
 ) -> None:
@@ -154,13 +155,14 @@ def convert_dataset_parquet(
             sequence from the tokenizer
         get_eos_token_id (bool): Whether to get the token ID to insert at the end of each sequence
             from the tokenizer
+        use_fast (bool): Whether to use a fast version of the tokenizer.
         recurse (bool): Whether to recurse into subdirectories of the given path to look for data
             files.
         num_workers (Optional[int]): Number of workers for data loading
     """
     if concat_tokens is not None:
         mode = ConcatMode.CONCAT_TOKENS
-        built_tokenizer = AutoTokenizer.from_pretrained(tokenizer)
+        built_tokenizer = AutoTokenizer.from_pretrained(tokenizer, use_fast=use_fast)
         # we will enforce length, so suppress warnings about sequences too long for the model
         built_tokenizer.model_max_length = int(1e30)
         columns = {'tokens': 'ndarray:int32'}
@@ -226,6 +228,7 @@ def convert_dataset_parquet_from_args(
     no_wrap: bool = False,
     get_bos_token_id: bool = False,
     get_eos_token_id: bool = False,
+    use_fast: bool = True,
     recurse: bool = False,
     num_workers: Optional[int] = None,
 ) -> None:
@@ -245,6 +248,7 @@ def convert_dataset_parquet_from_args(
             sequence from the tokenizer
         get_eos_token_id (bool): Whether to get the token ID to insert at the end of each sequence
             from the tokenizer
+        use_fast (bool): Whether to use a fast version of the tokenizer.
         recurse (bool): Whether to recurse into subdirectories of the given path to look for data
             files.
         num_workers (Optional[int]): Number of workers for data loading
@@ -287,6 +291,7 @@ def convert_dataset_parquet_from_args(
         no_wrap=no_wrap,
         get_bos_token_id=get_bos_token_id,
         get_eos_token_id=get_eos_token_id,
+        use_fast=use_fast,
         recurse=recurse,
         num_workers=num_workers,
     )
@@ -324,6 +329,7 @@ def parse_args() -> Namespace:
     parser.add_argument('--no_wrap', default=False, action='store_true')
     parser.add_argument('--get_bos_token_id', action='store_true')
     parser.add_argument('--get_eos_token_id', action='store_true')
+    parser.add_argument('--no_use_fast', action='store_true')
 
     parsed = parser.parse_args()
     return parsed
@@ -343,5 +349,6 @@ if __name__ == '__main__':
         no_wrap=args.no_wrap,
         get_bos_token_id=args.get_bos_token_id,
         get_eos_token_id=args.get_eos_token_id,
+        use_fast=not args.no_use_fast,
         recurse=args.recurse,
     )
