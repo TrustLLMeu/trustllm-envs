@@ -28,6 +28,16 @@ class ConcatMode(Enum):
     CONCAT_TOKENS = 'CONCAT_TOKENS'
 
 
+def patch_dataset_sharding():
+    import itertools
+
+    def my_iter(self):
+        ex_iterator = iter(self.ex_iterable)
+        return itertools.islice(ex_iterator, self.offset, None, self.step)
+
+    hf_datasets.iterable_dataset.StepExamplesIterable.__iter__ = my_iter
+
+
 def build_hf_dataset(
     path: str,
     split: str,
@@ -335,6 +345,7 @@ def parse_args() -> Namespace:
 
 
 if __name__ == '__main__':
+    patch_dataset_sharding()
     args = parse_args()
     convert_dataset_parquet_from_args(
         path=args.path,
