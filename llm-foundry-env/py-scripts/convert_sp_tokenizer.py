@@ -41,6 +41,7 @@ def create_hf_tok(path, spm_tok):
         from_slow=True,
         legacy=False,
     )
+    tok.pad_token_id = spm_tok.pad_id()
     return tok
 
 
