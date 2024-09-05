@@ -1,0 +1,203 @@
+variables:
+  data_local: ???
+  data_remote:  # If blank, files must be present in data_local
+  max_seq_len: ???
+  global_seed: ???
+
+  # Run Name
+  run_name:  # If left blank, will be read from env var $RUN_NAME
+
+max_seq_len: ${variables.max_seq_len}
+run_name: ${variables.run_name}
+
+# Model
+model:
+  name: mpt_causal_lm
+  init_device: meta
+  d_model: ???
+  n_heads: ???
+  n_layers: ???
+  expansion_ratio: ???
+  max_seq_len: ${variables.max_seq_len}
+  learned_pos_emb: false
+  vocab_size: ???
+  resid_pdrop: 0.0
+  emb_pdrop: 0.0
+  embedding_fraction: 1.0
+  tie_word_embeddings: false
+  no_bias: true
+  norm_type: rmsnorm
+  norm_eps: 1e-5
+  logit_scale: ${eval:'1 / ${model._mup_config.d_model_ratio}'}
+  fc_type: torch
+  ffn_config:
+    ffn_type: mptglu
+    ffn_act_fn: 
+      name: silu
+  attn_config:
+    attn_type: grouped_query_attention
+    attn_impl: flash
+    attn_pdrop: 0.0
+    kv_n_heads: ???
+    softmax_scale: ${eval:'(${model._mup_config.d_heads_base})**0.5 / ${model._mup_config.d_heads}'}
+    qk_ln: false
+    qk_gn: false
+    fused_qkv: true
+    clip_qkv: null
+    attn_uses_sequence_id: false
+    sliding_window_size: -1
+    alibi: false
+    rope: true
+    rope_theta: 500000
+    rope_impl: hf
+    rope_hf_config:
+      type: no_scaling
+      factor: 1.0
+  init_config:
+    name: baseline_
+    _init_std_base: ???
+    init_std: ${eval:'${._init_std_base} / ${model._mup_config.d_model_ratio}**0.5'}
+    init_div_is_residual: True # True: 1 / math.sqrt(2 * cfg.n_layers)
+    emb_init_std: ${._init_std_base}
+    unemb_init_std: ${._init_std_base}
+  _mup_config: 
+    d_model_base: ???
+    n_heads_base: ???
+    d_heads_base: ${eval:'${.d_model_base} / ${.n_heads_base}'}
+    d_heads: ${eval:'${model.d_model} / ${model.n_heads}'}
+    d_model_ratio: ${eval:'${model.d_model} / ${.d_model_base}'} 
+    eps_base: ???
+    matrix_like_params:
+      - param_str_match: attn.Wqkv.weight
+        lr: ${eval:'${optimizer.lr} / ${model._mup_config.d_model_ratio}'}
+        eps: ${eval:'${model._mup_config.eps_base} / ${model._mup_config.d_model_ratio}'}
+      - param_str_match: attn.out_proj.weight
+        lr: ${eval:'${optimizer.lr} / ${model._mup_config.d_model_ratio}'}
+        eps: ${eval:'${model._mup_config.eps_base} / ${model._mup_config.d_model_ratio}'}
+      - param_str_match: ffn.up_proj.weight
+        lr: ${eval:'${optimizer.lr} / ${model._mup_config.d_model_ratio}'}
+        eps: ${eval:'${model._mup_config.eps_base} / ${model._mup_config.d_model_ratio}'}
+      - param_str_match: ffn.down_proj.weight
+        lr: ${eval:'${optimizer.lr} / ${model._mup_config.d_model_ratio}'}
+        eps: ${eval:'${model._mup_config.eps_base} / ${model._mup_config.d_model_ratio}'}
+      - param_str_match: ffn.gate_proj.weight
+        lr: ${eval:'${optimizer.lr} / ${model._mup_config.d_model_ratio}'}
+        eps: ${eval:'${model._mup_config.eps_base} / ${model._mup_config.d_model_ratio}'}
+
+# Tokenizer
+tokenizer:
+  name: ???
+  kwargs:
+    model_max_length: ${variables.max_seq_len}
+    use_fast: false
+
+# Dataloaders
+train_loader:
+  name: text
+  dataset:
+    local:
+    remote:
+    split: train
+    shuffle: true
+    max_seq_len: ${variables.max_seq_len}
+    shuffle_seed: ${variables.global_seed}
+    streams:
+      dan:
+        local: "${variables.data_local}/dan"
+        proportion: 0.5
+      eng:
+        local:  "${variables.data_local}/eng"
+        proportion: 0.5
+  drop_last: true
+  num_workers: ???
+
+eval_loader:
+  name: text
+  dataset:
+    local:
+    remote:
+    split: val
+    shuffle: false
+    max_seq_len: ${variables.max_seq_len}
+    shuffle_seed: ${variables.global_seed}
+    streams:
+      dan:
+        local: "${variables.data_local}/dan"
+        proportion: 0.5
+      eng:
+        local:  "${variables.data_local}/eng"
+        proportion: 0.5
+  drop_last: false
+  num_workers: ???
+
+# Optimization
+scheduler:
+  name: ???
+  t_warmup: ???
+  t_constant: ???
+  t_decay: ???
+  alpha_f: ???
+
+optimizer:
+  name: ???
+  lr: ???
+  betas: ???
+  weight_decay: ???
+  eps: ${model._mup_config.eps_base}
+  param_groups: ${model._mup_config.matrix_like_params}
+
+algorithms:
+  gradient_clipping:
+    clipping_type: norm
+    clipping_threshold: 1.0
+
+max_duration: ???
+eval_interval: ???
+eval_first: false
+eval_subset_num_batches: -1
+global_train_batch_size: ???
+
+# System
+seed: ${variables.global_seed}
+device_eval_batch_size: ???
+device_train_microbatch_size: ???
+# device_train_microbatch_size: auto
+precision: ???
+
+# FSDP
+fsdp_config:
+  sharding_strategy: ???
+  mixed_precision: PURE
+  activation_checkpointing: false
+  activation_checkpointing_reentrant: false
+  activation_cpu_offload: false
+  limit_all_gathers: true
+
+# Logging
+progress_bar: false
+log_to_console: true
+console_log_interval: 1ba
+
+callbacks:
+  # speed_monitor:
+  #   window_size: 10
+  lr_monitor: {}
+  # memory_monitor: {}
+  # runtime_estimator: {}
+
+loggers:
+  mlflow:
+    tracking_uri: ???
+    experiment_name: ???
+    run_name: ${run_name}
+    ignore_hyperparameters: []
+
+# Checkpoint to local filesystem or remote object store
+save_interval: ???
+save_overwrite: ???
+save_num_checkpoints_to_keep: ???
+save_folder: ???
+save_weights_only: false
+
+# Load from local filesystem or remote object store
+load_path: ???
