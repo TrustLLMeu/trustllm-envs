@@ -82,6 +82,15 @@ def build_hf_dataset(
             )
         else:
             data_files = glob(f'{path}/*')
+
+        if (
+                os.getenv('SLURM_ARRAY_TASK_ID')
+                and os.getenv('SLURM_ARRAY_TASK_COUNT')
+        ):
+            array_id = int(os.getenv('SLURM_ARRAY_TASK_ID'))
+            num_splits = int(os.getenv('SLURM_ARRAY_TASK_COUNT'))
+            print(f'This is process {array_id}/{num_splits}')
+            data_files = sorted(data_files)[array_id::num_splits]
     else:
         data_files = path
 
