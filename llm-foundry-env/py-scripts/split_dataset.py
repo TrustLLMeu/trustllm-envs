@@ -10,32 +10,58 @@ import tqdm
 
 def parse_args():
     parser = ArgumentParser()
-    parser.add_argument('--in_path',
-                        required=True,
-                        help='Input path (without file extensions .bin or .idx) for megatron data pair.')
-    parser.add_argument('--left_path',
-                        default='train',
-                        help='Output path (without file extension .bin or .idx) for the left (default: train) split.')
-    parser.add_argument('--right_path',
-                        default='valid',
-                        help='Output path (without file extension .bin or .idx) for the right (default: valid) split.')
-    parser.add_argument('--right_prob',
-                        default=1e-3,
-                        type=float,
-                        help='Probability of a sample ending up in the right (valid) split. NOTE: The minimum (in expected number of samples) of right_prob and right_max is chosen during splitting.')
-    parser.add_argument('--right_max',
-                        default=1000,
-                        type=int,
-                        help='Approximate number of samples that should end up in the right (valid) split. NOTE: The minimum (in expected number of samples) of right_prob and right_max is chosen during splitting.')
-    parser.add_argument('--seed',
-                        default=0x5eed,
-                        type=int,
-                        help='Seed for the RNG'
-                        )
+    parser.add_argument(
+        '--in_path',
+        required=True,
+        help='Input path for `StreamingDataset`.',
+    )
+    parser.add_argument(
+        '--left_path',
+        default='train',
+        help='Output path for the left (default: "train") split.',
+    )
+    parser.add_argument(
+        '--right_path',
+        default='valid',
+        help='Output path for the right (default: "valid") split.',
+    )
+    parser.add_argument(
+        '--right_prob',
+        default=1e-3,
+        type=float,
+        help=(
+            'Probability of a sample ending up in the right (valid) split. '
+            'NOTE: The minimum (in expected number of samples) of '
+            '`--right_prob` and `--right_max` is chosen during splitting.'
+        ),
+    )
+    parser.add_argument(
+        '--right_max',
+        default=1000,
+        type=int,
+        help=(
+            'Approximate number of samples that should end up in the right '
+            '(valid) split. NOTE: The minimum (in expected number of samples) '
+            'of right_prob and right_max is chosen during splitting.'
+        ),
+    )
+    parser.add_argument(
+        '--seed',
+        default=0x5eed,
+        type=int,
+        help='Seed for the RNG',
+    )
     return parser.parse_args()
 
 
-def run_split(in_path, left_path, right_path, right_prob, right_max, seed):
+def run_split(
+        in_path,
+        left_path,
+        right_path,
+        right_prob,
+        right_max,
+        seed,
+):
     ds = StreamingDataset(
         local=in_path,
         batch_size=1,
