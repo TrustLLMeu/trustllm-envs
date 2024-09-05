@@ -95,11 +95,24 @@ def run_split(
         # replication=replication,
     )
 
-    if 'tokens' in ds.get_item(0):
-        columns = {'tokens': 'ndarray:int32'}
+    has_tokens = 'tokens' in ds.get_item(0)
+    if has_tokens:
+        key = 'tokens'
+        columns = {key: 'ndarray:int32'}
     else:
-        columns = {'text': 'str'}
+        key = 'text'
+        columns = {key: 'str'}
 
+    print(f'{in_path = }')
+    print(f'{left_path = }')
+    print(f'{right_path = }')
+    print(f'{compression = }')
+    print(f'{columns = }')
+
+    num_elems_left = 0
+    num_samples_left = 0
+    num_elems_right = 0
+    num_samples_right = 0
     with (
             MDSWriter(
                 columns=columns,
@@ -116,11 +129,21 @@ def run_split(
 
         threshold = min(right_max / len(ds), right_prob)
         for sample in tqdm.tqdm(ds):
+            num_elems = len(sample[key])
             if rng.random() > threshold:
                 out = left_out
+                num_elems_left += num_elems
+                num_samples_left += 1
             else:
                 out = right_out
+                num_elems_right += num_elems
+                num_samples_right += 1
             out.write(sample)
+
+    print(f'{num_elems_left = }')
+    print(f'{num_samples_left = }')
+    print(f'{num_elems_right = }')
+    print(f'{num_samples_right = }')
 
 
 if __name__ == '__main__':
