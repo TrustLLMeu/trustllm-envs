@@ -51,6 +51,10 @@ def parse_args():
         type=int,
         help='Seed for the RNG',
     )
+    parser.add_argument(
+        '--compression',
+        help='Compression algorithm to use.'
+    )
     return parser.parse_args()
 
 
@@ -61,6 +65,7 @@ def run_split(
         right_prob,
         right_max,
         seed,
+        compression,
 ):
     ds = StreamingDataset(
         local=in_path,
@@ -95,7 +100,6 @@ def run_split(
     else:
         columns = {'text': 'str'}
 
-    compression = False
     with (
             MDSWriter(
                 columns=columns,
@@ -128,4 +132,5 @@ if __name__ == '__main__':
         right_prob=args.right_prob,
         right_max=args.right_max,
         seed=args.seed,
+        compression=args.compression,
     )
