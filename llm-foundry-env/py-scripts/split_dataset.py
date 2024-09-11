@@ -5,8 +5,29 @@ from argparse import ArgumentParser
 
 import numpy as np
 from streaming import MDSWriter, StreamingDataset
+import os
 import tqdm
+import multiprocessing as mp
+from functools import partial
 
+# Define worker function to handle writing data
+def write_data(writer_kwargs, ds, idx_chunk, worker_id):
+    assert 'out' in writer_kwargs
+    writer_kwargs['out'] = os.path.join(writer_kwargs['out'], str(worker_id))
+    with MDSWriter(**writer_kwargs) as writer:
+        for idx in tqdm.tqdm(idx_chunk):
+            writer.write(ds.get_item(idx))
+
+def parallelize_writing(writer_kwargs, ds, indices, num_workers):
+    # Split indices into chunks, excluding remainder
+    idx_chunks = np.array_split(indices, num_workers)
+
+    # Use multiprocessing to parallelize writing
+    with mp.Pool(processes=num_workers) as pool:
+        # Create a list of (chunk, worker_id) pairs to pass to the workers
+        worker_args = [(idx_chunks[i], i) for i in range(len(idx_chunks))]
+        # Pass worker_id and chunk to each worker using starmap
+        pool.starmap(partial(write_data, writer_kwargs, ds), worker_args)
 
 def parse_args():
     parser = ArgumentParser()
@@ -55,6 +76,12 @@ def parse_args():
         '--compression',
         help='Compression algorithm to use.'
     )
+    parser.add_argument(
+        '--num_workers',
+        default=4,
+        type=int,
+        help='Number of workers to use for parallel writing.',
+    )
     return parser.parse_args()
 
 
@@ -66,6 +93,7 @@ def run_split(
         right_max,
         seed,
         compression,
+        num_workers,
 ):
     ds = StreamingDataset(
         local=in_path,
@@ -109,42 +137,48 @@ def run_split(
     print(f'{compression = }')
     print(f'{columns = }')
 
-    num_elems_left = 0
-    num_samples_left = 0
-    num_elems_right = 0
-    num_samples_right = 0
-    with (
-            MDSWriter(
-                columns=columns,
-                out=left_path,
-                compression=compression,
-            ) as left_out,
-            MDSWriter(
-                columns=columns,
-                out=right_path,
-                compression=compression,
-            ) as right_out,
-    ):
-        rng = np.random.default_rng(seed)
+    rng = np.random.default_rng(seed)
+    threshold = min(right_max / len(ds), right_prob)
+    right_idx = []
+    while True:
+        next_id = rng.geometric(threshold)
+        if len(right_idx) > 0:
+            next_id += right_idx[-1]
+        else:
+            next_id -= 1
+        right_idx.append(next_id)
 
-        threshold = min(right_max / len(ds), right_prob)
-        for sample in tqdm.tqdm(ds):
-            num_elems = len(sample[key])
-            if rng.random() > threshold:
-                out = left_out
-                num_elems_left += num_elems
-                num_samples_left += 1
-            else:
-                out = right_out
-                num_elems_right += num_elems
-                num_samples_right += 1
-            out.write(sample)
+        if right_idx[-1] >= len(ds):
+            right_idx.pop()
+            break
+    left_idx = np.setdiff1d(np.arange(len(ds)), right_idx, assume_unique=True)
+    
+    print('total samples:', len(ds))
+    print('train samples:', len(left_idx))
+    print('val samples:', len(right_idx))
+    assert all(np.sort(np.append(left_idx, right_idx)) == range(len(ds)))
+    assert len(np.unique(left_idx)) == len(left_idx)
+    assert len(np.unique(right_idx)) == len(right_idx)
 
-    print(f'{num_elems_left = }')
-    print(f'{num_samples_left = }')
-    print(f'{num_elems_right = }')
-    print(f'{num_samples_right = }')
+    # Parallelize writing for left and right indices
+    left_writer_kwargs = {
+        'columns': columns,
+        'out': left_path,
+        'compression': compression,
+    }
+    right_writer_kwargs = {
+        'columns': columns,
+        'out': right_path,
+        'compression': compression,
+    }
 
+    # Parallelize writing left_idx
+    print('Writing left_idx...')
+    parallelize_writing(left_writer_kwargs, ds, left_idx, num_workers=num_workers)
+
+    # Parallelize writing right_idx
+    print('Writing right_idx...')
+    parallelize_writing(right_writer_kwargs, ds, right_idx, num_workers=num_workers)
 
 if __name__ == '__main__':
     args = parse_args()
@@ -156,4 +190,5 @@ if __name__ == '__main__':
         right_max=args.right_max,
         seed=args.seed,
         compression=args.compression,
+        num_workers=args.num_workers,
     )
