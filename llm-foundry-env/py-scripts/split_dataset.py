@@ -30,6 +30,7 @@ def parallelize_writing(writer_kwargs, ds, indices, num_workers):
 
     # Write in parallel.
     with mp.Pool(processes=num_workers) as pool:
+        # TODO get number of tokens and reduce afterwards
         pool.starmap(
             functools.partial(write_data, writer_kwargs, ds),
             worker_args,
