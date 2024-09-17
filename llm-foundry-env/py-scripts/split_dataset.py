@@ -6,6 +6,7 @@ import functools
 import multiprocessing as mp
 import os
 
+from llmfoundry.utils.data_prep_utils import merge_shard_groups
 import numpy as np
 from streaming import MDSWriter, StreamingDataset
 import tqdm
@@ -204,6 +205,7 @@ def run_split(
         left_indices,
         num_workers=num_workers,
     )
+    merge_shard_groups(left_path)
 
     print('Writing right split...')
     parallelize_writing(
@@ -212,6 +214,7 @@ def run_split(
         right_indices,
         num_workers=num_workers,
     )
+    merge_shard_groups(right_path)
 
 
 if __name__ == '__main__':
