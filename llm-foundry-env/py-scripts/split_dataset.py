@@ -20,21 +20,26 @@ def write_data(writer_kwargs, ds, indices_shard, rank):
 
 
 def parallelize_writing(writer_kwargs, ds, indices, num_workers):
-    # Create indices shards.
-    indices_shards = np.array_split(indices, num_workers)
-    # Create a list of (shard, rank) pairs to pass to the workers.
-    worker_args = [
-        (indices_shard, rank)
-        for (rank, indices_shard) in enumerate(indices_shards)
-    ]
+    if num_workers < 0:
+        raise ValueError('cannot use negative number of workers.')
+    elif num_workers == 0:
+        write_data(writer_kwargs, ds, indices, 0)
+    else:
+        # Create indices shards.
+        indices_shards = np.array_split(indices, num_workers)
+        # Create a list of (shard, rank) pairs to pass to the workers.
+        worker_args = [
+            (indices_shard, rank)
+            for (rank, indices_shard) in enumerate(indices_shards)
+        ]
 
-    # Write in parallel.
-    with mp.Pool(processes=num_workers) as pool:
-        # TODO get number of tokens and reduce afterwards
-        pool.starmap(
-            functools.partial(write_data, writer_kwargs, ds),
-            worker_args,
-        )
+        # Write in parallel.
+        with mp.Pool(processes=num_workers) as pool:
+            # TODO get number of tokens and reduce afterwards
+            pool.starmap(
+                functools.partial(write_data, writer_kwargs, ds),
+                worker_args,
+            )
 
 
 def parse_args():
@@ -86,7 +91,7 @@ def parse_args():
     )
     parser.add_argument(
         '--num_workers',
-        default=4,
+        default=0,
         type=int,
         help='Number of workers to use for parallel writing.',
     )
