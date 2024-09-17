@@ -27,7 +27,6 @@ if [ "$SYSTEMNAME" = juwelsbooster ] \
             exit 1
         fi
     fi
-    module load NCCL
 fi
 
 pop_curr_file

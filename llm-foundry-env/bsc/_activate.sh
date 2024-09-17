@@ -22,8 +22,6 @@ if [ "$container_library" = apptainer ]; then
         exit 1
     fi
     apptainer_bin=singularity
-    module try-load cuda
-    module try-load nccl
 fi
 
 pop_curr_file
