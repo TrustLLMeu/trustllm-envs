@@ -17,8 +17,8 @@ training.
    ```shell
    [ -d trustllm-envs ] || git clone https://github.com/TrustLLMeu/trustllm-envs.git
    ```
-1. Configure project-global paths and – most importantly – the
-   container library to use to your liking in
+1. Configure project-global paths and – most importantly – the machine
+   name and container library to use to your liking in
    `trustllm-envs/global_configuration.sh`.
 1. Configure paths concerning the LLM Foundry environment to your
    liking in `trustllm-envs/llm-foundry-env/configuration.sh`.
