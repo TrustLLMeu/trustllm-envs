@@ -56,7 +56,7 @@ model:
   init_config:
     name: baseline_
     _init_std_base: ???
-    init_std: ${eval:'${._init_std_base} / ${model._mup_config.d_model_ratio}**0.5'}
+    init_std: ${eval:'${._init_std_base} / ${model._mup_config.d_model_ratio}**0.5'} # NB: make sure all the layers which receive this std are matrix like!
     init_div_is_residual: True # True: 1 / math.sqrt(2 * cfg.n_layers)
     emb_init_std: ${._init_std_base}
     unemb_init_std: ${._init_std_base}
@@ -67,22 +67,27 @@ model:
     d_heads: ${eval:'${model.d_model} / ${model.n_heads}'}
     d_model_ratio: ${eval:'${model.d_model} / ${.d_model_base}'} 
     eps_base: ???
-    matrix_like_params:
+    matrix_like_params: # NB: add/remove `gate_proj` entry depending on ffn_type!
       - param_str_match: attn.Wqkv.weight
         lr: ${eval:'${optimizer.lr} / ${model._mup_config.d_model_ratio}'}
         eps: ${eval:'${model._mup_config.eps_base} / ${model._mup_config.d_model_ratio}'}
+        weight_decay: ${eval:'${optimizer.weight_decay} * ${model._mup_config.d_model_ratio} if "decoupled" not in "${optimizer.name}" else ${optimizer.weight_decay}'}
       - param_str_match: attn.out_proj.weight
         lr: ${eval:'${optimizer.lr} / ${model._mup_config.d_model_ratio}'}
         eps: ${eval:'${model._mup_config.eps_base} / ${model._mup_config.d_model_ratio}'}
+        weight_decay: ${eval:'${optimizer.weight_decay} * ${model._mup_config.d_model_ratio} if "decoupled" not in "${optimizer.name}" else ${optimizer.weight_decay}'}
       - param_str_match: ffn.up_proj.weight
         lr: ${eval:'${optimizer.lr} / ${model._mup_config.d_model_ratio}'}
         eps: ${eval:'${model._mup_config.eps_base} / ${model._mup_config.d_model_ratio}'}
+        weight_decay: ${eval:'${optimizer.weight_decay} * ${model._mup_config.d_model_ratio} if "decoupled" not in "${optimizer.name}" else ${optimizer.weight_decay}'}
       - param_str_match: ffn.down_proj.weight
         lr: ${eval:'${optimizer.lr} / ${model._mup_config.d_model_ratio}'}
         eps: ${eval:'${model._mup_config.eps_base} / ${model._mup_config.d_model_ratio}'}
+        weight_decay: ${eval:'${optimizer.weight_decay} * ${model._mup_config.d_model_ratio} if "decoupled" not in "${optimizer.name}" else ${optimizer.weight_decay}'}
       - param_str_match: ffn.gate_proj.weight
         lr: ${eval:'${optimizer.lr} / ${model._mup_config.d_model_ratio}'}
         eps: ${eval:'${model._mup_config.eps_base} / ${model._mup_config.d_model_ratio}'}
+        weight_decay: ${eval:'${optimizer.weight_decay} * ${model._mup_config.d_model_ratio} if "decoupled" not in "${optimizer.name}" else ${optimizer.weight_decay}'}
 
 # Tokenizer
 tokenizer:
@@ -101,15 +106,62 @@ train_loader:
     shuffle: true
     max_seq_len: ${variables.max_seq_len}
     shuffle_seed: ${variables.global_seed}
+    epoch_size: ${eval:'10000000000000 / ${variables.max_seq_len}'}
     streams:
+      afr:
+        local: "${variables.data_local}/afr"
+        proportion: 0.001352385557433215
+      code:
+        local: "${variables.data_local}/code-fast"
+        proportion: 0.30796839684273686
       dan:
         local: "${variables.data_local}/dan"
-        proportion: 0.5
+        proportion: 0.026670310486060417
+      deu:
+        local: "${variables.data_local}/deu-fast"
+        proportion: 0.18943002978106832
       eng:
-        local:  "${variables.data_local}/eng"
-        proportion: 0.5
+        local:  "${variables.data_local}/eng-fast"
+        proportion: 0.3482448942858498
+      fao:
+        local:  "${variables.data_local}/fao"
+        proportion: 8.52162600850915e-05
+      fry:
+        local:  "${variables.data_local}/fry"
+        proportion: 5.4024485718372014e-05
+      gsw: ## NB: for gsw only train split exists
+        local:  "${variables.data_local}/gsw"
+        proportion: 4.926151316429887e-08
+      isl:
+        local:  "${variables.data_local}/isl"
+        proportion: 0.007897999882605708
+      lim:
+        local:  "${variables.data_local}/lim"
+        proportion: 8.771628187817968e-06
+      ltz:
+        local:  "${variables.data_local}/ltz"
+        proportion: 5.117039679941545e-06
+      nds:
+        local:  "${variables.data_local}/nds"
+        proportion: 2.4733384734575056e-06
+      nld:
+        local:  "${variables.data_local}/nld-fast"
+        proportion: 0.06885193947903728
+      nno:
+        local:  "${variables.data_local}/nno"
+        proportion: 0.0007914016032073252
+      nob:
+        local:  "${variables.data_local}/nob"
+        proportion: 0.0146845697154507
+      nor:
+        local:  "${variables.data_local}/nor"
+        proportion: 0.00270379204229229
+      swe:
+        local:  "${variables.data_local}/swe"
+        proportion: 0.031248628310600237
   drop_last: true
   num_workers: ???
+  prefetch_factor: 2
 
 eval_loader:
   name: text
@@ -120,15 +172,62 @@ eval_loader:
     shuffle: false
     max_seq_len: ${variables.max_seq_len}
     shuffle_seed: ${variables.global_seed}
+    epoch_size: null # will be set to the sum of streams
     streams:
+      afr:
+        local: "${variables.data_local}/afr"
+        repeat: 1
+      code:
+        local: "${variables.data_local}/code-fast"
+        repeat: 1
       dan:
         local: "${variables.data_local}/dan"
-        proportion: 0.5
+        repeat: 1
+      deu:
+        local: "${variables.data_local}/deu-fast"
+        repeat: 1
       eng:
-        local:  "${variables.data_local}/eng"
-        proportion: 0.5
+        local:  "${variables.data_local}/eng-fast"
+        repeat: 1
+      fao:
+        local:  "${variables.data_local}/fao"
+        repeat: 1
+      fry:
+        local:  "${variables.data_local}/fry"
+        repeat: 1
+      # gsw: ## NB: val split it's empty, so we skip it
+      #   local:  "${variables.data_local}/gsw"
+      #   repeat: 1
+      isl:
+        local:  "${variables.data_local}/isl"
+        repeat: 1
+      lim:
+        local:  "${variables.data_local}/lim"
+        repeat: 1
+      ltz:
+        local:  "${variables.data_local}/ltz"
+        repeat: 1
+      nds:
+        local:  "${variables.data_local}/nds"
+        repeat: 1
+      nld:
+        local:  "${variables.data_local}/nld-fast"
+        repeat: 1
+      nno:
+        local:  "${variables.data_local}/nno"
+        repeat: 1
+      nob:
+        local:  "${variables.data_local}/nob"
+        repeat: 1
+      nor:
+        local:  "${variables.data_local}/nor"
+        repeat: 1
+      swe:
+        local:  "${variables.data_local}/swe"
+        repeat: 1
   drop_last: false
   num_workers: ???
+  prefetch_factor: 2
 
 # Optimization
 scheduler:
@@ -190,7 +289,11 @@ loggers:
     tracking_uri: ???
     experiment_name: ???
     run_name: ${run_name}
+    resume: ???
     ignore_hyperparameters: []
+  tensorboard:
+    log_dir: ???
+    flush_interval: 100
 
 # Checkpoint to local filesystem or remote object store
 save_interval: ???

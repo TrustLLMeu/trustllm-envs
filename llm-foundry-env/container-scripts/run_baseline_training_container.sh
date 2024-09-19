@@ -96,7 +96,9 @@ python -u -m composer \
     save_overwrite="$SAVE_OVERWRITE" \
     save_num_checkpoints_to_keep="$SAVE_NUM_CHECKPOINTS_TO_KEEP" \
     loggers.mlflow.experiment_name="$EXPERIMENT_NAME" \
-    loggers.mlflow.tracking_uri="$MLFLOW_TRACKING_URI" \
+    loggers.mlflow.tracking_uri="$MLFLOW_LOG_DIR" \
+    loggers.mlflow.resume="$MLFLOW_RESUME" \
+    loggers.tensorboard.log_dir="$TENSORBOARD_LOG_DIR" \
     load_path="$LOAD_PATH"
 
 # # Convert the model to HuggingFace format
