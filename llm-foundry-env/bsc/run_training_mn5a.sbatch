@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Run a model training on JUWELS Booster.
+# Run a model training on MareNostrum 5 ACC.
 
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
