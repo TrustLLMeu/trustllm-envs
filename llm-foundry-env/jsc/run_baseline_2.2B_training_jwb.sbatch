@@ -124,6 +124,9 @@ export TENSORBOARD_LOG_DIR="$checkpoint_dir"/"$EXPERIMENT_NAME"/"$RUN_NAME"/tens
 export MLFLOW_LOG_DIR="$checkpoint_dir"/mlruns
 export MLFLOW_RESUME=false
 
+# Force the baseline training script to be used, for reproducibility.
+training_script="$(get_curr_dir)"/../container-scripts/run_baseline_training_container.sh
+
 # We assign to a variable again so Bash can do the quoted
 # interpolation.
 _curr_dir="$(get_curr_dir)"
