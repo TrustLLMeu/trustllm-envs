@@ -59,7 +59,7 @@ export GLOBAL_SEED=1012
 
 # tokenizer
 export MAX_SEQ_LEN=4096
-export TOKENIZER_DIR=/p/data1/trustllmd/filatov1/tokenizers/baseline-tok
+export TOKENIZER_DIR=/p/data1/trustllmd/baseline_tok
 
 # model
 export N_LAYERS=32
