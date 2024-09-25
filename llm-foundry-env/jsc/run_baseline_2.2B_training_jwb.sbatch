@@ -113,13 +113,13 @@ export EXPERIMENT_NAME=baseline
 export RUN_NAME=run-bs-"$GLOBAL_BS"-lr-"$LR_BASE"-dur-"$MAX_DURATION"-"$SLURM_JOB_NUM_NODES"nodes
 
 # save/load paths
+export SAVE_FOLDER="$checkpoint_dir"/"$EXPERIMENT_NAME"/"$RUN_NAME"/checkpoints
 # Automatically resume training. To force a restart, set
 # `LOAD_PATH=null` unconditionally.
 export LOAD_PATH="$SAVE_FOLDER"/latest-rank0.pt
 if ! [ -f "$LOAD_PATH" ]; then
     export LOAD_PATH=null
 fi
-export SAVE_FOLDER="$checkpoint_dir"/"$EXPERIMENT_NAME"/"$RUN_NAME"/checkpoints
 export TENSORBOARD_LOG_DIR="$checkpoint_dir"/"$EXPERIMENT_NAME"/"$RUN_NAME"/tensorboard_logs
 export MLFLOW_LOG_DIR="$checkpoint_dir"/mlruns
 export MLFLOW_RESUME=false
