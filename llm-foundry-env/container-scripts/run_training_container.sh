@@ -46,6 +46,7 @@ cd "$ext_repo_dir"/llm-foundry/scripts
 #   script),
 # - use FlashAttention-2,
 # - use a padded vocab size,
+# - reduce gradients in FP32,
 # - save checkpoints to SCRATCH.
 
 # Train a model for 10 batches
@@ -66,6 +67,7 @@ python -u -m composer \
     eval_loader.dataset.split=val \
     model.attn_config.attn_impl=flash \
     model.vocab_size="$padded_vocab_size" \
+    fsdp_config.mixed_precision=DEFAULT \
     max_duration=10ba \
     eval_interval=0 \
     save_folder="$MODEL_CHECKPOINT_DIR"
