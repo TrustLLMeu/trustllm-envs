@@ -52,6 +52,7 @@ export EVAL_NUM_WORKERS=3
 export TRAIN_CONFIG_YAML_FILE="$(get_curr_dir)"/../conf-yamls/baseline-2.2B.yaml
 
 # data
+data_dir=/p/data1/trustllmd/filatov1/data
 export INPUT_DATA_ROOT_DIR="$data_dir"/baseline-llm-foundry
 
 # random seed
