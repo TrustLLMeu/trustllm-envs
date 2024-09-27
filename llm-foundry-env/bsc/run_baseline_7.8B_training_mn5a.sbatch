@@ -84,6 +84,7 @@ export GLOBAL_BS=1024
 # parallelisation / performance
 export PRECISION="amp_bf16" # amp_bf16 / amp_fp16
 export FSDP_STRATEGY="FULL_SHARD"
+export FSDP_PRECISION="DEFAULT"  # gradients are fp32
 
 # schedule
 export SCHEDULER_NAME="constant_decay_with_warmup"

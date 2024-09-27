@@ -79,6 +79,7 @@ python -u -m composer \
     model._mup_config.n_heads_base="$N_HEADS_BASE" \
     precision="$PRECISION" \
     fsdp_config.sharding_strategy="$FSDP_STRATEGY" \
+    fsdp_config.mixed_precision="$FSDP_PRECISION" \
     optimizer.name="$OPTIMIZER_NAME" \
     optimizer.lr="$LR_BASE" \
     optimizer.betas=\["$BETA_1","$BETA_2"\] \
