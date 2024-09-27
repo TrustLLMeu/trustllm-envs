@@ -56,7 +56,7 @@ python -u -m composer \
     --master_port="$MASTER_PORT" \
     train/train.py \
     "$TRAIN_CONFIG_YAML_FILE" \
-    data_local="$INPUT_DATA_ROOT_DIR" \
+    variables.data_local="$INPUT_DATA_ROOT_DIR" \
     tokenizer.name="$TOKENIZER_DIR" \
     train_loader.num_workers="$TRAIN_NUM_WORKERS" \
     train_loader.dataset.split=train \
