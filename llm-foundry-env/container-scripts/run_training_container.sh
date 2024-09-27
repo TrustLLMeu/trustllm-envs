@@ -39,6 +39,7 @@ cd "$ext_repo_dir"/llm-foundry/scripts
 # - run multi-node,
 # - use a variable YAML file,
 # - use local preprocessed data from SCRATCH,
+# - set the sequence length explicitly,
 # - use a local tokenizer,
 # - use the name of the dataset as splits,
 # - use multiple CPUs for data processing (variables defined outside
@@ -57,6 +58,7 @@ python -u -m composer \
     train/train.py \
     "$TRAIN_CONFIG_YAML_FILE" \
     variables.data_local="$INPUT_DATA_ROOT_DIR" \
+    variables.max_seq_len=2048 \
     tokenizer.name="$TOKENIZER_DIR" \
     train_loader.num_workers="$TRAIN_NUM_WORKERS" \
     train_loader.dataset.split=train \
