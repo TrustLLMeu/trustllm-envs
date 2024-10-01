@@ -2,7 +2,7 @@
 
 # Run a model training on MareNostrum 5 ACC.
 
-#SBATCH --nodes=2
+#SBATCH --nodes=2  # 96
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=80  # 80 physical cores per node.
 #SBATCH --threads-per-core=1  # Use only physical CPU cores.
@@ -11,6 +11,7 @@
 #SBATCH --account=ehpc09
 # Use `acc_debug` for debugging, and `acc_ehpc` for "normal" jobs.
 #SBATCH --qos=acc_debug
+# SBATCH --array=0-32%1
 
 set -euo pipefail
 
@@ -44,6 +45,7 @@ export EVAL_NUM_WORKERS=7
 export TRAIN_CONFIG_YAML_FILE="$(get_curr_dir)"/../conf-yamls/baseline-2.2B.yaml
 
 # data
+export STREAMING_SAMPLE_ID_CACHE="$scratch_dir"/data-cache/baseline-llm-foundry
 export INPUT_DATA_ROOT_DIR=/gpfs/scratch/ehpc09/baseline-data-llm-foundry
 
 # random seed
@@ -71,15 +73,15 @@ export BETA_1=0.9
 export BETA_2=0.98
 export WEIGHT_DECAY=1e-02
 export EPS_BASE=1e-15
-# base_lrs=( 7.62939453e-06 1.52587891e-05 3.05175781e-05 6.10351562e-05 1.22070312e-04 2.44140625e-04 4.88281250e-04 9.76562500e-04 1.95312500e-03 ) # np.logspace(-17, -9, 9, base=2)
+# base_lrs=( 7.62939453e-06 1.52587891e-05 3.05175781e-05 6.10351562e-05 1.22070312e-04 2.44140625e-04 4.88281250e-04 9.76562500e-04 1.95312500e-03 0.00390625 0.0078125 0.015625 0.03125 0.0625 ) # np.logspace(-17, -4, 14, base=2); low = -17; high = -5; np.logspace(low, high, abs(low - high) + 1, base=2)
 # export LR_BASE="${base_lrs[$SLURM_ARRAY_TASK_ID]}"
-export LR_BASE=4.88281250e-04  # 2^-11
+export LR_BASE=0.00390625  # 2^-8
 export INIT_STD_BASE=0.01
 
 # batching
 export MICRO_BS=1
 export EVAL_MICRO_BS="$((2 * MICRO_BS))"
-export GLOBAL_BS=1024
+export GLOBAL_BS=1152
 
 # parallelisation / performance
 export PRECISION="amp_bf16" # amp_bf16 / amp_fp16
@@ -116,7 +118,7 @@ export SAVE_NUM_CHECKPOINTS_TO_KEEP=-1
 
 # experiment
 export EXPERIMENT_NAME=baseline
-export RUN_NAME=run_bs-"$GLOBAL_BS"_lr-"$LR_BASE"_dur-"$MAX_DURATION"_"$SLURM_JOB_NUM_NODES"-nodes
+export RUN_NAME=run_bs-"$GLOBAL_BS"_lr-"$LR_BASE"_dur-"$MAX_DURATION"_96-nodes
 
 # save/load paths
 export SAVE_FOLDER="$checkpoint_dir"/"$EXPERIMENT_NAME"/"$RUN_NAME"/checkpoints
