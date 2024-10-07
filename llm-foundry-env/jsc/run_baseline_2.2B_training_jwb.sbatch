@@ -100,6 +100,7 @@ export SCHEDULER_NAME="constant_decay_with_warmup"
 export T_WARMUP="3200ba"
 export T_CONSTANT="25600ba"
 export T_DECAY="3200ba"
+export ALPHA_C=1.0
 export ALPHA_F=0.0
 export MAX_DURATION="32000ba"
 # export RESET_TIME=false
