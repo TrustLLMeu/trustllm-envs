@@ -104,6 +104,7 @@ export T_DECAY=47684
 # maximum (5T) token horizon (decay after 1192093 steps)
 # export T_CONSTANT=1072884
 # export T_DECAY=119209
+export ALPHA_C=1.0
 export ALPHA_F=0.0
 # 2T token horizon (with 10% decay after 476837 steps)
 export MAX_DURATION=524521

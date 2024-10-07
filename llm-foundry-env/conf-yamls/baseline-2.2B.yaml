@@ -235,6 +235,7 @@ scheduler:
   t_warmup: ???
   t_constant: ???
   t_decay: ???
+  alpha_c: 1.0
   alpha_f: ???
 
 optimizer:

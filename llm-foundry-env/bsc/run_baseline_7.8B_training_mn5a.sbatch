@@ -7,7 +7,7 @@
 #SBATCH --cpus-per-task=80  # 80 physical cores per node.
 #SBATCH --threads-per-core=1  # Use only physical CPU cores.
 #SBATCH --gres=gpu:4
-#SBATCH --time=23:59:59
+#SBATCH --time=01:59:59
 #SBATCH --account=ehpc09
 # Use `acc_debug` for debugging, and `acc_ehpc` for "normal" jobs.
 #SBATCH --qos=acc_debug
@@ -24,6 +24,10 @@ source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
 source "$(get_curr_dir)"/../configuration.sh
 
 export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
+
+# Fix Triton cache dir issues.
+export TRITON_CACHE_DIR="$triton_cache_dir"/cache/"$SLURM_JOB_ID"
+mkdir -p "$TRITON_CACHE_DIR"
 
 # Try to reduce link flips.
 export NCCL_IB_TIMEOUT=50
@@ -97,6 +101,7 @@ export T_DECAY=47684
 # maximum (5T) token horizon (decay after 1192093 steps)
 # export T_CONSTANT=1072884
 # export T_DECAY=119209
+export ALPHA_C=1.0
 export ALPHA_F=0.0
 # 2T token horizon (with 10% decay after 476837 steps)
 export MAX_DURATION=524521

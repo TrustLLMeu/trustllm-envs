@@ -89,6 +89,7 @@ python -u -m composer \
     scheduler.t_warmup="$T_WARMUP" \
     scheduler.t_constant="$T_CONSTANT" \
     scheduler.t_decay="$T_DECAY" \
+    scheduler.alpha_c="$ALPHA_C" \
     scheduler.alpha_f="$ALPHA_F" \
     max_duration="$MAX_DURATION" \
     eval_interval="$EVAL_INTERVAL" \
