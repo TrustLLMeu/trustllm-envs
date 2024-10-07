@@ -175,18 +175,18 @@ export TRANSFORMERS_OFFLINE=0
 export TRUST_REMOTE_CODE=0
 
 # Pre-download an example model.
-python -c 'import os; from transformers import AutoModel; AutoModel.from_pretrained("gpt2", trust_remote_code=bool(os.getenv("TRUST_REMOTE_CODE", 0)))'
+python -c 'import os; from transformers import AutoModel; AutoModel.from_pretrained("gpt2", trust_remote_code=bool(int(os.getenv("TRUST_REMOTE_CODE", 0))))'
 
 # Pre-download an example tokenizer; once with `tokenizers` package, once with `transformers` package.
 python -c 'from tokenizers import Tokenizer; Tokenizer.from_pretrained("gpt2")'
-python -c 'import os; from transformers import AutoTokenizer; AutoTokenizer.from_pretrained("gpt2", trust_remote_code=bool(os.getenv("TRUST_REMOTE_CODE", 0)))'
+python -c 'import os; from transformers import AutoTokenizer; AutoTokenizer.from_pretrained("gpt2", trust_remote_code=bool(int(os.getenv("TRUST_REMOTE_CODE", 0))))'
 
 # Pre-download an example dataset.
-python -c 'import os; from datasets import load_dataset; load_dataset("wikitext", "wikitext-103-raw-v1", trust_remote_code=bool(os.getenv("TRUST_REMOTE_CODE", 0)))'
+python -c 'import os; from datasets import load_dataset; load_dataset("wikitext", "wikitext-103-raw-v1", trust_remote_code=bool(int(os.getenv("TRUST_REMOTE_CODE", 0))))'
 
 # Pre-download an example metric; once with `evaluate` package, once with `datasets` package (deprecated).
 python -c 'import evaluate; evaluate.load("accuracy")'
-python -c 'import os; from datasets import load_metric; load_metric("accuracy", trust_remote_code=bool(os.getenv("TRUST_REMOTE_CODE", 0)))'
+python -c 'import os; from datasets import load_metric; load_metric("accuracy", trust_remote_code=bool(int(os.getenv("TRUST_REMOTE_CODE", 0))))'
 ```
 
 ### Offline installation
