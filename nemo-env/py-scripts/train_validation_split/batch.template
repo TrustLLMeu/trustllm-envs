@@ -1,0 +1,16 @@
+#!/bin/bash
+#SBATCH --job-name=train-val-splitter
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=80
+#SBATCH --array=1-$num_jobs
+#SBATCH --qos=acc_ehpc
+#SBATCH --account=ehpc09
+#SBATCH --time=12:00:00
+
+module purge
+module load singularity
+
+args=`sed "$$SLURM_ARRAY_TASK_ID!d" $config`
+cmd="python3 split.py $$args"
+echo "Running $$cmd"
+srun singularity exec split.sif $$cmd
