@@ -25,7 +25,9 @@ source "$(get_curr_dir)"/../configuration.sh
 
 export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
-# Fix Triton cache dir issues.
+# Fix Triton cache dir issues; see
+# https://github.com/triton-lang/triton/pull/4295. Can remove when
+# Triton is updated to a version that includes this fix.
 export TRITON_CACHE_DIR="$triton_cache_dir"/cache/"$SLURM_JOB_ID"
 mkdir -p "$TRITON_CACHE_DIR"
 
