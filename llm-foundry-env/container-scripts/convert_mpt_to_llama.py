@@ -7,7 +7,6 @@ from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
     LlamaConfig,
-    LlamaForCausalLM,
 )
 
 EPS = 1e-8
@@ -434,7 +433,10 @@ def main_model():
     del mpt_state_dict
 
     llama_config = convert_mpt_config_to_llama(mpt_config)
-    llama_model = LlamaForCausalLM(llama_config)
+    llama_model = AutoModelForCausalLM.from_config(
+        llama_config,
+        torch_dtype=mpt_config.torch_dtype,
+    )
     llama_model.load_state_dict(llama_state_dict)
     llama_model.save_pretrained(args.llama_model_dir)
 
