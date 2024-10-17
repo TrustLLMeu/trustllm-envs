@@ -98,19 +98,22 @@ def attn_config_to_various(mpt_config):
     elif attn_config['rope_impl'] == 'hf':
         rope_config = attn_config['rope_hf_config']
 
-        rope_scaling = rope_config.copy()
-        del rope_scaling['type']
+        # We can forego supplying a RoPE scaling config if scaling is
+        # disabled.
+        if rope_config['type'] != 'no_scaling':
+            rope_scaling = rope_config.copy()
+            del rope_scaling['type']
 
-        rope_scaling['rope_type'] = (
-            'default'
-            if rope_config['type'] == 'no_scaling'
-            else rope_config['type']
-        )
-        rope_scaling['factor'] = (
-            1.0
-            if rope_config['type'] == 'no_scaling'
-            else rope_config['factor']
-        )
+            rope_scaling['rope_type'] = (
+                'default'
+                if rope_config['type'] == 'no_scaling'
+                else rope_config['type']
+            )
+            rope_scaling['factor'] = (
+                1.0
+                if rope_config['type'] == 'no_scaling'
+                else rope_config['factor']
+            )
     else:
         raise ValueError('unknown RoPE implementation')
 
