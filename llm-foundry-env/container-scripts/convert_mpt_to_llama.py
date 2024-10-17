@@ -325,18 +325,18 @@ def split_fused_qkv_bias(mpt_config, mpt_state_dict, mpt_key, match_result):
 
 
 MPT_STATE_DICT_TO_LLAMA_DICT = {
-    r'^transformer\.wte\.(weight|bias)': r'model.embed_tokens.\1',
-    r'^transformer\.blocks\.([0-9]+)\.norm_1\.(weight|bias)': r'model.layers.\1.input_layernorm.\2',
+    r'^transformer\.wte\.(weight|bias)$': r'model.embed_tokens.\1',
+    r'^transformer\.blocks\.([0-9]+)\.norm_1\.(weight|bias)$': r'model.layers.\1.input_layernorm.\2',
     # TODO handle other Wqkv combinations
-    r'^transformer\.blocks\.([0-9]+)\.attn\.Wqkv\.weight': split_fused_qkv_weight,
-    r'^transformer\.blocks\.([0-9]+)\.attn\.Wqkv\.bias': split_fused_qkv_bias,
-    r'^transformer\.blocks\.([0-9]+)\.attn\.out_proj\.(weight|bias)': r'model.layers.\1.self_attn.o_proj.\2',
-    r'^transformer\.blocks\.([0-9]+)\.norm_2\.(weight|bias)': r'model.layers.\1.post_attention_layernorm.\2',
-    r'^transformer\.blocks\.([0-9]+)\.ffn\.up_proj\.(weight|bias)': r'model.layers.\1.mlp.up_proj.\2',
-    r'^transformer\.blocks\.([0-9]+)\.ffn\.down_proj\.(weight|bias)': r'model.layers.\1.mlp.down_proj.\2',
-    r'^transformer\.blocks\.([0-9]+)\.ffn\.gate_proj\.(weight|bias)': r'model.layers.\1.mlp.gate_proj.\2',
-    r'^transformer\.norm_f\.(weight|bias)': r'model.norm.\1',
-    r'^lm_head\.(weight|bias)': r'lm_head.\1',
+    r'^transformer\.blocks\.([0-9]+)\.attn\.Wqkv\.weight$': split_fused_qkv_weight,
+    r'^transformer\.blocks\.([0-9]+)\.attn\.Wqkv\.bias$': split_fused_qkv_bias,
+    r'^transformer\.blocks\.([0-9]+)\.attn\.out_proj\.(weight|bias)$': r'model.layers.\1.self_attn.o_proj.\2',
+    r'^transformer\.blocks\.([0-9]+)\.norm_2\.(weight|bias)$': r'model.layers.\1.post_attention_layernorm.\2',
+    r'^transformer\.blocks\.([0-9]+)\.ffn\.up_proj\.(weight|bias)$': r'model.layers.\1.mlp.up_proj.\2',
+    r'^transformer\.blocks\.([0-9]+)\.ffn\.down_proj\.(weight|bias)$': r'model.layers.\1.mlp.down_proj.\2',
+    r'^transformer\.blocks\.([0-9]+)\.ffn\.gate_proj\.(weight|bias)$': r'model.layers.\1.mlp.gate_proj.\2',
+    r'^transformer\.norm_f\.(weight|bias)$': r'model.norm.\1',
+    r'^lm_head\.(weight|bias)$': r'lm_head.\1',
 }
 
 
