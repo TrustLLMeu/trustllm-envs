@@ -2,8 +2,13 @@ from argparse import ArgumentParser
 from collections import OrderedDict
 import re
 
-from llmfoundry import MPTConfig, MPTForCausalLM
-from transformers import AutoTokenizer, LlamaConfig, LlamaForCausalLM
+from transformers import (
+    AutoConfig,
+    AutoModelForCausalLM,
+    AutoTokenizer,
+    LlamaConfig,
+    LlamaForCausalLM,
+)
 
 EPS = 1e-8
 
@@ -269,7 +274,7 @@ def parse_args_config():
 
 def main_config():
     args = parse_args_config()
-    mpt_config = MPTConfig.from_pretrained(args.mpt_config_path)
+    mpt_config = AutoConfig.from_pretrained(args.mpt_config_path)
     llama_config = convert_mpt_config_to_llama(mpt_config)
     if args.llama_config_dir is not None:
         llama_config.save_pretrained(args.llama_config_dir)
@@ -409,8 +414,11 @@ def parse_args_model():
 
 def main_model():
     args = parse_args_model()
-    mpt_config = MPTConfig.from_pretrained(args.mpt_model_dir)
-    mpt_model = MPTForCausalLM.from_pretrained(
+    mpt_config = AutoConfig.from_pretrained(
+        args.mpt_model_dir,
+        trust_remote_code=True,
+    )
+    mpt_model = AutoModelForCausalLM.from_pretrained(
         args.mpt_model_dir,
         trust_remote_code=True,
         torch_dtype='bfloat16',
