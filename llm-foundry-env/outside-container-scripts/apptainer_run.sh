@@ -63,7 +63,6 @@ fi
 env -u BASH_ENV -u CC -u CFLAGS -u CMAKE_LIBRARY_PATH -u CMAKE_PREFIX_PATH \
     -u CPATH -u CXX -u CXXFLAGS -u LESSOPEN -u PYTHONPATH \
     "$apptainer_bin" run --nv \
-    --bind "$scratch_dir"/triton-build-patch.py:/usr/lib/python3/dist-packages/triton/common/build.py \
     "$apptainer_file" "${args[@]}"
 
 pop_curr_file
