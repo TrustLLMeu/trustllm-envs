@@ -16,6 +16,7 @@ source "$(get_curr_dir)"/../global_configuration.sh
 # PyTorch cache configuration
 mkdir -p "$torch_cache_dir"
 
+export PYTORCH_KERNEL_CACHE_PATH="$torch_cache_dir"/kernels
 export TORCH_HOME="$torch_cache_dir"/hub
 export TORCH_EXTENSIONS_DIR="$torch_cache_dir"/torch_extensions
 
