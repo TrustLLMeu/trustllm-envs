@@ -16,6 +16,8 @@ source "$(get_curr_dir)"/../global_configuration.sh
 # Triton cache configuration
 mkdir -p "$triton_cache_dir"
 
-export TRITON_CACHE_DIR="$triton_cache_dir"/cache
+export TRITON_HOME="$triton_cache_dir"
+# We additionally set `TRITON_CACHE_DIR` for backward-compatibility.
+export TRITON_CACHE_DIR="$TRITON_HOME"/.triton/cache
 
 pop_curr_file
