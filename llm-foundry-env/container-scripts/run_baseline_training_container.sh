@@ -64,7 +64,6 @@ python -u -m composer \
     variables.max_seq_len="$MAX_SEQ_LEN" \
     tokenizer.name="$TOKENIZER_DIR" \
     train_loader.num_workers="$TRAIN_NUM_WORKERS" \
-    eval_loader.num_workers="$EVAL_NUM_WORKERS" \
     global_train_batch_size="$GLOBAL_BS" \
     device_train_microbatch_size="$MICRO_BS" \
     device_eval_batch_size="$EVAL_MICRO_BS" \
