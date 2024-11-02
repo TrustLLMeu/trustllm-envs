@@ -25,6 +25,12 @@ source "$(get_curr_dir)"/../configuration.sh
 
 export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
+# Fix Triton cache dir issues; see
+# https://github.com/triton-lang/triton/pull/4295. Can remove when
+# Triton is updated to a version that includes this fix.
+export TRITON_CACHE_DIR="$triton_cache_dir"/cache/"$SLURM_JOB_ID"
+mkdir -p "$TRITON_CACHE_DIR"
+
 # Try to reduce link flips.
 export NCCL_IB_TIMEOUT=50
 export UCX_RC_TIMEOUT=4s
@@ -82,7 +88,7 @@ export WEIGHT_DECAY=1e-02
 export EPS_BASE=1e-15
 # base_lrs=( 7.62939453e-06 1.52587891e-05 3.05175781e-05 6.10351562e-05 1.22070312e-04 2.44140625e-04 4.88281250e-04 9.76562500e-04 1.95312500e-03 ) # np.logspace(-17, -9, 9, base=2)
 # export LR_BASE="${base_lrs[$SLURM_ARRAY_TASK_ID]}"
-export LR_BASE=4.88281250e-04  # 2^-11
+export LR_BASE=0.00390625  # 2^-8
 export INIT_STD_BASE=0.01
 
 # batching
@@ -126,7 +132,7 @@ export SAVE_NUM_CHECKPOINTS_TO_KEEP=-1
 
 # experiment
 export EXPERIMENT_NAME=baseline
-export RUN_NAME=run_bs-"$GLOBAL_BS"_lr-"$LR_BASE"_dur-"$MAX_DURATION"_"$SLURM_JOB_NUM_NODES"-nodes
+export RUN_NAME=run_bs-"$GLOBAL_BS"_lr-"$LR_BASE"_dur-"$MAX_DURATION"_96-nodes
 
 # save/load paths
 export SAVE_FOLDER="$checkpoint_dir"/"$EXPERIMENT_NAME"/"$RUN_NAME"/checkpoints
