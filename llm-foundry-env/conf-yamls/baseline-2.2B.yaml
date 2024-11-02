@@ -164,70 +164,263 @@ train_loader:
   prefetch_factor: 2
 
 eval_loader:
-  name: text
-  dataset:
-    local:
-    remote:
-    split: val
-    shuffle: false
-    max_seq_len: ${variables.max_seq_len}
-    shuffle_seed: ${variables.global_seed}
-    epoch_size: null # will be set to the sum of streams
-    streams:
-      afr:
-        local: "${variables.data_local}/afr"
-        repeat: 1
-      code:
-        local: "${variables.data_local}/code-fast"
-        repeat: 1
-      dan:
-        local: "${variables.data_local}/dan"
-        repeat: 1
-      deu:
-        local: "${variables.data_local}/deu-fast"
-        repeat: 1
-      eng:
-        local:  "${variables.data_local}/eng-fast"
-        repeat: 1
-      fao:
-        local:  "${variables.data_local}/fao"
-        repeat: 1
-      fry:
-        local:  "${variables.data_local}/fry"
-        repeat: 1
-      # gsw: ## NB: val split it's empty, so we skip it
-      #   local:  "${variables.data_local}/gsw"
-      #   repeat: 1
-      isl:
-        local:  "${variables.data_local}/isl"
-        repeat: 1
-      lim:
-        local:  "${variables.data_local}/lim"
-        repeat: 1
-      ltz:
-        local:  "${variables.data_local}/ltz"
-        repeat: 1
-      nds:
-        local:  "${variables.data_local}/nds"
-        repeat: 1
-      nld:
-        local:  "${variables.data_local}/nld-fast"
-        repeat: 1
-      nno:
-        local:  "${variables.data_local}/nno"
-        repeat: 1
-      nob:
-        local:  "${variables.data_local}/nob"
-        repeat: 1
-      nor:
-        local:  "${variables.data_local}/nor"
-        repeat: 1
-      swe:
-        local:  "${variables.data_local}/swe"
-        repeat: 1
-  drop_last: false
-  num_workers: ???
-  prefetch_factor: 2
+  - name: text
+    label: ALL
+    dataset:
+      local:
+      remote:
+      split: val
+      shuffle: false
+      max_seq_len: ${variables.max_seq_len}
+      shuffle_seed: ${variables.global_seed}
+      epoch_size: null # will be set to the sum of streams
+      streams:
+        afr:
+          local: "${variables.data_local}/afr"
+          repeat: 1
+        code:
+          local: "${variables.data_local}/code-fast"
+          repeat: 1
+        dan:
+          local: "${variables.data_local}/dan"
+          repeat: 1
+        deu:
+          local: "${variables.data_local}/deu-fast"
+          repeat: 1
+        eng:
+          local:  "${variables.data_local}/eng-fast"
+          repeat: 1
+        fao:
+          local:  "${variables.data_local}/fao"
+          repeat: 1
+        fry:
+          local:  "${variables.data_local}/fry"
+          repeat: 1
+        # gsw: ## NB: val split it's empty, so we skip it
+        #   local:  "${variables.data_local}/gsw"
+        #   repeat: 1
+        isl:
+          local:  "${variables.data_local}/isl"
+          repeat: 1
+        lim:
+          local:  "${variables.data_local}/lim"
+          repeat: 1
+        ltz:
+          local:  "${variables.data_local}/ltz"
+          repeat: 1
+        nds:
+          local:  "${variables.data_local}/nds"
+          repeat: 1
+        nld:
+          local:  "${variables.data_local}/nld-fast"
+          repeat: 1
+        nno:
+          local:  "${variables.data_local}/nno"
+          repeat: 1
+        nob:
+          local:  "${variables.data_local}/nob"
+          repeat: 1
+        nor:
+          local:  "${variables.data_local}/nor"
+          repeat: 1
+        swe:
+          local:  "${variables.data_local}/swe"
+          repeat: 1
+    drop_last: false
+    num_workers: 2
+    prefetch_factor: 2
+  - name: text
+    label: ENG
+    dataset:
+      local:
+      remote:
+      split: val
+      shuffle: false
+      max_seq_len: ${variables.max_seq_len}
+      shuffle_seed: ${variables.global_seed}
+      epoch_size: null # will be set to the sum of streams
+      streams:
+        eng:
+          local:  "${variables.data_local}/eng-fast"
+          repeat: 1
+    drop_last: false
+    num_workers: 1
+    prefetch_factor: 2
+  - name: text
+    label: CODE
+    dataset:
+      local:
+      remote:
+      split: val
+      shuffle: false
+      max_seq_len: ${variables.max_seq_len}
+      shuffle_seed: ${variables.global_seed}
+      epoch_size: null # will be set to the sum of streams
+      streams:
+        code:
+          local: "${variables.data_local}/code-fast"
+          repeat: 1
+    drop_last: false
+    num_workers: 1
+    prefetch_factor: 2
+  - name: text
+    label: DEU
+    dataset:
+      local:
+      remote:
+      split: val
+      shuffle: false
+      max_seq_len: ${variables.max_seq_len}
+      shuffle_seed: ${variables.global_seed}
+      epoch_size: null # will be set to the sum of streams
+      streams:
+        deu:
+          local: "${variables.data_local}/deu-fast"
+          repeat: 1
+        ## NB: val split is empty, so we skip it
+        # gsw:
+        #   local:  "${variables.data_local}/gsw"
+        #   repeat: 1
+        ltz:
+          local:  "${variables.data_local}/ltz"
+          repeat: 1
+        nds:
+          local:  "${variables.data_local}/nds"
+          repeat: 1
+    drop_last: false
+    num_workers: 1
+    prefetch_factor: 2
+  - name: text
+    label: NLD
+    dataset:
+      local:
+      remote:
+      split: val
+      shuffle: false
+      max_seq_len: ${variables.max_seq_len}
+      shuffle_seed: ${variables.global_seed}
+      epoch_size: null # will be set to the sum of streams
+      streams:
+        nld:
+          local:  "${variables.data_local}/nld-fast"
+          repeat: 1
+        afr:
+          local: "${variables.data_local}/afr"
+          repeat: 1
+        fry:
+          local:  "${variables.data_local}/fry"
+          repeat: 1
+        lim:
+          local:  "${variables.data_local}/lim"
+          repeat: 1
+    drop_last: false
+    num_workers: 1
+    prefetch_factor: 2
+  - name: text
+    label: SWE
+    dataset:
+      local:
+      remote:
+      split: val
+      shuffle: false
+      max_seq_len: ${variables.max_seq_len}
+      shuffle_seed: ${variables.global_seed}
+      epoch_size: null # will be set to the sum of streams
+      streams:
+        swe:
+          local:  "${variables.data_local}/swe"
+          repeat: 1
+    drop_last: false
+    num_workers: 1
+    prefetch_factor: 2
+  - name: text
+    label: DAN
+    dataset:
+      local:
+      remote:
+      split: val
+      shuffle: false
+      max_seq_len: ${variables.max_seq_len}
+      shuffle_seed: ${variables.global_seed}
+      epoch_size: null # will be set to the sum of streams
+      streams:
+        dan:
+          local: "${variables.data_local}/dan"
+          repeat: 1
+    drop_last: false
+    num_workers: 1
+    prefetch_factor: 2
+  - name: text
+    label: NOR
+    dataset:
+      local:
+      remote:
+      split: val
+      shuffle: false
+      max_seq_len: ${variables.max_seq_len}
+      shuffle_seed: ${variables.global_seed}
+      epoch_size: null # will be set to the sum of streams
+      streams:
+        nob:
+          local:  "${variables.data_local}/nob"
+          repeat: 1
+        nor:
+          local:  "${variables.data_local}/nor"
+          repeat: 1
+    drop_last: false
+    num_workers: 1
+    prefetch_factor: 2
+  - name: text
+    label: NNO
+    dataset:
+      local:
+      remote:
+      split: val
+      shuffle: false
+      max_seq_len: ${variables.max_seq_len}
+      shuffle_seed: ${variables.global_seed}
+      epoch_size: null # will be set to the sum of streams
+      streams:
+        nno:
+          local:  "${variables.data_local}/nno"
+          repeat: 1
+    drop_last: false
+    num_workers: 1
+    prefetch_factor: 2
+  - name: text
+    label: ISL
+    dataset:
+      local:
+      remote:
+      split: val
+      shuffle: false
+      max_seq_len: ${variables.max_seq_len}
+      shuffle_seed: ${variables.global_seed}
+      epoch_size: null # will be set to the sum of streams
+      streams:
+        isl:
+          local:  "${variables.data_local}/isl"
+          repeat: 1
+    drop_last: false
+    num_workers: 1
+    prefetch_factor: 2
+  - name: text
+    label: FAO
+    dataset:
+      local:
+      remote:
+      split: val
+      shuffle: false
+      max_seq_len: ${variables.max_seq_len}
+      shuffle_seed: ${variables.global_seed}
+      epoch_size: null # will be set to the sum of streams
+      streams:
+        fao:
+          local:  "${variables.data_local}/fao"
+          repeat: 1
+    drop_last: false
+    num_workers: 1
+    prefetch_factor: 2
 
 # Optimization
 scheduler:
