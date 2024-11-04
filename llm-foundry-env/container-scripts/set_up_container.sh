@@ -82,6 +82,7 @@ for _repo_tuple in "${repos[@]}"; do
         # Do we maybe have to change the repo's remote URI?
         if [ "$_repo_uri" = 'https://github.com/TrustLLMeu/llm-foundry.git' ] \
                || [ "$_repo_uri" = 'https://github.com/TrustLLMeu/composer.git' ] \
+               || [ "$_repo_uri" = 'https://github.com/TrustLLMeu/streaming.git' ] \
                || [ "$_repo_uri" = 'https://github.com/TrustLLMeu/megablocks.git' ]; then
             _forked_repo_uri=1
         else
