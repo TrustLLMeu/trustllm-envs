@@ -1,7 +1,8 @@
 # TrustLLM software environments
 
 Container-based environments for the TrustLLM EU project, with support
-for [LLM Foundry](https://github.com/mosaicml/llm-foundry) and
+for [LLM Foundry](https://github.com/mosaicml/llm-foundry),
+[Megatron-LM](https://github.com/NVIDIA/Megatron-LM), and
 [NeMo](https://github.com/NVIDIA/NeMo). The repository also includes
 example scripts for JSC systems.
 
