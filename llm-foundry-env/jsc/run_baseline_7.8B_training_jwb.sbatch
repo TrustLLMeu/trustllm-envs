@@ -94,7 +94,7 @@ export INIT_STD_BASE=0.01
 # batching
 export MICRO_BS=1
 export EVAL_MICRO_BS="$((2 * MICRO_BS))"
-export GLOBAL_BS=1024
+export GLOBAL_BS=1152
 
 # parallelisation / performance
 export PRECISION="amp_bf16" # amp_bf16 / amp_fp16
@@ -104,16 +104,16 @@ export FSDP_PRECISION="DEFAULT"  # gradients are fp32
 # schedule
 export SCHEDULER_NAME="constant_decay_with_warmup"
 export T_WARMUP=119209
-# 2T token horizon (decay after 476837 steps)
-export T_CONSTANT=357628
-export T_DECAY=47684
+# 2.1T token horizon (decay after 445048 steps)
+export T_CONSTANT=325839
+export T_DECAY=44505
 # maximum (5T) token horizon (decay after 1192093 steps)
 # export T_CONSTANT=1072884
 # export T_DECAY=119209
 export ALPHA_C=1.0
 export ALPHA_F=0.0
-# 2T token horizon (with 10% decay after 476837 steps)
-export MAX_DURATION=524521
+# 2.1T token horizon (with 10% decay after 445048 steps)
+export MAX_DURATION=489553
 # maximum (5T) token horizon (with 10% decay after 1192093 steps)
 # export MAX_DURATION=1311302
 export T_WARMUP="$T_WARMUP"ba
