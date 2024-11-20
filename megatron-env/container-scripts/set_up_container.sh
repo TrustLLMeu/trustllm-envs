@@ -160,6 +160,9 @@ env MAMBA_FORCE_BUILD=TRUE \
     python -m pip "${_pip_install_args[@]}" \
     git+https://github.com/state-spaces/mamba.git@v2.2.2
 
+# Install torchrun_jsc to fix distributed job launching.
+python -m pip "${_pip_install_args[@]}" torchrun_jsc
+
 # Other dependencies we assume to be available in the container:
 # - TransformerEngine
 # - Apex
