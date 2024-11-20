@@ -460,6 +460,7 @@ precision: ???
 # FSDP
 fsdp_config:
   sharding_strategy: ???
+  state_dict_type: sharded
   mixed_precision: PURE
   activation_checkpointing: false
   activation_checkpointing_reentrant: false
