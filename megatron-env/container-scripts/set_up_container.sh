@@ -19,6 +19,12 @@ source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
 
 source "$(get_curr_dir)"/../container-scripts/activate_container.sh setup
 
+# Create the patched TransformerEngine file.
+sed '/^    props = torch.cuda.get_device_properties(torch.cuda.current_device())$/i \    if not torch.cuda.is_available():\
+        import warnings\
+        warnings.warn("No GPU found; TransformerEngine may not work correctly without one.")\
+        return (0, 0)' /usr/local/lib/python3.10/dist-packages/transformer_engine/pytorch/utils.py > "$scratch_dir"/transformer-engine-utils-patch.py
+
 if [ "$#" -gt 0 ] && [ "$1" = download ]; then
     mkdir -p "$pip_offline_dir"
 
