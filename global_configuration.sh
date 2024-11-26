@@ -34,11 +34,19 @@ base_scratch_dir="$root_scratch_dir"/"$project_name"/"$USER"
 cache_dir="$base_scratch_dir"/.cache
 
 # Which container library is used (overrides what's specified in
-# `machine_data.csv`).
+# `machine_data.csv`). Currently supported options:
+# - "apptainer"
+# - "docker"
 # container_library=apptainer
 
 # Name of Apptainer binary (used for overwriting it if necessary)
 apptainer_bin="${apptainer_bin:-apptainer}"
+docker_cmd="${docker_cmd:-}"
+if [ -z "$docker_cmd" ]; then
+    # Name of Docker command (used for overwriting it if necessary).
+    # Use this to, e.g., add `sudo` to the command.
+    docker_cmd=(docker)
+fi
 
 # Where Apptainer cache and temporary files will be stored
 apptainer_cache_dir="$cache_dir"/apptainer

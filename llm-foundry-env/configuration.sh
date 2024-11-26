@@ -80,10 +80,13 @@ docker_image_uri='docker://docker.io/mosaicml/pytorch:2.3.0_cu121-python3.11-ubu
 # Which file to build the container in. The default settings
 # automatically grab the information from the tail of the URI.
 apptainer_build_file="$scratch_dir"/apptainers/build/llm-foundry_"$(basename "$docker_image_uri" | tr ':' '_')".sif
+docker_image_tag=llm-foundry_"$(basename "$docker_image_uri")"
+docker_build_container_name=build_llm-foundry_"$(basename "$docker_image_uri" | tr ':' '_')"
 # Which container to use. Ideally keep this different from the above
 # build paths so the actively used container is not overwritten by
 # accident.
 apptainer_file="$scratch_dir"/apptainers/llm-foundry_"$(basename "$docker_image_uri" | tr ':' '_')".sif
+docker_container_name=llm-foundry_"$(basename "$docker_image_uri" | tr ':' '_')"
 # Pre-dowloaded image used for offline building if requested. The
 # default setting uses the same location as `apptainer_build_file`,
 # with the `sif` file ending replaced by `tar`.

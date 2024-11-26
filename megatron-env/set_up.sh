@@ -20,6 +20,8 @@ source "$(get_curr_dir)"/../global_configuration.sh
 
 if [ "$container_library" = apptainer ]; then
     source "$(get_curr_dir)"/outside-container-scripts/set_up_apptainer.sh "$@"
+elif [ "$container_library" = docker ]; then
+    source "$(get_curr_dir)"/outside-container-scripts/set_up_docker.sh "$@"
 else
     echo "Unknown container library \"$container_library\"."
     pop_curr_file
