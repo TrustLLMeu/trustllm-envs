@@ -19,6 +19,9 @@ source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
 
 source "$(get_curr_dir)"/../container-scripts/activate_container.sh setup
 
+mkdir -p "$project_dir"
+mkdir -p "$scratch_dir"
+
 # Create the patched TransformerEngine file.
 sed '/^    props = torch.cuda.get_device_properties(torch.cuda.current_device())$/i \    if not torch.cuda.is_available():\
         import warnings\
