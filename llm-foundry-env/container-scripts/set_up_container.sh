@@ -19,6 +19,9 @@ source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
 
 source "$(get_curr_dir)"/../container-scripts/activate_container.sh setup
 
+mkdir -p "$project_dir"
+mkdir -p "$scratch_dir"
+
 # Create the patched Triton file.
 sed 's|libs = subprocess\..*$|libs = "/usr/local/cuda/lib64/stubs/libcuda.so"|g' /usr/lib/python3/dist-packages/triton/common/build.py > "$scratch_dir"/triton-build-patch.py
 

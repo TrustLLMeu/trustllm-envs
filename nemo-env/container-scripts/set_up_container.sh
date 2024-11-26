@@ -19,6 +19,9 @@ source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
 
 source "$(get_curr_dir)"/../container-scripts/activate_container.sh setup
 
+mkdir -p "$project_dir"
+mkdir -p "$scratch_dir"
+
 if [ "$#" -gt 0 ] && [ "$1" = download ]; then
     mkdir -p "$pip_offline_dir"
 
