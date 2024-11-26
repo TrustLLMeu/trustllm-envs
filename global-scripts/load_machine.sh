@@ -19,7 +19,11 @@ while read -r line; do
     _curr_name="$(echo "$line" | cut -d "$_delim" -f 1)"
     if [ "$_curr_name" = "$machine_name" ]; then
         root_project_dir="$(echo "$line" | cut -d "$_delim" -f 2)"
+        # Replace potential tilde prefix for home directory.
+        root_project_dir="${root_project_dir/#\~/"$HOME"}"
         root_scratch_dir="$(echo "$line" | cut -d "$_delim" -f 3)"
+        # Replace potential tilde prefix for home directory.
+        root_scratch_dir="${root_scratch_dir/#\~/"$HOME"}"
         project_name="$(echo "$line" | cut -d "$_delim" -f 4)"
         container_library="$(echo "$line" | cut -d "$_delim" -f 5)"
         cuda_compute_capability="$(echo "$line" | cut -d "$_delim" -f 6)"

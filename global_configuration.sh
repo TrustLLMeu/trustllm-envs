@@ -11,6 +11,7 @@ _curr_dir="$(dirname "$_curr_file")"
 source "$_curr_dir"/global-scripts/get_curr_file.sh "$_curr_file"
 
 # Which machine we are running on. Currently supported options:
+# - "local" (your local machine)
 # - "jsc" (JUWELS Booster, JUWELS Cluster, JURECA-DC)
 # - "bsc" (MareNostrum 5 ACC)
 machine_name=jsc
