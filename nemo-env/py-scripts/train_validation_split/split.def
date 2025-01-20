@@ -1,0 +1,8 @@
+BootStrap: library
+From: ubuntu:22.04
+
+%post
+  apt-get -y update
+  apt-get -y install python3 pip
+  pip install numpy tqdm click
+  pip install torch --index-url https://download.pytorch.org/whl/cpu
