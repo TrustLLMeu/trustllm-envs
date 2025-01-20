@@ -53,8 +53,8 @@ repos+=( 'https://github.com/TrustLLMeu/composer.git 3208e17ef26542d04aa0bdf3793
 # The feature "gpu" is the same as "gpu-flash2", but we currently keep
 # the latter explicit specification because that is a somewhat recent
 # change.
-# This would execute `python -m pip install -e '.[gpu-flash2,megablocks,openai,tensorboard]'`
-repos+=( 'https://github.com/TrustLLMeu/llm-foundry.git 46cf2eef45f03a52e5af2b9f041f920ca0dbad55 [gpu-flash2,megablocks,openai,tensorboard]' )
+# This would execute `python -m pip install -e '.[gpu-flash2,megablocks,openai,te,tensorboard]'`
+repos+=( 'https://github.com/TrustLLMeu/llm-foundry.git 46cf2eef45f03a52e5af2b9f041f920ca0dbad55 [gpu-flash2,megablocks,openai,te,tensorboard]' )
 # For example, this would clone a repo at tag v0.0.1 and do a standard
 # `pip install -e .`:
 # repos+=( 'https://github.com/github/example-repo.git v0.0.1' )
