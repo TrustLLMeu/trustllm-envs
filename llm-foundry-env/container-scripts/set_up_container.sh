@@ -30,6 +30,7 @@ if [ "$#" -gt 0 ] && [ "$1" = download ]; then
     _pip_install_args=( download -d "$pip_offline_dir" "${@:2}" )
     _pip_install_upgrade_args=( "${_pip_install_args[@]}" )
     _pip_install_editable_args=( "${_pip_install_args[@]}" )
+    _pip_install_unisolated_args=( "${_pip_install_args[@]}" )
 elif [ "$#" -gt 0 ] && [ "$1" = offline ]; then
     if ! [ -d "$pip_offline_dir" ]; then
         echo "\`pip\` packages have not been pre-downloaded for offline" \
@@ -41,12 +42,14 @@ elif [ "$#" -gt 0 ] && [ "$1" = offline ]; then
     _pip_install_args=( install --no-build-isolation --no-index --find-links 'file://'"$pip_offline_dir" )
     _pip_install_upgrade_args=( "${_pip_install_args[@]}" )
     _pip_install_editable_args=( "${_pip_install_args[@]}" -e )
+    _pip_install_unisolated_args=( "${_pip_install_args[@]}" )
 else
     _is_installing=1
     _is_offline=0
     _pip_install_args=( install )
     _pip_install_upgrade_args=( "${_pip_install_args[@]}" -U )
     _pip_install_editable_args=( "${_pip_install_args[@]}" -e )
+    _pip_install_unisolated_args=( "${_pip_install_args[@]}" --no-build-isolation )
 fi
 
 # Create or activate the Python virtual environment
@@ -63,6 +66,14 @@ fi
 
 # Clone and install the external repositories
 mkdir -p "$ext_repo_dir"
+
+# Install STK, ignoring dependencies, because it messes with Triton.
+# Version taken from `megablocks/setup.py`.
+python -m pip "${_pip_install_args[@]}" --no-deps 'stanford-stk==0.7.1'
+# Install grouped GEMM, because it messes with the ARM container.
+# Version taken from `llm-foundry/setup.py`.
+python -m pip "${_pip_install_unisolated_args[@]}" 'grouped_gemm==0.1.6'
+
 for _repo_tuple in "${repos[@]}"; do
     _repo_uri="$(echo "$_repo_tuple" | tr -s ' ' | cut -d ' ' -f 1)"
     _repo_commit="$(echo "$_repo_tuple" | tr -s ' ' | cut -d ' ' -f 2)"
