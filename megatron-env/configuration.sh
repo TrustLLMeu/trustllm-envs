@@ -45,10 +45,11 @@ repos=()
 # Data processing/format library. No version specified in
 # `Megatron-LM/examples/multimodal/Dockerfile`, so just use latest.
 repos+=( 'https://github.com/NVIDIA/Megatron-Energon.git 5.0.0' )
-# Main framework. Current latest pre-release taken because of FSDP-2
-# integration. Next release with it should be 0.10.
+# Main framework. Current latest pre-release branch HEAD taken because
+# of FSDP-2 integration (`core_r0.10.0` branch). Next release with it
+# should be 0.10.
 # This would execute `python -m pip install -e .`
-repos+=( 'https://github.com/NVIDIA/Megatron-LM.git core_r0.10.0' )
+repos+=( 'https://github.com/NVIDIA/Megatron-LM.git 44609f88875b8857434e9c91d32ea91f0cc15c1f' )
 # For example, this would clone a repo and do a standard
 # `pip install -e .`:
 # repos+=( 'https://github.com/github/example-repo.git v0.0.1' )
