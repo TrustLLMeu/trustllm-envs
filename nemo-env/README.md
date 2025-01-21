@@ -8,7 +8,8 @@ for JSC systems.
 ### Setting up
 
 This will set up the software stack, preprocess data, and run a
-training.
+training. Note that [updating](#updating) requires a different, but
+simpler, approach.
 
 1. SSH onto a GPU-focused supercomputer such as JUWELS Booster for
    setting up.
