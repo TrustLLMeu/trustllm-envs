@@ -44,17 +44,17 @@ repos=()
 # example below); separated by spaces.
 # Data processing/format library. Latest version specified in
 # `llm-foundry/setup.py`.
-repos+=( 'https://github.com/mosaicml/streaming.git v0.11.0' )
+repos+=( 'https://github.com/TrustLLMeu/streaming.git 911c4b8e9aebc28de7c62942ef89bde86bb3c86f' )
 # MoE library. Latest version specified in `llm-foundry/setup.py` (based on v0.7.0).
-repos+=( 'https://github.com/TrustLLMeu/megablocks.git e1134878c2f18ba9177ae88fd06f86ad6281bd66' )
+repos+=( 'https://github.com/TrustLLMeu/megablocks.git c1df76c0d6df61e7ffabd3674d07a96ca57643f2' )
 # Trainer library. Latest version specified in `llm-foundry/setup.py` (based on v0.28.0).
-repos+=( 'https://github.com/TrustLLMeu/composer.git 3208e17ef26542d04aa0bdf3793623591a3cb3bb [mlflow,nlp,tensorboard,wandb]' )
+repos+=( 'https://github.com/TrustLLMeu/composer.git a2458d8c832bb200acddfc3e70c09f77b6e16162 [mlflow,nlp,tensorboard,wandb]' )
 # Main framework. Latest release version (based on v0.16.0).
 # The feature "gpu" is the same as "gpu-flash2", but we currently keep
 # the latter explicit specification because that is a somewhat recent
 # change.
 # This would execute `python -m pip install -e '.[gpu-flash2,megablocks,openai,te,tensorboard]'`
-repos+=( 'https://github.com/TrustLLMeu/llm-foundry.git 46cf2eef45f03a52e5af2b9f041f920ca0dbad55 [gpu-flash2,megablocks,openai,te,tensorboard]' )
+repos+=( 'https://github.com/TrustLLMeu/llm-foundry.git ff881ec5cb202f2f34ec34258e6c6cd8e1f5e07d [gpu-flash2,megablocks,openai,te,tensorboard]' )
 # For example, this would clone a repo at tag v0.0.1 and do a standard
 # `pip install -e .`:
 # repos+=( 'https://github.com/github/example-repo.git v0.0.1' )
@@ -76,7 +76,9 @@ data_dir="$scratch_dir"/data
 checkpoint_dir="$scratch_dir"/experiments
 
 # Which container to build.
-docker_image_uri='docker://docker.io/mosaicml/pytorch:2.5.1_cu124-python3.11-ubuntu22.04'
+docker_image_uri='docker://nvcr.io/nvidia/pytorch:24.11-py3'
+# Official image, but not built for ARM.
+# docker_image_uri='docker://docker.io/mosaicml/pytorch:2.5.1_cu124-python3.11-ubuntu22.04'
 # Which file to build the container in. The default settings
 # automatically grab the information from the tail of the URI.
 apptainer_build_file="$scratch_dir"/apptainers/build/llm-foundry_"$(basename "$docker_image_uri" | tr ':' '_')".sif
