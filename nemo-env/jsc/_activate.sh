@@ -17,7 +17,7 @@ if [ "$SYSTEMNAME" = juwelsbooster ] \
        || [ "$SYSTEMNAME" = juwels ] \
        || [ "$SYSTEMNAME" = jurecadc ]; then
     module purge
-    module load Stages/2024
+    module load Stages/2025
     module load GCC
     if [ "$container_library" = apptainer ]; then
         # Handle partitions without Apptainer-Tools module.
