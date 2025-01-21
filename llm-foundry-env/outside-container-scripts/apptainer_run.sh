@@ -19,12 +19,6 @@ if ! [ -f "$apptainer_file" ]; then
     pop_curr_file
     exit 1
 fi
-if ! [ -f "$scratch_dir"/triton-build-patch.py ]; then
-    echo 'Cannot find necessary patch file; please run' \
-         "\`nice bash set_up.sh\`."
-    pop_curr_file
-    exit 1
-fi
 
 # If the user does not supply an argument, drop them into an
 # interactive shell. Similarly, if they try to execute `bash`, handle
