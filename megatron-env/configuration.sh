@@ -44,11 +44,11 @@ repos=()
 # example below); separated by spaces.
 # Data processing/format library. No version specified in
 # `Megatron-LM/examples/multimodal/Dockerfile`, so just use latest.
-repos+=( 'https://github.com/NVIDIA/Megatron-Energon.git 3.0.1' )
-# Main framework. Current latest HEAD commit taken because of FSDP-2
+repos+=( 'https://github.com/NVIDIA/Megatron-Energon.git 5.0.0' )
+# Main framework. Current latest pre-release taken because of FSDP-2
 # integration. Next release with it should be 0.10.
 # This would execute `python -m pip install -e .`
-repos+=( 'https://github.com/NVIDIA/Megatron-LM.git 4c4215fd7570975ef817757d8bfd466d29d51dca' )
+repos+=( 'https://github.com/NVIDIA/Megatron-LM.git core_r0.10.0' )
 # For example, this would clone a repo and do a standard
 # `pip install -e .`:
 # repos+=( 'https://github.com/github/example-repo.git v0.0.1' )
@@ -70,7 +70,7 @@ data_dir="$scratch_dir"/data
 checkpoint_dir="$scratch_dir"/experiments
 
 # Which container to build.
-docker_image_uri='docker://nvcr.io/nvidia/pytorch:24.10-py3'
+docker_image_uri='docker://nvcr.io/nvidia/pytorch:24.12-py3'
 # Which file to build the container in. The default settings
 # automatically grab the information from the tail of the URI.
 apptainer_build_file="$scratch_dir"/apptainers/build/megatron_"$(basename "$docker_image_uri" | tr ':' '_')".sif
