@@ -74,6 +74,31 @@ python -m pip "${_pip_install_args[@]}" --no-deps 'stanford-stk==0.7.1'
 # Version taken from `llm-foundry/setup.py`.
 python -m pip "${_pip_install_unisolated_args[@]}" 'grouped_gemm==0.1.6'
 
+if [ "$(command -v nvcc)" ]; then
+    _cuda_ver="$(nvcc --version | awk 'match($0, / release [0-9.]+,/) { prefix_len=length(" release "); print substr($0, RSTART + prefix_len, RLENGTH - prefix_len - 1); }')"
+    _cuda_major_ver="$(echo "$_cuda_ver" | cut -d . -f 1)"
+    _cuda_minor_ver="$(echo "$_cuda_ver" | cut -d . -f 2)"
+
+    # The used FlashAttention-3 version requires CUDA ≥12.3.
+    _install_fa3=0
+    if [ "$_cuda_major_ver" -gt 12 ]; then
+        _install_fa3=1
+    elif [ "$_cuda_major_ver" -eq 12 ] && [ "$_cuda_minor_ver" -ge 3 ]; then
+        _install_fa3=1
+    fi
+
+    # Install FlashAttention-3 according to TransformerEngine
+    # version 1.11 installation instructions.
+    # This version is the last one that matches the used TransformerEngine
+    # version's installation instructions.
+    if ((_install_fa3)); then
+        python -m pip "${_pip_install_args[@]}" 'git+https://github.com/Dao-AILab/flash-attention.git@v2.7.2#egg=flashattn-hopper&subdirectory=hopper'
+        _python_site_dir="$(python -c 'import site; print(site.getsitepackages()[0])')"
+        mkdir -p "$_python_site_dir"/flashattn_hopper
+        cp "$_python_site_dir"/flash_attn_interface.py "$_python_site_dir"/flashattn_hopper
+    fi
+fi
+
 for _repo_tuple in "${repos[@]}"; do
     _repo_uri="$(echo "$_repo_tuple" | tr -s ' ' | cut -d ' ' -f 1)"
     _repo_commit="$(echo "$_repo_tuple" | tr -s ' ' | cut -d ' ' -f 2)"
