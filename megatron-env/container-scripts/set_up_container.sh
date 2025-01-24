@@ -132,6 +132,9 @@ for _repo_tuple in "${repos[@]}"; do
     popd
 done
 
+# Most version specifications here from
+# `Megatron-LM/Dockerfile.ci.dev` and
+# `Megatron-LM/requirements/pytorch:24.07/requirements.txt`.
 # Install grouped GEMM for optional MoE functionality. Latest version
 # as specified in
 # `Megatron-LM/megatron/core/transformer/moe/grouped_gemm_util.py`.
@@ -148,8 +151,7 @@ python -m pip "${_pip_install_args[@]}" tokenizers datasets
 python -m pip "${_pip_install_args[@]}" wandb
 # Install Flask packages for inference server. Latest version.
 python -m pip "${_pip_install_args[@]}" flask-restful
-# Install TensorRT Model Optimizer for faster inference. Version
-# specification from `Megatron-LM/Dockerfile.ci.dev`.
+# Install TensorRT Model Optimizer for faster inference.
 python -m pip "${_pip_install_args[@]}" 'nvidia-modelopt[torch]>=0.19.0'
 # Install Zarr and TensorStore for sharded checkpointing. Not really
 # necessary since FSDP-2 does not work with these backends, but just
@@ -168,6 +170,11 @@ env CAUSAL_CONV1D_FORCE_BUILD=TRUE \
 env MAMBA_FORCE_BUILD=TRUE \
     python -m pip "${_pip_install_args[@]}" \
     git+https://github.com/state-spaces/mamba.git@v2.2.2
+
+# Here we uninstall a potentially different Triton again so we have
+# the version in the container. That way, it doesn't cause problems
+# with the container's PyTorch relying on version-specific internals.
+python -m pip uninstall triton
 
 # Install torchrun_jsc to fix distributed job launching.
 python -m pip "${_pip_install_args[@]}" torchrun_jsc
