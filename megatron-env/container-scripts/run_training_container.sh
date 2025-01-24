@@ -29,6 +29,8 @@ megatron_repo_dir="$ext_repo_dir"/Megatron-LM
 # - disable gradient accumulation fusion (required for FSDP2),
 # - use PyTorch DCP checkpoint format (also required for FSDP2),
 # - do not tie embedding layers (also required for FSDP2),
+# - pass "no async allreduce" argument even though it's ignored to
+#   avoid an error,
 # - use a local tokenizer,
 # - use local preprocessed data from SCRATCH,
 # - use multiple CPUs for data processing (variables defined outside
@@ -57,6 +59,7 @@ python -u -m torchrun_jsc \
        --ckpt-format torch_dist \
        --async-save \
        --untie-embeddings-and-output-weights \
+       --no-async-tensor-model-parallel-allreduce \
        --tensor-model-parallel-size=1 \
        --pipeline-model-parallel-size=1 \
        --num-layers=32 \
