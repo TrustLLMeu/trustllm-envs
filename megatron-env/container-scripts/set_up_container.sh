@@ -174,7 +174,7 @@ env MAMBA_FORCE_BUILD=TRUE \
 # Here we uninstall a potentially different Triton again so we have
 # the version in the container. That way, it doesn't cause problems
 # with the container's PyTorch relying on version-specific internals.
-python -m pip uninstall triton
+python -m pip uninstall -y triton
 
 # Install torchrun_jsc to fix distributed job launching.
 python -m pip "${_pip_install_args[@]}" torchrun_jsc
