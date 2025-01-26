@@ -23,6 +23,7 @@ megatron_repo_dir="$ext_repo_dir"/Megatron-LM
 # - use variable config values,
 # - run multi-node,
 # - run for only 10 steps,
+# - no evaluation,
 # - use BF16 precision,
 # - use smaller micro and global batch sizes,
 # - use FSDP2 as the sole parallelization strategy,
@@ -39,7 +40,7 @@ megatron_repo_dir="$ext_repo_dir"/Megatron-LM
 # - log to SCRATCH.
 
 seq_length=4096
-python -u -m torchrun_jsc \
+env NVTE_APPLY_QK_LAYER_SCALING=1 python -u -m torchrun_jsc \
        --nproc_per_node=gpu \
        --nnodes="$NUM_NODES" \
        --rdzv_id="$RDZV_ID" \
@@ -48,7 +49,7 @@ python -u -m torchrun_jsc \
        "$megatron_repo_dir"/pretrain_gpt.py  \
        --train-iters=10 \
        --log-interval=1 \
-       --eval-iters=TODO \
+       --eval-iters=0 \
        --eval-interval=10 \
        --bf16 \
        --accumulate-allreduce-grads-in-fp32 \
