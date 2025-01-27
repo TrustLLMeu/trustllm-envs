@@ -92,10 +92,15 @@ if [ "$(command -v nvcc)" ]; then
     # This version is the last one that matches the used TransformerEngine
     # version's installation instructions.
     if ((_install_fa3)); then
-        python -m pip "${_pip_install_args[@]}" 'git+https://github.com/Dao-AILab/flash-attention.git@v2.7.2#egg=flashattn-hopper&subdirectory=hopper'
+        # Handle installation failing.
+        ! python -m pip "${_pip_install_args[@]}" 'git+https://github.com/Dao-AILab/flash-attention.git@v2.7.2#egg=flashattn-hopper&subdirectory=hopper'
         _python_site_dir="$(python -c 'import site; print(site.getsitepackages()[0])')"
-        mkdir -p "$_python_site_dir"/flashattn_hopper
-        cp "$_python_site_dir"/flash_attn_interface.py "$_python_site_dir"/flashattn_hopper
+        # If installation was successful, then execute further
+        # installation instructions.
+        if [ -f "$_python_site_dir"/flash_attn_interface.py ]; then
+            mkdir -p "$_python_site_dir"/flashattn_hopper
+            cp "$_python_site_dir"/flash_attn_interface.py "$_python_site_dir"/flashattn_hopper
+        fi
     fi
 fi
 
