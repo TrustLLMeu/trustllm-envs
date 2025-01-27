@@ -72,7 +72,7 @@ repos+=( 'https://github.com/NVIDIA/NeMo-Aligner.git 0baba9939fef0fd37b89d019a9b
 scratch_dir="$base_scratch_dir"/"$env_name"
 
 # Directory that will contain the Python `venv`.
-venv_dir="$scratch_dir"/env
+venv_dir="$scratch_dir"/env_"$(uname -m)"
 
 # Where to store preprocessed datasets.
 data_dir="$scratch_dir"/data
@@ -84,18 +84,18 @@ checkpoint_dir="$scratch_dir"/experiments
 docker_image_uri='docker://nvcr.io/nvidia/pytorch:24.05-py3'
 # Which file to build the container in. The default settings
 # automatically grab the information from the tail of the URI.
-apptainer_build_file="$scratch_dir"/apptainers/build/nemo_"$(basename "$docker_image_uri" | tr ':' '_')".sif
-docker_image_tag=nemo_"$(basename "$docker_image_uri")"
-docker_build_container_name=build_nemo_"$(basename "$docker_image_uri" | tr ':' '_')"
+apptainer_build_file="$scratch_dir"/apptainers/build/nemo_"$(basename "$docker_image_uri" | tr ':' '_')"_"$(uname -m)".sif
+docker_image_tag=nemo_"$(basename "$docker_image_uri")"_"$(uname -m)"
+docker_build_container_name=build_nemo_"$(basename "$docker_image_uri" | tr ':' '_')"_"$(uname -m)"
 # Which container to use. Ideally keep this different from the above
 # build paths so the actively used container is not overwritten by
 # accident.
-apptainer_file="$scratch_dir"/apptainers/nemo_"$(basename "$docker_image_uri" | tr ':' '_')".sif
-docker_container_name=nemo_"$(basename "$docker_image_uri" | tr ':' '_')"
+apptainer_file="$scratch_dir"/apptainers/nemo_"$(basename "$docker_image_uri" | tr ':' '_')"_"$(uname -m)".sif
+docker_container_name=nemo_"$(basename "$docker_image_uri" | tr ':' '_')"_"$(uname -m)"
 # Pre-dowloaded image used for offline building if requested. The
 # default setting uses the same location as `apptainer_build_file`,
 # with the `sif` file ending replaced by `tar`.
-apptainer_offline_build_file="$(dirname "$apptainer_build_file")"/"$(basename "$apptainer_build_file" .sif)".tar
+apptainer_offline_build_file="$(dirname "$apptainer_build_file")"/"$(basename "$apptainer_build_file" .sif)"_"$(uname -m)".tar
 
 # Where `pip` packages will be stored/looked for for offline
 # installation.

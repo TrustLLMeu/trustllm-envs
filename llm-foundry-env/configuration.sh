@@ -67,7 +67,7 @@ repos+=( 'https://github.com/TrustLLMeu/llm-foundry.git ff881ec5cb202f2f34ec3425
 scratch_dir="$base_scratch_dir"/"$env_name"
 
 # Directory that will contain the Python `venv`.
-venv_dir="$scratch_dir"/env
+venv_dir="$scratch_dir"/env_"$(uname -m)"
 
 # Where to store preprocessed datasets.
 data_dir="$scratch_dir"/data
@@ -81,18 +81,18 @@ docker_image_uri='docker://nvcr.io/nvidia/pytorch:24.11-py3'
 # docker_image_uri='docker://docker.io/mosaicml/pytorch:2.5.1_cu124-python3.11-ubuntu22.04'
 # Which file to build the container in. The default settings
 # automatically grab the information from the tail of the URI.
-apptainer_build_file="$scratch_dir"/apptainers/build/llm-foundry_"$(basename "$docker_image_uri" | tr ':' '_')".sif
-docker_image_tag=llm-foundry_"$(basename "$docker_image_uri")"
-docker_build_container_name=build_llm-foundry_"$(basename "$docker_image_uri" | tr ':' '_')"
+apptainer_build_file="$scratch_dir"/apptainers/build/llm-foundry_"$(basename "$docker_image_uri" | tr ':' '_')"_"$(uname -m)".sif
+docker_image_tag=llm-foundry_"$(basename "$docker_image_uri")"_"$(uname -m)"
+docker_build_container_name=build_llm-foundry_"$(basename "$docker_image_uri" | tr ':' '_')"_"$(uname -m)"
 # Which container to use. Ideally keep this different from the above
 # build paths so the actively used container is not overwritten by
 # accident.
-apptainer_file="$scratch_dir"/apptainers/llm-foundry_"$(basename "$docker_image_uri" | tr ':' '_')".sif
-docker_container_name=llm-foundry_"$(basename "$docker_image_uri" | tr ':' '_')"
+apptainer_file="$scratch_dir"/apptainers/llm-foundry_"$(basename "$docker_image_uri" | tr ':' '_')"_"$(uname -m)".sif
+docker_container_name=llm-foundry_"$(basename "$docker_image_uri" | tr ':' '_')"_"$(uname -m)"
 # Pre-dowloaded image used for offline building if requested. The
 # default setting uses the same location as `apptainer_build_file`,
 # with the `sif` file ending replaced by `tar`.
-apptainer_offline_build_file="$(dirname "$apptainer_build_file")"/"$(basename "$apptainer_build_file" .sif)".tar
+apptainer_offline_build_file="$(dirname "$apptainer_build_file")"/"$(basename "$apptainer_build_file" .sif)"_"$(uname -m)".tar
 
 # Where `pip` packages will be stored/looked for for offline
 # installation.
