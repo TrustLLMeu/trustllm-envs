@@ -167,8 +167,10 @@ python -m pip "${_pip_install_args[@]}" einops
 env CAUSAL_CONV1D_FORCE_BUILD=TRUE \
     python -m pip "${_pip_install_args[@]}" \
     git+https://github.com/Dao-AILab/causal-conv1d.git@v1.4.0
+# Install Mamba package with `--no-deps` due to Triton. We should have
+# all dependencies covered.
 env MAMBA_FORCE_BUILD=TRUE \
-    python -m pip "${_pip_install_args[@]}" \
+    python -m pip "${_pip_install_args[@]}" --no-deps \
     git+https://github.com/state-spaces/mamba.git@v2.2.2
 
 # Here we uninstall a potentially different Triton again so we have
