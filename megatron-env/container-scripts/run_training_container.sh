@@ -109,7 +109,7 @@ env NVTE_APPLY_QK_LAYER_SCALING=1 python -u -m torchrun_jsc \
        --log-timers-to-tensorboard \
        --log-validation-ppl-to-tensorboard \
        --log-memory-to-tensorboard \
-       --save-interval=1234
+       --seed=1234
 
 # Same as above, but using SentencePiece tokenizer.
 # python -u -m torchrun_jsc \
@@ -181,4 +181,4 @@ env NVTE_APPLY_QK_LAYER_SCALING=1 python -u -m torchrun_jsc \
 #        --log-timers-to-tensorboard \
 #        --log-validation-ppl-to-tensorboard \
 #        --log-memory-to-tensorboard \
-#        --save-interval=1234
+#        --seed=1234
