@@ -93,7 +93,7 @@ export LR_BASE=0.00390625  # 2^-8
 export INIT_STD_BASE=0.01
 
 # batching
-export MICRO_BS=1
+export MICRO_BS=9
 export EVAL_MICRO_BS="$((2 * MICRO_BS))"
 export GLOBAL_BS=1152
 
@@ -101,6 +101,7 @@ export GLOBAL_BS=1152
 export PRECISION="amp_bf16" # amp_bf16 / amp_fp16
 export FSDP_STRATEGY="FULL_SHARD"
 export FSDP_PRECISION="DEFAULT"  # gradients are fp32
+export FSDP_ACTIVATION_CHECKPOINTING=true
 
 # schedule
 export SCHEDULER_NAME="constant_decay_with_warmup"

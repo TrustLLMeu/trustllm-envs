@@ -93,6 +93,7 @@ export GLOBAL_BS=1152
 export PRECISION="amp_bf16" # amp_bf16 / amp_fp16
 export FSDP_STRATEGY="FULL_SHARD"
 export FSDP_PRECISION="DEFAULT"  # gradients are fp32
+export FSDP_ACTIVATION_CHECKPOINTING=false
 
 # schedule
 export SCHEDULER_NAME="constant_decay_with_warmup"

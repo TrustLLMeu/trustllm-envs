@@ -79,6 +79,7 @@ python -u -m composer \
     precision="$PRECISION" \
     fsdp_config.sharding_strategy="$FSDP_STRATEGY" \
     fsdp_config.mixed_precision="$FSDP_PRECISION" \
+    fsdp_config.activation_checkpointing="$FSDP_ACTIVATION_CHECKPOINTING" \
     optimizer.name="$OPTIMIZER_NAME" \
     optimizer.lr="$LR_BASE" \
     optimizer.betas=\["$BETA_1","$BETA_2"\] \
