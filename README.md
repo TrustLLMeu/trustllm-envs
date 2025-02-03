@@ -37,7 +37,7 @@ Note, however, that this argument passing is not perfect due to some
 container start scripts messing with the arguments. To be absolutely
 sure that a command with complex quoting is executed correctly, please
 use the container in an interactive session or create a script from
-the command and execute that instead.
+the command and execute that instead.  
 For example:
 
 ```shell
