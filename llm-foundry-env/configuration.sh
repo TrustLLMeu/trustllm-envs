@@ -98,6 +98,17 @@ apptainer_offline_build_file="$(dirname "$apptainer_build_file")"/"$(basename "$
 # installation.
 pip_offline_dir="$scratch_dir"/pip-offline
 
+# Array of files to patch in the container. The two entries (file to
+# patch inside container, patched file outside of container) are
+# separated by colons. Should be absolute paths.
+patched_files=()
+# File to patch and patched file locations; separated by colons.
+# For example, this would patch the file located inside the container
+# at `/inside-container/my-file` and create a patched version at
+# `/outside-container/my-file-patched` (which will be appropriately
+# mapped onto the container):
+# patched_files+=( '/inside-container/my-file:/outside-container/my-file-patched' )
+
 # ---
 
 # This directory

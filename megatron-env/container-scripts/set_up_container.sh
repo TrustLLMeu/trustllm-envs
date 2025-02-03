@@ -22,11 +22,16 @@ source "$(get_curr_dir)"/../container-scripts/activate_container.sh setup
 mkdir -p "$project_dir"
 mkdir -p "$scratch_dir"
 
+# Restore original files so patching works cleanly.
+bash "$(get_curr_dir)"/restore_patch_backups.sh
+
 # Create the patched TransformerEngine file.
 sed '/^    props = torch.cuda.get_device_properties(torch.cuda.current_device())$/i \    if not torch.cuda.is_available():\
         import warnings\
         warnings.warn("No GPU found; TransformerEngine may not work correctly without one.")\
-        return (0, 0)' /usr/local/lib/python3.12/dist-packages/transformer_engine/pytorch/utils.py > "$scratch_dir"/transformer-engine-utils-patch.py
+        return (0, 0)' \
+    "$(echo "${patched_files[0]}" | tr -s ':' | cut -d ':' -f 1)" \
+    > "$(echo "${patched_files[0]}" | tr -s ':' | cut -d ':' -f 2)"
 
 if [ "$#" -gt 0 ] && [ "$1" = download ]; then
     mkdir -p "$pip_offline_dir"

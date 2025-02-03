@@ -53,11 +53,19 @@ else
     )
 fi
 
+_patch_file_args=()
+for _patch_file_tuple in "${patched_files[@]}"; do
+    _file_to_patch="$(echo "$_patch_file_tuple" | tr -s ':' | cut -d ':' -f 1)"
+    _patched_file="$(echo "$_patch_file_tuple" | tr -s ':' | cut -d ':' -f 2)"
+
+    _patch_file_args+=( --bind "$_patched_file"':'"$_file_to_patch" )
+done
+
 # We unset a bunch of environment variables so they don't disturb our Apptainer.
 env -u BASH_ENV -u CC -u CFLAGS -u CMAKE_LIBRARY_PATH -u CMAKE_PREFIX_PATH \
     -u CPATH -u CXX -u CXXFLAGS -u LESSOPEN -u PYTHONPATH \
     "$apptainer_bin" run --nv \
-    --bind "$scratch_dir"/transformer-engine-utils-patch.py:/usr/local/lib/python3.12/dist-packages/transformer_engine/pytorch/utils.py \
+    "${_patch_file_args[@]}" \
     "$apptainer_file" "${args[@]}"
 
 pop_curr_file

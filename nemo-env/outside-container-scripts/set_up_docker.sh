@@ -22,10 +22,25 @@ fi
 
 "${docker_cmd[@]}" start "$docker_container_name"
 
+# Make backup of files to patch. We'll overwrite the original files
+# further below.
+"${docker_cmd[@]}" \
+    exec \
+    --env USER="$USER" --env HOME="$HOME" \
+    -it "$docker_container_name" \
+    bash "$(get_curr_dir)"/../container-scripts/make_initial_patch_backups.sh
+
 "${docker_cmd[@]}" \
     exec \
     --env USER="$USER" --env HOME="$HOME" \
     -it "$docker_container_name" \
     bash "$(get_curr_dir)"/../container-scripts/set_up_container.sh "$@"
+
+# Overwrite patched files.
+"${docker_cmd[@]}" \
+    exec \
+    --env USER="$USER" --env HOME="$HOME" \
+    -it "$docker_container_name" \
+    bash "$(get_curr_dir)"/../container-scripts/overwrite_with_patches.sh
 
 pop_curr_file
