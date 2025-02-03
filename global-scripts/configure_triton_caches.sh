@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Set up miscellaneous environment variables so that we write into
+# Set up environment variables for Triton so that we write into
 # storage where we know we have enough space.
 
 set -euo pipefail
