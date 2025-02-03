@@ -1,7 +1,7 @@
 # TrustLLM LLM Foundry environment
 
 The container-based environment on using LLM Foundry, with example
-scripts for JSC systems.
+scripts for JSC and BSC systems.
 
 ## Usage
 

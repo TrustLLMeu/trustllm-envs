@@ -1,7 +1,7 @@
 # TrustLLM NeMo environment
 
 The container-based environment on using NeMo, with example scripts
-for JSC systems.
+for JSC and BSC systems.
 
 ## Usage
 
