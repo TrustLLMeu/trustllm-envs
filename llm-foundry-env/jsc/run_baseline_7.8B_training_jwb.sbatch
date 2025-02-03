@@ -94,7 +94,7 @@ export INIT_STD_BASE=0.01
 
 # batching
 export MICRO_BS=9
-export EVAL_MICRO_BS="$((2 * MICRO_BS))"
+export EVAL_MICRO_BS="$((1 * MICRO_BS))"
 export GLOBAL_BS=1152
 
 # parallelisation / performance
