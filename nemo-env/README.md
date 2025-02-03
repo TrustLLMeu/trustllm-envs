@@ -66,8 +66,8 @@ simpler, approach.
    You need to execute both, the parallel and non-parallel
    preprocessing examples, for the training example to work, because
    they create different splits (train and validation, respectively).
-1. SSH onto the GPU-focused supercomputer such as JUWELS Booster for
-   GPU tasks.
+1. SSH onto a GPU-focused supercomputer such as JUWELS Booster for GPU
+   tasks.
 1. Run a pre-training task. Here is an example assuming you're on
    JUWELS Booster:
 
