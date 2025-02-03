@@ -59,7 +59,7 @@ if ! [ -d "$venv_dir" ]; then
     python -m pip "${_pip_install_upgrade_args[@]}" pip
 else
     source "$venv_dir"/bin/activate
-    if (("$_is_installing")) && (("$_is_offline")); then
+    if ((_is_installing)) && ((_is_offline)); then
         python -m pip "${_pip_install_upgrade_args[@]}" pip
     fi
 fi
