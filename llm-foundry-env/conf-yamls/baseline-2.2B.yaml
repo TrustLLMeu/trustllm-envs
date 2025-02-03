@@ -478,7 +478,7 @@ callbacks:
   lr_monitor: {}
   optimizer_monitor:
     log_optimizer_metrics: true
-    batch_log_interval: 1
+    batch_log_interval: 10
   # memory_monitor: {}
   # runtime_estimator: {}
 
