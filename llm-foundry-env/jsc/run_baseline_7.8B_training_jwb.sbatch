@@ -124,8 +124,8 @@ export MAX_DURATION="$MAX_DURATION"ba
 # export RESET_TIME=false
 
 # eval / checkpointing intervals
-export EVAL_INTERVAL=1600
-export SAVE_INTERVAL=1600
+export EVAL_INTERVAL=400
+export SAVE_INTERVAL=400
 export EVAL_INTERVAL="$EVAL_INTERVAL"ba
 export SAVE_INTERVAL="$SAVE_INTERVAL"ba
 export SAVE_OVERWRITE=false
