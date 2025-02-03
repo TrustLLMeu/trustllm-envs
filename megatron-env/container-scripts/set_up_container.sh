@@ -38,7 +38,12 @@ if [ "$#" -gt 0 ] && [ "$1" = download ]; then
 
     _is_installing=0
     _is_offline=0
-    _pip_install_args=( download -d "$pip_offline_dir" "${@:2}" )
+    _pip_install_args=(
+        download
+        --cache-dir "$pip_cache_dir"
+        -d "$pip_offline_dir"
+        "${@:2}"
+    )
     _pip_install_upgrade_args=( "${_pip_install_args[@]}" )
     _pip_install_editable_args=( "${_pip_install_args[@]}" )
 elif [ "$#" -gt 0 ] && [ "$1" = offline ]; then
@@ -49,13 +54,19 @@ elif [ "$#" -gt 0 ] && [ "$1" = offline ]; then
 
     _is_installing=1
     _is_offline=1
-    _pip_install_args=( install --no-build-isolation --no-index --find-links 'file://'"$pip_offline_dir" )
+    _pip_install_args=(
+        install
+        --cache-dir "$pip_cache_dir"
+        --no-build-isolation
+        --no-index
+        --find-links 'file://'"$pip_offline_dir"
+    )
     _pip_install_upgrade_args=( "${_pip_install_args[@]}" )
     _pip_install_editable_args=( "${_pip_install_args[@]}" -e )
 else
     _is_installing=1
     _is_offline=0
-    _pip_install_args=( install )
+    _pip_install_args=( install --cache-dir "$pip_cache_dir" )
     _pip_install_upgrade_args=( "${_pip_install_args[@]}" -U )
     _pip_install_editable_args=( "${_pip_install_args[@]}" -e )
 fi

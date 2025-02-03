@@ -53,6 +53,9 @@ fi
 apptainer_cache_dir="$cache_dir"/apptainer
 apptainer_tmp_dir="$cache_dir"/apptainer-tmp
 
+# Root directory for caches of `pip`.
+pip_cache_dir="$cache_dir"/pip
+
 # Root directory for caches of Triton.
 triton_cache_dir="$cache_dir"/triton
 
