@@ -56,6 +56,9 @@ venv_dir="$scratch_dir"/env_"$(uname -m)"
 
 # Which container to build.
 docker_image_uri='docker://docker.io/library/python:3.13.1-bullseye'
+# The following image has built-in CUDA support, but contains an older
+# Python version and does not explicitly support Python.
+# docker_image_uri='docker://nvcr.io/nvidia/cuda:12.8.0-cudnn-devel-rockylinux9'
 # Which file to build the container in. The default settings
 # automatically grab the information from the tail of the URI.
 apptainer_build_file="$scratch_dir"/apptainers/build/python_"$(basename "$docker_image_uri" | tr ':' '_')"_"$(uname -m)".sif
