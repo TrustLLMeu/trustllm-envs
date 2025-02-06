@@ -60,7 +60,7 @@ elif [ "${#_args[@]}" -gt 0 ] && [ "$(basename "${_args[*]:0:1}")" = bash ]; the
         "${_args[@]:1}"
     )
 else
-    _docker_args=()
+    _docker_args=( -it )
     args=(
         env
         BASH_ENV'='"$(get_curr_dir)"/../container-scripts/activate_interactive_container.sh
