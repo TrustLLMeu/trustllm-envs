@@ -34,9 +34,13 @@ fi
 
 # -----
 
+# We assign to a variable again so we can use it after popping the
+# value below.
+_curr_file="$(get_curr_file)"
+
 pop_curr_file
 
 # Re-use parent environment's script.
 source "$parent_env_dir"/container-scripts/activate_interactive_container.sh \
-       __inherit__ "$(get_curr_file)" \
+       __inherit__ "$_curr_file" \
        "${_args[@]}"
