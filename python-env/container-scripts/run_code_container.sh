@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Start a training run.
+# Print "Hello world!".
 
 set -euo pipefail
 
