@@ -24,9 +24,11 @@ fi
 
 # -----
 
+_prev_args=( "${_args[@]}" )
 _next_script="$(get_curr_dir)"/activate.sh
 source "$_next_script" \
        __inherit__ "$_next_script"
+_args=( "${_prev_args[@]}" )
 
 "${docker_cmd[@]}" start "$docker_container_name"
 
