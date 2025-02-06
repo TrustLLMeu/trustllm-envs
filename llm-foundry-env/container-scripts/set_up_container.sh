@@ -138,17 +138,16 @@ for _repo_tuple in "${repos[@]}"; do
         pushd "$_curr_repo_dir"
 
         # Do we maybe have to change the repo's remote URI?
-        if [ "$_repo_uri" = 'https://github.com/TrustLLMeu/llm-foundry.git' ] \
-               || [ "$_repo_uri" = 'https://github.com/TrustLLMeu/composer.git' ] \
-               || [ "$_repo_uri" = 'https://github.com/TrustLLMeu/streaming.git' ] \
-               || [ "$_repo_uri" = 'https://github.com/TrustLLMeu/megablocks.git' ]; then
-            _forked_repo_uri=1
-        else
-            _forked_repo_uri=0
-        fi
+        _is_forked_repo_uri=0
+        for _forked_repo_uri in "${forked_repo_uris[@]}"; do
+            if [ "$_repo_uri" = "$_forked_repo_uri" ]; then
+                _is_forked_repo_uri=1
+                break
+            fi
+        done
         # For safety, we upgrade URI of `origin` to our fork.
-        # Previously this was the upstream MosaicML `origin`.
-        if ((_forked_repo_uri)) \
+        # Previously this was the upstream `origin`.
+        if ((_is_forked_repo_uri)) \
            && [ "$(git remote get-url origin)" != "$_repo_uri" ]; then
             git remote add prev-origin "$(git remote get-url origin)"
             git remote set-url origin "$_repo_uri"

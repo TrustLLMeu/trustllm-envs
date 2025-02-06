@@ -103,6 +103,15 @@ patched_files+=( /usr/local/lib/python3.12/dist-packages/transformer_engine/pyto
 # mapped onto the container):
 # patched_files+=( '/inside-container/my-file:/outside-container/my-file-patched' )
 
+# Array of repository URIs that point to forks. This is used to update
+# a local clone's remote URI. Any repository URIs that still point to
+# upstream will instead be pointed to the fork's URI if necessary.
+# Note that this functionality relies on repositories all having
+# different names.
+forked_repo_uris=(
+    'https://github.com/TrustLLMeu/Megatron-LM.git'
+)
+
 # ---
 
 # This directory
