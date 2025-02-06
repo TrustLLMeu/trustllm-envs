@@ -3,6 +3,8 @@
 # Configure the software environment used inside the container, and
 # set it up for interactive usage.
 
+set -euo pipefail
+
 # Do not use these variables; they may be overwritten. Instead, use
 # `get_curr_file` or `get_curr_dir` after sourcing `get_curr_file.sh`.
 _curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
