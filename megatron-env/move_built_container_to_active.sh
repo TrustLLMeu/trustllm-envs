@@ -10,23 +10,32 @@ _curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
 _curr_dir="$(dirname "$_curr_file")"
 source "$_curr_dir"/../global-scripts/get_curr_file.sh "$_curr_file"
 
-source "$(get_curr_dir)"/configuration.sh
-
-if [ "$container_library" = apptainer ]; then
-    mkdir -p "$(dirname "$apptainer_file")"
-    mv -i "$apptainer_build_file" "$apptainer_file"
-elif [ "$container_library" = docker ]; then
-    # Only remove old container if the new one actually exists.
-    if [ -n "$("${docker_cmd[@]}" container ls --all -q -f name='^'"$docker_container_name"'$')" ] \
-           && [ -n "$("${docker_cmd[@]}" container ls --all -q -f name='^'"$docker_build_container_name"'$')" ]; then
-        "${docker_cmd[@]}" container rm "$docker_container_name"
-    fi
-    "${docker_cmd[@]}" container rename "$docker_build_container_name" \
-           "$docker_container_name"
-else
-    echo "Unknown container library \"$container_library\"."
+source "$(get_curr_dir)"/parent_env.sh
+if [ "$#" -gt 1 ] && [ "$1" = __inherit__ ]; then
+    # If we are inheriting from this environment, we use the parent of
+    # this environment for further propagation, but all other
+    # locations use the child environment.
     pop_curr_file
-    exit 1
+
+    _curr_file="$2"
+    _curr_dir="$(dirname "$_curr_file")"
+    source "$_curr_dir"/../global-scripts/get_curr_file.sh "$_curr_file"
+    _args=( "${@:3}" )
+else
+    _args=( "$@" )
 fi
+
+if (("${DEBUG_TRUSTLLM_ENVS:-0}")); then
+    printf '  in: %s\n    curr_file = %s\n' \
+           "${BASH_SOURCE[0]:-${(%):-%x}}" \
+           "$(get_curr_file)"
+fi
+
+# -----
+
+# Re-use parent environment's script.
+source "$parent_env_dir"/move_built_container_to_active.sh \
+       __inherit__ "$(get_curr_file)" \
+       "${_args[@]}"
 
 pop_curr_file

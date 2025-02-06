@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-# Try to make a backup file suffixed with ".bak" for each file to
-# patch; existing backups will not be overwritten.
+# Create patched files to put into the container later.
 
 set -euo pipefail
 
@@ -34,9 +33,14 @@ fi
 
 # -----
 
-# Re-use parent environment's script.
-source "$parent_env_dir"/container-scripts/make_initial_patch_backups.sh \
-       __inherit__ "$(get_curr_file)" \
-       "${_args[@]}"
+source "$(get_curr_dir)"/../configuration.sh
+
+# Create the patched TransformerEngine file.
+sed '/^    props = torch.cuda.get_device_properties(torch.cuda.current_device())$/i \    if not torch.cuda.is_available():\
+        import warnings\
+        warnings.warn("No GPU found; TransformerEngine may not work correctly without one.")\
+        return (0, 0)' \
+    "$(echo "${patched_files[*]:0:1}" | tr -s ':' | cut -d ':' -f 1)" \
+    > "$(echo "${patched_files[*]:0:1}" | tr -s ':' | cut -d ':' -f 2)"
 
 pop_curr_file

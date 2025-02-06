@@ -10,33 +10,32 @@ _curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
 _curr_dir="$(dirname "$_curr_file")"
 source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
 
-source "$(get_curr_dir)"/activate.sh
+source "$(get_curr_dir)"/../parent_env.sh
+if [ "$#" -gt 1 ] && [ "$1" = __inherit__ ]; then
+    # If we are inheriting from this environment, we use the parent of
+    # this environment for further propagation, but all other
+    # locations use the child environment.
+    pop_curr_file
 
-source "$(get_curr_dir)"/../../global-scripts/configure_apptainer.sh
-
-mkdir -p "$(dirname "$apptainer_build_file")"
-
-if [ "$#" -gt 0 ] && [ "$1" = download ]; then
-    if [ "$(command -v docker)" ]; then
-        echo 'Docker is not available, but required for pre-downloading.'
-    fi
-
-    mkdir -p "$(dirname "$apptainer_offline_build_file")"
-
-    # Strip the URI protocol.
-    _docker_image="$(echo "$docker_image_uri" | cut -d / -f 3-)"
-    docker pull "$_docker_image"
-    docker save "$_docker_image" > "$apptainer_offline_build_file"
-elif [ "$#" -gt 0 ] && [ "$1" = offline ]; then
-    if ! [ -f "$apptainer_offline_build_file" ]; then
-        echo 'Container has not been pre-downloaded for offline building.' \
-             "Please place it at \`$apptainer_offline_build_file\`."
-    fi
-
-    "$apptainer_bin" build "$apptainer_build_file" \
-                     docker-archive://"$apptainer_offline_build_file"
+    _curr_file="$2"
+    _curr_dir="$(dirname "$_curr_file")"
+    source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
+    _args=( "${@:3}" )
 else
-    "$apptainer_bin" pull "$apptainer_build_file" "$docker_image_uri"
+    _args=( "$@" )
 fi
+
+if (("${DEBUG_TRUSTLLM_ENVS:-0}")); then
+    printf '  in: %s\n    curr_file = %s\n' \
+           "${BASH_SOURCE[0]:-${(%):-%x}}" \
+           "$(get_curr_file)"
+fi
+
+# -----
+
+# Re-use parent environment's script.
+source "$parent_env_dir"/outside-container-scripts/build_apptainer.sh \
+       __inherit__ "$(get_curr_file)" \
+       "${_args[@]}"
 
 pop_curr_file

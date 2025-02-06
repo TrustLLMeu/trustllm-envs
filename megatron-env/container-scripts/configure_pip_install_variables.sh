@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-# Try to make a backup file suffixed with ".bak" for each file to
-# patch; existing backups will not be overwritten.
+# Set up variables for `pip install` commands and related logic.
 
 set -euo pipefail
 
@@ -35,7 +34,7 @@ fi
 # -----
 
 # Re-use parent environment's script.
-source "$parent_env_dir"/container-scripts/make_initial_patch_backups.sh \
+source "$parent_env_dir"/container-scripts/configure_pip_install_variables.sh \
        __inherit__ "$(get_curr_file)" \
        "${_args[@]}"
 

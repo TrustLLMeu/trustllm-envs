@@ -10,13 +10,32 @@ _curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
 _curr_dir="$(dirname "$_curr_file")"
 source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
 
-source "$(get_curr_dir)"/../configuration.sh
+source "$(get_curr_dir)"/../parent_env.sh
+if [ "$#" -gt 1 ] && [ "$1" = __inherit__ ]; then
+    # If we are inheriting from this environment, we use the parent of
+    # this environment for further propagation, but all other
+    # locations use the child environment.
+    pop_curr_file
 
-for _patch_file_tuple in "${patched_files[@]}"; do
-    _file_to_patch="$(echo "$_patch_file_tuple" | tr -s ':' | cut -d ':' -f 1)"
-    _patched_file="$(echo "$_patch_file_tuple" | tr -s ':' | cut -d ':' -f 2)"
+    _curr_file="$2"
+    _curr_dir="$(dirname "$_curr_file")"
+    source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
+    _args=( "${@:3}" )
+else
+    _args=( "$@" )
+fi
 
-    cp "$_patched_file" "$_file_to_patch"
-done
+if (("${DEBUG_TRUSTLLM_ENVS:-0}")); then
+    printf '  in: %s\n    curr_file = %s\n' \
+           "${BASH_SOURCE[0]:-${(%):-%x}}" \
+           "$(get_curr_file)"
+fi
+
+# -----
+
+# Re-use parent environment's script.
+source "$parent_env_dir"/container-scripts/overwrite_with_patches.sh \
+       __inherit__ "$(get_curr_file)" \
+       "${_args[@]}"
 
 pop_curr_file

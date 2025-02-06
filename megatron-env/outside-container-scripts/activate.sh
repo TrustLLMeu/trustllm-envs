@@ -10,22 +10,32 @@ _curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
 _curr_dir="$(dirname "$_curr_file")"
 source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
 
-source "$(get_curr_dir)"/../../global_configuration.sh
+source "$(get_curr_dir)"/../parent_env.sh
+if [ "$#" -gt 1 ] && [ "$1" = __inherit__ ]; then
+    # If we are inheriting from this environment, we use the parent of
+    # this environment for further propagation, but all other
+    # locations use the child environment.
+    pop_curr_file
 
-# JSC machine activation steps
-if [ "$machine_name" = jsc ] \
-       || [ "$machine_name" = jwb ] \
-       || [ "$machine_name" = jwc ] \
-       || [ "$machine_name" = jrc ]; then
-    source "$(get_curr_dir)"/../jsc/_activate.sh
-elif [ "$machine_name" = bsc ] \
-       || [ "$machine_name" = mn5a ]; then
-    source "$(get_curr_dir)"/../bsc/_activate.sh
+    _curr_file="$2"
+    _curr_dir="$(dirname "$_curr_file")"
+    source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
+    _args=( "${@:3}" )
+else
+    _args=( "$@" )
 fi
 
-source "$(get_curr_dir)"/../configuration.sh
+if (("${DEBUG_TRUSTLLM_ENVS:-0}")); then
+    printf '  in: %s\n    curr_file = %s\n' \
+           "${BASH_SOURCE[0]:-${(%):-%x}}" \
+           "$(get_curr_file)"
+fi
 
-# HuggingFace libraries cache configuration
-source "$(get_curr_dir)"/../../global-scripts/configure_caches.sh
+# -----
+
+# Re-use parent environment's script.
+source "$parent_env_dir"/outside-container-scripts/activate.sh \
+       __inherit__ "$(get_curr_file)" \
+       "${_args[@]}"
 
 pop_curr_file

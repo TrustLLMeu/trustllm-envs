@@ -10,20 +10,32 @@ _curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
 _curr_dir="$(dirname "$_curr_file")"
 source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
 
-source "$(get_curr_dir)"/activate.sh
-
-if ! [ -f "$apptainer_file" ]; then
-    echo 'Cannot find Apptainer container file; please run' \
-         "\`nice bash build_container.sh" \
-         "&& bash move_built_container_to_active.sh\`."
+source "$(get_curr_dir)"/../parent_env.sh
+if [ "$#" -gt 1 ] && [ "$1" = __inherit__ ]; then
+    # If we are inheriting from this environment, we use the parent of
+    # this environment for further propagation, but all other
+    # locations use the child environment.
     pop_curr_file
-    exit 1
+
+    _curr_file="$2"
+    _curr_dir="$(dirname "$_curr_file")"
+    source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
+    _args=( "${@:3}" )
+else
+    _args=( "$@" )
 fi
 
-# We unset a bunch of environment variables so they don't disturb our Apptainer.
-env -u BASH_ENV -u CC -u CFLAGS -u CMAKE_LIBRARY_PATH -u CMAKE_PREFIX_PATH \
-    -u CPATH -u CXX -u CXXFLAGS -u LESSOPEN -u PYTHONPATH \
-    "$apptainer_bin" run --nv "$apptainer_file" \
-    bash "$(get_curr_dir)"/../container-scripts/set_up_container.sh "$@"
+if (("${DEBUG_TRUSTLLM_ENVS:-0}")); then
+    printf '  in: %s\n    curr_file = %s\n' \
+           "${BASH_SOURCE[0]:-${(%):-%x}}" \
+           "$(get_curr_file)"
+fi
+
+# -----
+
+# Re-use parent environment's script.
+source "$parent_env_dir"/outside-container-scripts/set_up_apptainer.sh \
+       __inherit__ "$(get_curr_file)" \
+       "${_args[@]}"
 
 pop_curr_file
