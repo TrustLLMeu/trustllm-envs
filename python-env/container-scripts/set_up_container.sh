@@ -76,6 +76,9 @@ _args=( "${_prev_args[@]}" )
 if ! [ -d "$venv_dir" ]; then
     python3 -m venv --system-site-packages --without-pip "$venv_dir"
     source "$venv_dir"/bin/activate
+    if ! ((_is_offline)); then
+        python -m ensurepip --upgrade
+    fi
     python -m pip "${_pip_install_upgrade_args[@]}" pip
 else
     source "$venv_dir"/bin/activate
