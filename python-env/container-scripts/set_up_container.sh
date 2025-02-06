@@ -74,7 +74,7 @@ _args=( "${_prev_args[@]}" )
 
 # Create or activate the Python virtual environment
 if ! [ -d "$venv_dir" ]; then
-    python -m venv --system-site-packages --without-pip "$venv_dir"
+    python3 -m venv --system-site-packages --without-pip "$venv_dir"
     source "$venv_dir"/bin/activate
     python -m pip "${_pip_install_upgrade_args[@]}" pip
 else
