@@ -34,7 +34,10 @@ source "$(get_curr_dir)"/../../global-scripts/configure_gpu_arch.sh
 
 # Have to explicitly give Triton the directory containing
 # `libcuda.so`.
-export TRITON_LIBCUDA_PATH=/usr/local/cuda/lib64/stubs
+_libcuda_dir=/usr/local/cuda/lib64/stubs
+if [ -e "$_libcuda_dir"/libcuda.so ]; then
+    export TRITON_LIBCUDA_PATH="$_libcuda_dir"
+fi
 
 # If we are _not_ doing the setup, we want some extra behavior:
 # 1. Put HuggingFace libraries into offline mode because of JSC system
