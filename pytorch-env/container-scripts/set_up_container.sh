@@ -8,6 +8,14 @@
 # passed as extra arguments to `pip download`. These can be used, for
 # example, to specify the `--platform` or `--python-version` to
 # download for.
+#
+# If the first argument is given as "offline", pre-downloaded packages
+# are installed.
+#
+# If the first argument is given as "update", repository states will
+# be updated before each repository's re-installation. The repository
+# update may fail, in which case individual Git conflicts have to be
+# resolved manually and the script restarted.
 
 set -euo pipefail
 
