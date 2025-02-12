@@ -43,7 +43,7 @@ mkdir -p "$base_scratch_dir"
     --mount type=bind,src="$_curr_dir"/../..,dst="$_curr_dir"/../.. \
     --mount type=bind,src="$base_project_dir",dst="$base_project_dir" \
     --mount type=bind,src="$base_scratch_dir",dst="$base_scratch_dir" \
-    --name "$docker_build_container_name"_2 -it \
+    --name "$docker_build_container_name" -it \
     "$docker_image_tag" bash
 
 pop_curr_file
