@@ -38,7 +38,8 @@ def main():
     input_files = []
     if args.dist_input_files:
         input_files.extend(args.dist_input_files.split(':'))
-    input_files.extend(sorted(glob.glob(args.dist_input_files_glob)))
+    if args.dist_input_files_glob:
+        input_files.extend(sorted(glob.glob(args.dist_input_files_glob)))
 
     shard_size = math.ceil(len(input_files) / world_size)
     shard_offset = shard_size * rank
