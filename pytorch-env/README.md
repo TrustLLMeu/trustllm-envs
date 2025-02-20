@@ -22,11 +22,11 @@ simpler, approach.
    name and container library to use to your liking in
    `trustllm-envs/global_configuration.sh`.
 1. Configure paths concerning the PyTorch environment to your liking
-   in `trustllm-envs/python-env/configuration.sh`.
+   in `trustllm-envs/pytorch-env/configuration.sh`.
 1. Switch into the PyTorch environment's directory:
 
    ```shell
-   cd trustllm-envs/python-env
+   cd trustllm-envs/pytorch-env
    ```
 1. Build the PyTorch container:
 
