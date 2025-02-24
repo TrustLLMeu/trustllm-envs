@@ -19,7 +19,7 @@ python -m pip "${_pip_install_args[@]}" accelerate transformers
 python -m pip "${_pip_install_args[@]}" tokenizers
 
 # Install torchrun_jsc to fix distributed job launching.
-python -m pip "${_pip_install_args[@]}" 'torchrun_jsc>=0.17'
+python -m pip "${_pip_install_args[@]}" 'torchrun_jsc>=0.0.17'
 
 torchtitan_repo_dir="$ext_repo_dir"/torchtitan
 # Install testing tools.
