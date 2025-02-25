@@ -120,7 +120,7 @@ forked_repo_uris=(
 # This directory
 
 # Container script used for training runs.
-training_script="$(get_curr_dir)"/container-scripts/run_training_container.sh
+training_script="$(get_curr_dir)"/container-scripts/run_experimental_training_container.sh
 
 # ---
 
