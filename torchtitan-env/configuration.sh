@@ -48,7 +48,7 @@ repos+=( 'https://github.com/pytorch/ao.git v0.8.0' )
 # Main framework. Current latest HEAD commit taken because no versions
 # tagged.
 # This would execute `python -m pip install -e .`
-repos+=( 'https://github.com/pytorch/torchtitan.git 3996b634a58c7b7de3f7f7b815058245d8c69e01' )
+repos+=( 'https://github.com/TrustLLMeu/torchtitan.git trustllm-0.1' )
 # Finetuning framework. Latest version.
 repos+=( 'https://github.com/pytorch/torchtune.git v0.5.0' )
 # Inference framework. Current latest HEAD commit taken because no
