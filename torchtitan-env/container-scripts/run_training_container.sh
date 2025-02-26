@@ -39,7 +39,7 @@ python -u -m torchrun_jsc \
        --rdzv_endpoint="$MASTER_ADDR":"$MASTER_PORT" \
        --rdzv_backend=c10d \
        "$torchtitan_repo_dir"/train.py  \
-       --job.description='Llama2 7B training' \
+       --job.description='Byte-Llama-2 7B training' \
        --job.config_file="$torchtitan_repo_dir"/torchtitan/models/llama/train_configs/llama3_8b.toml \
        --job.dump_folder="$checkpoint_dir" \
        --job.print_args \
@@ -60,7 +60,7 @@ python -u -m torchrun_jsc \
        --training.dataset_inner_name="$TRAIN_DATA_INNER_NAME" \
        --training.dataset_streaming \
        --training.seed=0 \
-       --model.name=llama2 \
+       --model.name=byte_llama2 \
        --model.flavor=7B \
        --model.norm_type=rmsnorm \
        --model.tokenizer_path="$TOKENIZER_MODEL_FILE" \
