@@ -20,4 +20,7 @@ export PYTORCH_KERNEL_CACHE_PATH="$torch_cache_dir"/kernels
 export TORCH_HOME="$torch_cache_dir"/hub
 export TORCH_EXTENSIONS_DIR="$torch_cache_dir"/torch_extensions
 
+# PyTorch can complain when this doesn't exist, for some reason.
+mkdir -p "$PYTORCH_KERNEL_CACHE_PATH"
+
 pop_curr_file
