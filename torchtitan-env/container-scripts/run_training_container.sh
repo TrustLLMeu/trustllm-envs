@@ -54,7 +54,11 @@ python -u -m torchrun_jsc \
        --training.max_norm=1.0 \
        --training.warmup_steps=500 \
        --training.compile \
+       --training.dataset=simple_custom \
        --training.dataset_path="$TRAIN_DATA_PATH" \
+       --training.dataset_files="$TRAIN_DATA_FILES" \
+       --training.dataset_inner_name="$TRAIN_DATA_INNER_NAME" \
+       --training.dataset_streaming \
        --training.seed=0 \
        --model.name=llama2 \
        --model.flavor=7B \

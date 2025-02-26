@@ -48,34 +48,32 @@ export NUM_NODES="$SLURM_JOB_NUM_NODES"
 export RDZV_ID="$SLURM_JOB_ID"
 
 # We have 48 physical CPU cores on JUWELS Booster nodes, so configure
-# 11 active data workers per GPU in total (that is, for the
-# "train" and "validation" split; we exclude the "test" split here);
-# this leaves one CPU for the main process.
+# 11 active data workers per GPU in total; this leaves one CPU for the
+# main process.
 export TRAIN_NUM_WORKERS=11
 
-# These prefixes are slightly different from the ones for data
-# preprocessing. These also include the JSON key used for querying the
-# text (usually "text") and the hierarchical level of processing
-# (usually "document").
-# In the usual case, the following conversion example should work:
-#
-# ```
-# # This variable is given for preprocessing
-# OUTPUT_DATA_PATH="$data_dir"/my-data/train
-# # This variable is given for training
-# TRAIN_DATA_PATH="$data_dir"/my-data/train_text_document
-# ```
-#
-# If you are unsure, you can always manually check which files the
-# preprocessing created.
-export TRAIN_DATA_PATH="$data_dir"/my-tiny-c4-gpt2-tok/train
+# If using TorchTitan's native dataloader, can be a path to a
+# directory, or a file format supported by HuggingFace `datasets`
+# (e.g., the literal "json"). If using the experimental dataloader, a
+# root directory containing directories containing data files has to
+# be given.
+export TRAIN_DATA_PATH=json
+# Comma-separated list of files. Ignored when using experimental
+# dataloader.
+export TRAIN_DATA_FILES="$root_scratch_dir"/"$project_name"/example-data/tiny-c4-100k.jsonl
+# Name of sub-dataset to use from root dataset (in this case, the "en"
+# subset of C4). Ignored when using experimental dataloader.
+export TRAIN_DATA_INNER_NAME=en
+# Name of sub-directories in `TRAIN_DATA_PATH` to select for
+# inclusion. Ignored when using native dataloader.
+# export TRAIN_DATASETS=train
 # We simply use the validation set for both evaluation and testing in
 # the example. Of course, this is redundant, but makes it easier to
 # change the example to include a real test set. Also, we need to
 # supply a test set assuming the data argument is given like in the
 # example.
-export EVAL_DATA_PATH="$TRAIN_DATA_PATH"
-export TEST_DATA_PATH="$EVAL_DATA_PATH"
+# export EVAL_DATA_PATH="$TRAIN_DATA_PATH"
+# export TEST_DATA_PATH="$EVAL_DATA_PATH"
 
 export TOKENIZER_MODEL_FILE="$root_scratch_dir"/"$project_name"/example-data/t5-small-tokenizer/spiece.model
 
