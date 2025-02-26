@@ -42,6 +42,7 @@ python -u -m torchrun_jsc \
        --job.description='Byte-Llama2 7B training' \
        --job.config_file="$torchtitan_repo_dir"/torchtitan/models/llama/train_configs/llama3_8b.toml \
        --job.dump_folder="$checkpoint_dir" \
+       --job.print_args \
        --training.steps=10 \
        --training.seq_len=4096 \
        --training.batch_size=1 \
