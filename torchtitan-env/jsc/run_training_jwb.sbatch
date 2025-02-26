@@ -58,14 +58,16 @@ export TRAIN_NUM_WORKERS=11
 # root directory containing directories containing data files has to
 # be given.
 export TRAIN_DATA_PATH=json
-# Comma-separated list of files. Ignored when using experimental
-# dataloader.
+# Optional comma-separated list of files to select. Set as empty
+# string ('') to disable. Ignored when using experimental dataloader.
 export TRAIN_DATA_FILES="$root_scratch_dir"/"$project_name"/example-data/tiny-c4-100k.jsonl
-# Name of sub-dataset to use from root dataset (in this case, the "en"
-# subset of C4). Ignored when using experimental dataloader.
+# Optional name of sub-dataset to use from root dataset (in this case,
+# the "en" subset of C4). Set as empty string ('') to disable. Ignored
+# when using experimental dataloader.
 export TRAIN_DATA_INNER_NAME=en
-# Name of sub-directories in `TRAIN_DATA_PATH` to select for
-# inclusion. Ignored when using native dataloader.
+# Comma-separated list of names of sub-directories in
+# `TRAIN_DATA_PATH` to select for inclusion. Set as empty string ('')
+# to disable. Ignored when using native dataloader.
 # export TRAIN_DATASETS=train
 # We simply use the validation set for both evaluation and testing in
 # the example. Of course, this is redundant, but makes it easier to

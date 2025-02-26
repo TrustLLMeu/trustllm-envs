@@ -31,6 +31,11 @@ torchtitan_repo_dir="$ext_repo_dir"/torchtitan
 # - save checkpoints to SCRATCH,
 # - log to SCRATCH.
 
+datasets_arg=()
+if [ -n "${TRAIN_DATASETS:-}" ]; then
+    datasets_arg=( --dataset.datasets="$TRAIN_DATASETS" )
+fi
+
 export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
 python -u -m torchrun_jsc \
        --nproc_per_node=gpu \
@@ -57,7 +62,7 @@ python -u -m torchrun_jsc \
        --training.dataset_path="$TRAIN_DATA_PATH" \
        --training.seed=0 \
        --dataset.use_experimental_dataloader \
-       --dataset.datasets="$TRAIN_DATASETS" \
+       "${datasets_arg[@]}" \
        --dataset.data_logical_shards="$((NUM_NODES * DEVICES_PER_NODE * TRAIN_NUM_WORKERS))" \
        --dataset.num_data_workers="$TRAIN_NUM_WORKERS" \
        --dataset.file_type="hf_parquet" \

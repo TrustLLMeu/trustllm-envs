@@ -31,6 +31,16 @@ torchtitan_repo_dir="$ext_repo_dir"/torchtitan
 # - save checkpoints to SCRATCH,
 # - log to SCRATCH.
 
+dataset_files_arg=()
+if [ -n "${TRAIN_DATA_FILES:-}" ]; then
+    dataset_files_arg=( --training.dataset_files="$TRAIN_DATA_FILES" )
+fi
+
+dataset_inner_name_arg=()
+if [ -n "${TRAIN_DATA_INNER_NAME:-}" ]; then
+    dataset_inner_name_arg=( --training.dataset_inner_name="$TRAIN_DATA_INNER_NAME" )
+fi
+
 export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
 python -u -m torchrun_jsc \
        --nproc_per_node=gpu \
@@ -56,8 +66,8 @@ python -u -m torchrun_jsc \
        --training.compile \
        --training.dataset=simple_custom \
        --training.dataset_path="$TRAIN_DATA_PATH" \
-       --training.dataset_files="$TRAIN_DATA_FILES" \
-       --training.dataset_inner_name="$TRAIN_DATA_INNER_NAME" \
+       "${dataset_files_arg[@]}" \
+       "${dataset_inner_name_arg[@]}" \
        --training.dataset_streaming \
        --training.seed=0 \
        --model.name=byte_llama2 \
