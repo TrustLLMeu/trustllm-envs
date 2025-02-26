@@ -73,7 +73,7 @@ export TRAIN_DATA_PATH="$_experimental_data_root"
 # the "en" subset of C4). Set as empty string ('') to disable. Ignored
 # when using experimental dataloader.
 # export TRAIN_DATA_INNER_NAME=en
-# Comma-separated list of names of sub-directories in
+# Optional comma-separated list of names of sub-directories in
 # `TRAIN_DATA_PATH` to select for inclusion. Set as empty string ('')
 # to disable. Ignored when using native dataloader.
 export TRAIN_DATASETS="$(dirname "$_experimental_train_data_path")"
