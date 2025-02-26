@@ -57,6 +57,7 @@ python -u -m torchrun_jsc \
        --training.dataset_path="$TRAIN_DATA_PATH" \
        --training.seed=0 \
        --dataset.use_experimental_dataloader \
+       --dataset.datasets="$TRAIN_DATASETS" \
        --dataset.data_logical_shards="$((NUM_NODES * DEVICES_PER_NODE * TRAIN_NUM_WORKERS))" \
        --dataset.num_data_workers="$TRAIN_NUM_WORKERS" \
        --dataset.file_type="hf_parquet" \
