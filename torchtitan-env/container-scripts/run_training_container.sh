@@ -48,7 +48,7 @@ python -u -m torchrun_jsc \
        --rdzv_id="$RDZV_ID" \
        --rdzv_endpoint="$MASTER_ADDR":"$MASTER_PORT" \
        --rdzv_backend=c10d \
-       "$torchtitan_repo_dir"/train.py  \
+       "$torchtitan_repo_dir"/torchtitan/train.py  \
        --job.description='Byte-Llama-2 7B training' \
        --job.config_file="$torchtitan_repo_dir"/torchtitan/models/llama/train_configs/llama3_8b.toml \
        --job.dump_folder="$checkpoint_dir" \
