@@ -62,7 +62,6 @@ python -u -m torchrun_jsc \
        --training.mixed_precision_param=bfloat16 \
        --training.mixed_precision_reduce=float32 \
        --training.max_norm=1.0 \
-       --training.warmup_steps=500 \
        --training.compile \
        --training.dataset=simple_custom \
        --training.dataset_path="$TRAIN_DATA_PATH" \
@@ -78,7 +77,8 @@ python -u -m torchrun_jsc \
        --activation_checkpoint.selective_ac_option=op \
        --optimizer.name=AdamW \
        --optimizer.lr=3e-4 \
-       --optimizer.fused \
+       --optimizer.implementation=fused \
+       --lr_scheduler.warmup_steps=500 \
        --metrics.log_freq=1 \
        --metrics.enable_tensorboard \
        --checkpoint.enable_checkpoint \
