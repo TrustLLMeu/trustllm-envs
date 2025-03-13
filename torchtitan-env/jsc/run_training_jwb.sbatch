@@ -54,21 +54,14 @@ export TRAIN_NUM_WORKERS=11
 
 # If using TorchTitan's native dataloader, can be a path to a
 # directory, or a file format supported by HuggingFace `datasets`
-# (e.g., the literal "json"). If using the experimental dataloader, a
-# root directory containing directories containing data files has to
-# be given.
+# (e.g., the literal "json").
 export TRAIN_DATA_PATH=json
 # Optional comma-separated list of files to select. Set as empty
-# string ('') to disable. Ignored when using experimental dataloader.
+# string ('') to disable.
 export TRAIN_DATA_FILES="$root_scratch_dir"/"$project_name"/example-data/tiny-c4-100k.jsonl
 # Optional name of sub-dataset to use from root dataset (in this case,
-# the "en" subset of C4). Set as empty string ('') to disable. Ignored
-# when using experimental dataloader.
+# the "en" subset of C4). Set as empty string ('') to disable.
 export TRAIN_DATA_INNER_NAME=en
-# Optional comma-separated list of names of sub-directories in
-# `TRAIN_DATA_PATH` to select for inclusion. Set as empty string ('')
-# to disable. Ignored when using native dataloader.
-# export TRAIN_DATASETS=train
 # We simply use the validation set for both evaluation and testing in
 # the example. Of course, this is redundant, but makes it easier to
 # change the example to include a real test set. Also, we need to
