@@ -57,8 +57,6 @@ python -u -m torchrun_jsc \
        --training.seq_len=4096 \
        --training.batch_size=1 \
        --training.global_batch_size=8 \
-       --training.data_parallel_replicate_degree="$(((NUM_NODES * DEVICES_PER_NODE) / GPUS_PER_REPLICA))" \
-       --training.tensor_parallel_degree=1 \
        --training.mixed_precision_param=bfloat16 \
        --training.mixed_precision_reduce=float32 \
        --training.max_norm=1.0 \
@@ -69,6 +67,8 @@ python -u -m torchrun_jsc \
        "${dataset_inner_name_arg[@]}" \
        --training.dataset_streaming \
        --training.seed=0 \
+       --parallelism.data_parallel_replicate_degree="$(((NUM_NODES * DEVICES_PER_NODE) / GPUS_PER_REPLICA))" \
+       --parallelism.tensor_parallel_degree=1 \
        --model.name=byte_llama2 \
        --model.flavor=7B \
        --model.norm_type=rmsnorm \
