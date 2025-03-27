@@ -45,6 +45,9 @@ repos=()
 # Low-precision kernel library. No version specified, so just use
 # latest.
 repos+=( 'https://github.com/pytorch/ao.git v0.11.0' )
+# Fault-tolerance library. Current latest HEAD commit taken because no
+# versions tagged.
+repos+=( 'https://github.com/pytorch/torchft.git 22b8fa1317c83291c497a9a46b4170f6a85823d4' )
 # Main framework. Current latest HEAD commit taken because no versions
 # tagged.
 # This would execute `python -m pip install -e .`
