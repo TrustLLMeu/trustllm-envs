@@ -71,6 +71,10 @@ data_dir="$scratch_dir"/data
 # Where to store model checkpoints.
 checkpoint_dir="$scratch_dir"/experiments
 
+# Where to install which Rust version. Current latest stable version.
+rust_ver=1.88.0
+rust_dir="$scratch_dir"/.rust
+
 # Which container to build.
 docker_image_uri='docker://nvcr.io/nvidia/pytorch:25.06-py3'
 # Which file to build the container in. The default settings
@@ -91,6 +95,11 @@ apptainer_offline_build_file="$(dirname "$apptainer_build_file")"/"$(basename "$
 # Where `pip` packages will be stored/looked for for offline
 # installation.
 pip_offline_dir="$scratch_dir"/pip-offline
+
+# Where the Rust installer will be stored/looked for for offline
+# installation. Installing Rust packages offline is currently not
+# supported.
+rust_offline_dir="$scratch_dir"/rust-offline
 
 # Array of files to patch in the container. The two entries (file to
 # patch inside container, patched file outside of container) are

@@ -40,4 +40,7 @@ source "$parent_env_dir"/container-scripts/activate_container.sh \
 
 unset PIP_CONSTRAINT
 
+# Put Rust binaries into `PATH`.
+export PATH="$rust_dir"/bin:"$PATH"
+
 pop_curr_file
