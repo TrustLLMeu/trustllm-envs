@@ -38,4 +38,7 @@ source "$parent_env_dir"/container-scripts/activate_container.sh \
        __inherit__ "$(get_curr_file)" \
        "${_args[@]}"
 
+# Put Rust binaries into `PATH`.
+export PATH="$rust_dir"/bin:"$PATH"
+
 pop_curr_file
