@@ -59,7 +59,7 @@ srun bash -c "
     export WORLD_SIZE=\"\$((SLURM_JOB_NUM_NODES - 1))\"; \\
     export NODE_RANK=\"\$SLURM_NODEID\"; \\
     bash ${_curr_dir@Q}/../container_run.sh \\
-        bash ${_curr_dir@Q}/../container-scripts/shuffle_data_spark_container.sh
+        bash ${_curr_dir@Q}/../container-scripts/shuffle_data_container.sh
 "
 
 pop_curr_file
