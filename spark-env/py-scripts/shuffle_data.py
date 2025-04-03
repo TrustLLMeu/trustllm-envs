@@ -31,6 +31,7 @@ def parse_args():
         '--event-dir',
         default=os.path.join(tempfile.gettempdir(), 'spark-events'),
     )
+    parser.add_argument('--max-total-mem-gb', type=float)
     parser.add_argument('--output-dir', required=True)
     return parser.parse_args()
 
@@ -55,16 +56,21 @@ def main():
     ).config(
         'spark.serializer',
         'org.apache.spark.serializer.KryoSerializer',
-    ).config(
-        'spark.executor.memory',
-        '23g',
-    ).config(
-        'spark.driver.memory',
-        '12g',
-    ).config(
-        'spark.driver.maxResultSize',
-        '12g',
-    ).getOrCreate()
+    )
+    if args.max_total_mem_gb:
+        total_memory_gb = args.max_total_mem_gb
+        spark = spark.config(
+            'spark.executor.memory',
+            f'{total_memory_gb / 2}g',
+        ).config(
+            'spark.driver.memory',
+            f'{total_memory_gb / 4}g',
+        ).config(
+            'spark.driver.maxResultSize',
+            f'{total_memory_gb / 4}g',
+        )
+
+    spark = spark.getOrCreate()
 
     def close_client():
         spark.sparkContext.stop()

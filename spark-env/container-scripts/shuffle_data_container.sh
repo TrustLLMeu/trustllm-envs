@@ -25,7 +25,7 @@ if ((NODE_RANK)); then
     spark_work_dir="$cache_dir"/spark-"$NODE_RANK"-"$SLURM_JOB_ID"
     spark-class org.apache.spark.deploy.worker.Worker \
                 spark://"$MASTER_ADDR":"$MASTER_PORT" \
-                --memory 47G \
+                --memory "$MAX_TOTAL_MEM_GB"G \
                 --work-dir "$spark_work_dir"
 else
     spark-class org.apache.spark.deploy.master.Master \
@@ -37,7 +37,8 @@ else
            --dist-input-files-glob="$INPUT_DATA_FILES_GLOB" \
            --output-dir="$OUTPUT_DATA_DIR" \
            --local-dir "$SPARK_LOCAL_DIRS" \
-           --event-dir "$cache_dir"/spark-events-"$SLURM_JOB_ID"
+           --event-dir "$cache_dir"/spark-events-"$SLURM_JOB_ID" \
+           --max-total-mem-gb "$MAX_TOTAL_MEM_GB"
 
     kill -s INT "$master_proc"
 fi
