@@ -40,5 +40,5 @@ else
            --event-dir "$cache_dir"/spark-events-"$SLURM_JOB_ID" \
            --max-total-mem-gb "$MAX_TOTAL_MEM_GB"
 
-    kill -s INT "$master_proc"
+    kill -s KILL "$master_proc"
 fi
