@@ -37,7 +37,7 @@ export MASTER_PORT=54123
 
 export DEVICES_PER_NODE=4
 
-# We have 128 physical CPU cores on JUWELS Booster nodes, so configure
+# We have 128 physical CPU cores on JURECA DC nodes, so configure
 # 17 + 14 = 31 data workers per GPU in total; this leaves one CPU for
 # the main process.
 export TRAIN_NUM_WORKERS=17
