@@ -27,8 +27,8 @@ source "$(get_curr_dir)"/../configuration.sh
 
 export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
-# Total CPU memory to give to Spark.
-export MAX_TOTAL_MEM_GB=94
+# Total CPU memory on the machine.
+export AVAILABLE_MEM_GB=96
 
 export MASTER_ADDR="$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)"
 if [ "$SYSTEMNAME" = juwelsbooster ] \

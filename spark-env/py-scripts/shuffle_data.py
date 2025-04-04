@@ -1,6 +1,7 @@
 from argparse import ArgumentParser
 import atexit
 import glob
+import math
 import os
 import tempfile
 
@@ -31,7 +32,7 @@ def parse_args():
         '--event-dir',
         default=os.path.join(tempfile.gettempdir(), 'spark-events'),
     )
-    parser.add_argument('--max-total-mem-gb', type=float)
+    parser.add_argument('--available-mem-gb', type=float)
     parser.add_argument('--output-dir', required=True)
     return parser.parse_args()
 
@@ -57,17 +58,17 @@ def main():
         'spark.serializer',
         'org.apache.spark.serializer.KryoSerializer',
     )
-    if args.max_total_mem_gb:
-        total_memory_gb = args.max_total_mem_gb
+    if args.available_mem_gb:
+        memory_gb = args.available_mem_gb
         spark = spark.config(
             'spark.executor.memory',
-            f'{total_memory_gb / 2}g',
+            f'{math.floor(memory_gb * 0.48)}g',
         ).config(
             'spark.driver.memory',
-            f'{total_memory_gb / 4}g',
+            f'{round(memory_gb * 0.25)}g',
         ).config(
             'spark.driver.maxResultSize',
-            f'{total_memory_gb / 4}g',
+            f'{round(memory_gb * 0.25)}g',
         )
 
     spark = spark.getOrCreate()
