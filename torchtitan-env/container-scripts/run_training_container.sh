@@ -50,7 +50,7 @@ python -u -m torchrun_jsc \
        --rdzv_backend=c10d \
        "$torchtitan_repo_dir"/torchtitan/train.py  \
        --job.description='Byte-Llama-2 7B training' \
-       --job.config_file="$torchtitan_repo_dir"/torchtitan/models/llama/train_configs/llama3_8b.toml \
+       --job.config_file="$torchtitan_repo_dir"/torchtitan/models/llama3/train_configs/llama3_8b.toml \
        --job.dump_folder="$checkpoint_dir" \
        --job.print_args \
        --training.steps=10 \
