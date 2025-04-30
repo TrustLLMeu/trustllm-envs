@@ -13,6 +13,9 @@ fi
 
 # -----
 
+# Set default for number of workers if not given.
+TRAIN_NUM_WORKERS="${TRAIN_NUM_WORKERS:-0}"
+
 torchtitan_repo_dir="$ext_repo_dir"/torchtitan
 
 # Below is a TorchTitan Llama-2 pretraining example configuration,
@@ -66,6 +69,8 @@ python -u -m torchrun_jsc \
        "${dataset_files_arg[@]}" \
        "${dataset_inner_name_arg[@]}" \
        --training.dataset_streaming \
+       --training.dataset_num_workers="$TRAIN_NUM_WORKERS" \
+       --training.dataset_pin_memory \
        --training.seed=0 \
        --parallelism.data_parallel_replicate_degree="$(((NUM_NODES * DEVICES_PER_NODE) / GPUS_PER_REPLICA))" \
        --parallelism.tensor_parallel_degree=1 \
