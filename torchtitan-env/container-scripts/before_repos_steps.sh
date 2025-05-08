@@ -35,8 +35,10 @@ fi
 # We get an `ldconfig` warning that we could prevent with
 # `--disable-ldconfig`, but it doesn't cause an error code, so we do
 # not disable `ldconfig` in case we can use it.
+# We install only the minimal required components.
 bash "$_rust_installer_dir"/install.sh \
-     --prefix="$rust_dir"
+     --prefix="$rust_dir" \
+     --components=rustc,rust-std-"$_cpu_arch"-unknown-linux-gnu,cargo
 
 # Put Rust binaries into `PATH`.
 export PATH="$rust_dir"/bin:"$PATH"
