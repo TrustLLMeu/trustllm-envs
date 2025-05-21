@@ -34,6 +34,18 @@ def parse_args():
     )
     parser.add_argument('--available-mem-gb', type=float)
     parser.add_argument('--output-dir', required=True)
+    parser.add_argument(
+        '--input-format',
+        choices=['parquet', 'json'],
+        default='parquet',
+        help='Format of the input data, i.e., when reading.',
+    )
+    parser.add_argument(
+        '--output-format',
+        choices=['parquet', 'json'],
+        default='parquet',
+        help='Format of the output data, i.e., when writing.',
+    )
     return parser.parse_args()
 
 
@@ -87,8 +99,13 @@ def main():
     if args.dist_input_files_glob:
         input_files.extend(sorted(glob.glob(args.dist_input_files_glob)))
 
-    print('now reading parquet')
-    df = spark.read.parquet(*input_files)
+    print(f'now reading {args.input_format}')
+    if args.input_format == 'parquet':
+        df = spark.read.parquet(*input_files)
+    elif args.input_format == 'json':
+        df = spark.read.json(*input_files)
+    else:
+        print(f'unhandled data input format {args.input_format}...')
     print('read parquet, now adding random column')
     df = df.withColumn('randf', sf.rand(seed=args.seed))
     print('added random column, now sorting')
@@ -96,12 +113,21 @@ def main():
     print('sorted, now coalescing')
     df = df.drop('randf')
     df = df.coalesce(world_size)
-    print('coalesced, now writing')
-    df.write.parquet(
-        args.output_dir,
-        mode='overwrite',
-        compression='zstd',
-    )
+    print(f'coalesced, now writing {args.output_format}')
+    if args.output_format == 'parquet':
+        df.write.parquet(
+            args.output_dir,
+            mode='overwrite',
+            compression='zstd',
+        )
+    elif args.output_format == 'json':
+        df.write.json(
+            args.output_dir,
+            mode='overwrite',
+            compression='zstd',
+        )
+    else:
+        print(f'unhandled data output format {args.output_format}...')
     print('done')
 
     close_client()

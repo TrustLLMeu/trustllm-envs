@@ -20,6 +20,9 @@ fi
 
 mkdir -p "$(dirname "$OUTPUT_DATA_DIR")"
 
+INPUT_FORMAT="${INPUT_FORMAT:-parquet}"
+OUTPUT_FORMAT="${OUTPUT_FORMAT:-parquet}"
+
 export SPARK_LOCAL_DIRS="$cache_dir"/spark-"$SLURM_JOB_ID"
 if ((NODE_RANK)); then
     spark_work_dir="$cache_dir"/spark-"$NODE_RANK"-"$SLURM_JOB_ID"
@@ -38,7 +41,9 @@ else
            --output-dir="$OUTPUT_DATA_DIR" \
            --local-dir "$SPARK_LOCAL_DIRS" \
            --event-dir "$cache_dir"/spark-events-"$SLURM_JOB_ID" \
-           --available-mem-gb "$AVAILABLE_MEM_GB"
+           --available-mem-gb "$AVAILABLE_MEM_GB" \
+           --input-format "$INPUT_FORMAT" \
+           --output-format "$OUTPUT_FORMAT"
 
     kill -s KILL "$master_proc"
 fi
