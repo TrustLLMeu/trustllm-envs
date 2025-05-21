@@ -58,7 +58,7 @@ export OUTPUT_DATA_DIR="$data_dir"/fineweb-edu/train-shuffled_shard-"$rank"-of-"
 
 # Clean up prev. job
 echo "before cleanup: $(date --iso-8601=seconds)"
-ls -l "$cache_dir"/spark* || srun bash "$(get_curr_dir)"/clean_up_spark.sh "$cache_dir"/spark*
+ls -l "$cache_dir"/spark* && srun bash "$(get_curr_dir)"/clean_up_spark.sh "$cache_dir"/spark*
 echo "after cleanup: $(date --iso-8601=seconds)"
 
 # We assign to a variable again so Bash can do the quoted
