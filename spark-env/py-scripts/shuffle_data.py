@@ -35,6 +35,12 @@ def parse_args():
     parser.add_argument('--available-mem-gb', type=float)
     parser.add_argument('--output-dir', required=True)
     parser.add_argument(
+        '--num-shards',
+        type=int,
+        help='Uniformly shard across all input files into this many shards',
+    )
+    parser.add_argument('--rank', type=int)
+    parser.add_argument(
         '--input-format',
         choices=['parquet', 'json'],
         default='parquet',
@@ -55,6 +61,10 @@ def main():
         'need either `--dist-input-files` or `--dist-input-files-glob` '
         'to be specified'
     )
+    assert (
+        args.num_shards is None and args.rank is None
+        or args.num_shards is not None and args.rank is not None
+    ), 'cannot give only one of `--num-shards` and `--rank`; please set both'
 
     world_size = int(os.environ['WORLD_SIZE'])
 
@@ -98,6 +108,9 @@ def main():
         input_files.extend(args.dist_input_files.split(':'))
     if args.dist_input_files_glob:
         input_files.extend(sorted(glob.glob(args.dist_input_files_glob)))
+
+    if args.num_shards is not None:
+        input_files = input_files[args.rank::args.num_shards]
 
     print(f'now reading {args.input_format}')
     if args.input_format == 'parquet':
