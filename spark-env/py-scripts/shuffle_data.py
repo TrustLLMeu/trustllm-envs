@@ -116,7 +116,7 @@ def main():
     if args.input_format == 'parquet':
         df = spark.read.parquet(*input_files)
     elif args.input_format == 'json':
-        df = spark.read.json(*input_files)
+        df = spark.read.json(input_files)
     else:
         print(f'unhandled data input format {args.input_format}...')
     print('read parquet, now adding random column')
