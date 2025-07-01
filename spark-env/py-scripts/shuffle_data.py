@@ -52,6 +52,14 @@ def parse_args():
         default='parquet',
         help='Format of the output data, i.e., when writing.',
     )
+    parser.add_argument(
+        '--output-compression',
+        default='zstd',
+        help=(
+            'Compression to apply to the output data, i.e., when writing. '
+            '"none" or "" for no compression.'
+        ),
+    )
     return parser.parse_args()
 
 
@@ -126,18 +134,24 @@ def main():
     print('sorted, now coalescing')
     df = df.drop('randf')
     df = df.coalesce(world_size)
+
+    output_compression = (
+        args.output_compression
+        if args.output_compresssion not in ['', 'none']
+        else None
+    )
     print(f'coalesced, now writing {args.output_format}')
     if args.output_format == 'parquet':
         df.write.parquet(
             args.output_dir,
             mode='overwrite',
-            compression='zstd',
+            compression=output_compression,
         )
     elif args.output_format == 'json':
         df.write.json(
             args.output_dir,
             mode='overwrite',
-            compression='zstd',
+            compression=output_compression,
         )
     else:
         print(f'unhandled data output format {args.output_format}...')
