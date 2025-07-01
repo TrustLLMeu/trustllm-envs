@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# Start a conversion from Parquet data in multiple files to shuffled
-# Parquet data in a single file.
+# Start a conversion from data to shuffled data, by default in
+# zstd-compressed Parquet format.
 
 set -euo pipefail
 
