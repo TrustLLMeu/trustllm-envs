@@ -54,7 +54,7 @@ python -u -m torchrun_jsc \
        "$torchtitan_repo_dir"/torchtitan/train.py  \
        --job.description='Byte-Llama-2 7B training' \
        --job.config_file="$torchtitan_repo_dir"/torchtitan/models/llama3/train_configs/llama3_8b.toml \
-       --job.dump_folder="$checkpoint_dir" \
+       --job.dump_folder="$MODEL_CHECKPOINT_DIR" \
        --job.print_args \
        --training.steps=10 \
        --training.seq_len=4096 \
