@@ -8,6 +8,11 @@ def parse_args(args_list: list[str] | None = None):
     parser = ArgumentParser()
 
     parser.add_argument(
+        "--server_protocol",
+        default="http",
+        help="Protocol to query the server with.",
+    )
+    parser.add_argument(
         "--server_address",
         default="localhost",
         help="Address to query the server from.",
@@ -27,7 +32,7 @@ def parse_args(args_list: list[str] | None = None):
 def main(args_list: list[str] | None = None):
     args = parse_args(args_list)
 
-    server_uri = args.server_address
+    server_uri = f"{args.server_protocol}://{args.server_address}"
     if args.server_port is not None:
         server_uri = f"{server_uri}:{args.server_port}"
     while True:
