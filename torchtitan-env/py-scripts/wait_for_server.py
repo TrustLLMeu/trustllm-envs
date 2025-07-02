@@ -1,5 +1,6 @@
 from argparse import ArgumentParser
 import sys
+import time
 import urllib.request
 
 
@@ -33,4 +34,4 @@ def main(args_list: list[str] | None = None):
             urllib.request.urlopen(server_uri, timeout=1.0)
             break
         except urllib.request.URLError:
-            pass
+            time.sleep(1.0)
