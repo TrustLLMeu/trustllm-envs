@@ -28,7 +28,7 @@ def parse_args(args_list: list[str] | None = None):
 def main(args_list: list[str] | None = None):
     args = parse_args(args_list)
 
-    server_uri = f"{args.server_address}:{args.server_port}",
+    server_uri = f"{args.server_address}:{args.server_port}"
     while True:
         try:
             urllib.request.urlopen(server_uri, timeout=1.0)
