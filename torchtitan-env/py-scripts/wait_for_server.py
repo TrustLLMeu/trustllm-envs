@@ -14,7 +14,6 @@ def parse_args(args_list: list[str] | None = None):
     )
     parser.add_argument(
         "--server_port",
-        required=True,
         type=int,
         help="Port to query the server from.",
     )
@@ -28,7 +27,9 @@ def parse_args(args_list: list[str] | None = None):
 def main(args_list: list[str] | None = None):
     args = parse_args(args_list)
 
-    server_uri = f"{args.server_address}:{args.server_port}"
+    server_uri = args.server_address
+    if args.server_port is not None:
+        server_uri = f"{server_uri}:{args.server_port}"
     while True:
         try:
             urllib.request.urlopen(server_uri, timeout=1.0)
