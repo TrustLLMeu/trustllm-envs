@@ -35,3 +35,7 @@ def main(args_list: list[str] | None = None):
             break
         except urllib.request.URLError:
             time.sleep(1.0)
+
+
+if __name__ == "__main__":
+    main()
