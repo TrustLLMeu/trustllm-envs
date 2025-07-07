@@ -47,7 +47,8 @@ export GPUS_PER_REPLICA="$DEVICES_PER_NODE"
 export NUM_NODES="$SLURM_JOB_NUM_NODES"
 export RDZV_ID="$SLURM_JOB_ID"
 
-export MODEL_CHECKPOINT_DIR="$checkpoint_dir"
+export DUMP_DIR="$checkpoint_dir"
+export SERVE_FROM_DIR="$DUMP_DIR"
 
 export SERVER_PORT=54125
 
