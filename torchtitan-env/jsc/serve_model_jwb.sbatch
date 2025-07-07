@@ -60,6 +60,7 @@ bash "$(get_curr_dir)"/../container_run.sh \
      --server_address="$MASTER_ADDR" \
      --server_port="$SERVER_PORT"
 
+torchtitan_repo_dir="$ext_repo_dir"/torchtitan
 bash "$(get_curr_dir)"/../container_run.sh \
      python \
      "$torchtitan_repo_dir"/torchtitan/tools/server/send_debug_requests.py \
