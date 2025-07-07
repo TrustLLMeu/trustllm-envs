@@ -1,4 +1,5 @@
 from argparse import ArgumentParser
+import http.client
 import sys
 import time
 import urllib.request
@@ -41,6 +42,8 @@ def main(args_list: list[str] | None = None):
             break
         except urllib.request.URLError:
             time.sleep(1.0)
+        except http.client.BadStatusLine:
+            break
 
 
 if __name__ == "__main__":
