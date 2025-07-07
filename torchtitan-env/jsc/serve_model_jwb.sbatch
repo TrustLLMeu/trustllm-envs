@@ -56,7 +56,7 @@ srun env -u CUDA_VISIBLE_DEVICES bash "$(get_curr_dir)"/../container_run.sh \
      bash "$(get_curr_dir)"/../container-scripts/serve_model_container.sh &
 
 bash "$(get_curr_dir)"/../container_run.sh \
-     python "$(get_curr_dir)"/../py-scripts/wait_for_server.py \
+     python "$(get_curr_dir)"/../py-scripts/wait_for_socket.py \
      --server_address="$MASTER_ADDR" \
      --server_port="$SERVER_PORT"
 
