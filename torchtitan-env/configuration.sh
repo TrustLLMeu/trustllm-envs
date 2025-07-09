@@ -44,13 +44,13 @@ repos=()
 # example below); separated by spaces.
 # Low-precision kernel library. No version specified, so just use
 # latest.
-repos+=( 'https://github.com/pytorch/ao.git v0.8.0' )
+repos+=( 'https://github.com/pytorch/ao.git v0.11.0' )
 # Main framework. Current latest HEAD commit taken because no versions
 # tagged.
 # This would execute `python -m pip install -e .`
 repos+=( 'https://github.com/TrustLLMeu/torchtitan.git trustllm-0.1' )
 # Finetuning framework. Latest version.
-repos+=( 'https://github.com/pytorch/torchtune.git v0.5.0' )
+repos+=( 'https://github.com/pytorch/torchtune.git v0.6.1' )
 # For example, this would clone a repo and do a standard
 # `pip install -e .`:
 # repos+=( 'https://github.com/github/example-repo.git v0.0.1' )
@@ -72,7 +72,7 @@ data_dir="$scratch_dir"/data
 checkpoint_dir="$scratch_dir"/experiments
 
 # Which container to build.
-docker_image_uri='docker://nvcr.io/nvidia/pytorch:24.12-py3'
+docker_image_uri='docker://nvcr.io/nvidia/pytorch:25.06-py3'
 # Which file to build the container in. The default settings
 # automatically grab the information from the tail of the URI.
 apptainer_build_file="$scratch_dir"/apptainers/build/torchtitan_"$(basename "$docker_image_uri" | tr ':' '_')"_"$(uname -m)".sif
