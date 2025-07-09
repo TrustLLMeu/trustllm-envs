@@ -51,9 +51,6 @@ repos+=( 'https://github.com/pytorch/ao.git v0.8.0' )
 repos+=( 'https://github.com/TrustLLMeu/torchtitan.git trustllm-0.1' )
 # Finetuning framework. Latest version.
 repos+=( 'https://github.com/pytorch/torchtune.git v0.5.0' )
-# Inference framework. Current latest HEAD commit taken because no
-# versions tagged.
-repos+=( 'https://github.com/pytorch/torchchat.git fd0412343639cf5f0737839fad68e76e134006d2' )
 # For example, this would clone a repo and do a standard
 # `pip install -e .`:
 # repos+=( 'https://github.com/github/example-repo.git v0.0.1' )
