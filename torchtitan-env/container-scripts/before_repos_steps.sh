@@ -12,6 +12,6 @@ source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
 
 source "$(get_curr_dir)"/configure_pip_install_variables.sh
 
-python -m pip "${_pip_install_args[@]}" 'torch==2.7.1'
+env -u PIP_CONSTRAINT python -m pip "${_pip_install_args[@]}" 'torch==2.7.1'
 
 pop_curr_file
