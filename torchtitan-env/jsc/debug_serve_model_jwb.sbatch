@@ -49,11 +49,14 @@ export RDZV_ID="$SLURM_JOB_ID"
 
 export DUMP_DIR="$checkpoint_dir"
 export SERVE_FROM_DIR="$DUMP_DIR"
+# export SERVE_FROM_DIR=/p/data1/trustllmd/filatov1/experiments/trustllm/1b_byte/lr-0.0625-bs-512-steps-476838-preshuffled-nworkers-0
+# export SERVE_FROM_DIR=/p/data1/trustllmd/filatov1/experiments/trustllm/1b_llama3/lr-0.0625-bs-512-steps-476838-preshuffled-nworkers-0
 
 export SERVER_PORT=54125
 
 srun env -u CUDA_VISIBLE_DEVICES bash "$(get_curr_dir)"/../container_run.sh \
-     bash "$(get_curr_dir)"/../container-scripts/serve_model_container.sh &
+     bash \
+     "$(get_curr_dir)"/../container-scripts/debug_serve_model_container.sh &
 
 bash "$(get_curr_dir)"/../container_run.sh \
      python "$(get_curr_dir)"/../py-scripts/wait_for_socket.py \
@@ -63,7 +66,7 @@ bash "$(get_curr_dir)"/../container_run.sh \
 torchtitan_repo_dir="$ext_repo_dir"/torchtitan
 bash "$(get_curr_dir)"/../container_run.sh \
      python \
-     "$torchtitan_repo_dir"/torchtitan/tools/server/test_hf_client.py \
+     "$torchtitan_repo_dir"/torchtitan/tools/server/send_debug_requests.py \
      --seed=0 \
      --server_address="$MASTER_ADDR" \
      --server_port="$SERVER_PORT"
