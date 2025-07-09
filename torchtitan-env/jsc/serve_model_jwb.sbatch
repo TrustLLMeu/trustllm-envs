@@ -56,13 +56,13 @@ srun env -u CUDA_VISIBLE_DEVICES bash "$(get_curr_dir)"/../container_run.sh \
      bash "$(get_curr_dir)"/../container-scripts/serve_model_container.sh &
 
 bash "$(get_curr_dir)"/../container_run.sh \
-     python "$(get_curr_dir)"/../py-scripts/wait_for_socket.py \
+     python -u "$(get_curr_dir)"/../py-scripts/wait_for_socket.py \
      --server_address="$MASTER_ADDR" \
      --server_port="$SERVER_PORT"
 
 torchtitan_repo_dir="$ext_repo_dir"/torchtitan
 bash "$(get_curr_dir)"/../container_run.sh \
-     python \
+     python -u \
      "$torchtitan_repo_dir"/torchtitan/tools/server/test_hf_client.py \
      --seed=0 \
      --server_address="$MASTER_ADDR" \
