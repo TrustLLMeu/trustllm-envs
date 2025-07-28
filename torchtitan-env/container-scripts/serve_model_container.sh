@@ -38,7 +38,7 @@ python -u -m torchrun_jsc \
        --rdzv_id="$RDZV_ID" \
        --rdzv_endpoint="$MASTER_ADDR":"$MASTER_PORT" \
        --rdzv_backend=c10d \
-       "$torchtitan_repo_dir"/torchtitan/tools/server/serve_model.py  \
+       "$torchtitan_repo_dir"/torchtitan/tools/server/serve_model.py \
        --dump_folder="$SERVE_FROM_DIR" \
        --new_dump_folder="$DUMP_DIR" \
        --server_address="$MASTER_ADDR" \
