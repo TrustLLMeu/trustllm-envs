@@ -21,9 +21,10 @@ python -m pip "${_pip_install_args[@]}" tokenizers
 # Install torchrun_jsc to fix distributed job launching.
 python -m pip "${_pip_install_args[@]}" 'torchrun_jsc>=0.0.17'
 
-# Install grouped GEMM for optional MoE functionality. Latest commit.
+# Install grouped GEMM for optional MoE functionality. Latest commit
+# of custom branch.
 python -m pip "${_pip_install_args[@]}" \
-       git+https://github.com/fanshiqing/grouped_gemm@5c1d831ecf91b225abc91689683e7de67fbee7ef
+       git+https://github.com/rakkit/grouped_gemm@compile
 
 torchtitan_repo_dir="$ext_repo_dir"/torchtitan
 # Install testing tools.
