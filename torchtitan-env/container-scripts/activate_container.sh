@@ -38,6 +38,9 @@ source "$parent_env_dir"/container-scripts/activate_container.sh \
        __inherit__ "$(get_curr_file)" \
        "${_args[@]}"
 
+# Globally disable `pip` constraints, allowing us to install arbitrary
+# packages. We probably violate assumptions in the container by
+# abusing this.
 unset PIP_CONSTRAINT
 
 # Put Rust binaries into `PATH`.
