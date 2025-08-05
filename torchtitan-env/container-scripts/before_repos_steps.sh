@@ -21,7 +21,8 @@ _rust_installer_file="$_rust_installer_dir".tar.xz
 if ! [ -d "$_rust_installer_dir" ]; then
     if ! [ -f "$_rust_installer_file" ]; then
         if ! ((_is_offline)); then
-            curl --proto '=https' --tlsv1.2 -sSf -o "$_rust_installer_file" https://static.rust-lang.org/dist/"$_rust_installer_file"
+            curl --proto '=https' --tlsv1.2 -sSf -o "$_rust_installer_file" \
+                 https://static.rust-lang.org/dist/"$(basename "$_rust_installer_file")"
         else
             echo 'Cannot install offline because Rust installer directory' \
                  'was not found. Please place Rust installer directory at' \
