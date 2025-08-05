@@ -32,7 +32,7 @@ if ! [ -d "$_rust_installer_dir" ]; then
                  'for more information.'
         fi
     fi
-    pushd "$_rust_installer_dir"
+    pushd "$(dirname "$_rust_installer_dir")"
     tar xJf "$_rust_installer_file"
     popd
 fi
