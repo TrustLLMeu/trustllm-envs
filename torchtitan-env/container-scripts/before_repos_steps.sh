@@ -17,6 +17,7 @@ source "$(get_curr_dir)"/configure_pip_install_variables.sh
 # Install Rust
 _cpu_arch="$(uname -m)"
 _rust_installer_dir="$rust_offline_dir"/rust-"$rust_ver"-"$_cpu_arch"-unknown-linux-gnu
+mkdir -p "$_rust_installer_dir"
 _rust_installer_file="$_rust_installer_dir".tar.xz
 if ! [ -d "$_rust_installer_dir" ]; then
     if ! [ -f "$_rust_installer_file" ]; then
