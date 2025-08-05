@@ -32,7 +32,9 @@ if ! [ -d "$_rust_installer_dir" ]; then
                  'for more information.'
         fi
     fi
+    pushd "$_rust_installer_dir"
     tar xJf "$_rust_installer_file"
+    popd
 fi
 # We get an `ldconfig` warning that we could prevent with
 # `--disable-ldconfig`, but it doesn't cause an error code, so we do
