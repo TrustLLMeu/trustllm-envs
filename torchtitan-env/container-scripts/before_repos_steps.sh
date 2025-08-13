@@ -12,7 +12,7 @@ source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
 
 source "$(get_curr_dir)"/configure_pip_install_variables.sh
 
-python -m pip "${_pip_install_args[@]}" --pre torch \
+python -m pip "${_pip_install_args[@]}" --pre 'torch==2.9.0.dev20250812' \
        --index-url https://download.pytorch.org/whl/nightly/cu129 \
        --force-reinstall
 
