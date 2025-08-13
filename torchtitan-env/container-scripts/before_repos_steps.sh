@@ -27,7 +27,7 @@ if ! [ -d "$_rust_installer_dir" ]; then
         else
             echo 'Cannot install offline because Rust installer directory' \
                  'was not found. Please place Rust installer directory at' \
-                 "\`$_rust_installer_dir\`. See" \
+                 "\`${_rust_installer_dir@Q}\`. See" \
                  'https://forge.rust-lang.org/infra/other-installation-methods.html#standalone-installers' \
                  'for more information.'
         fi
