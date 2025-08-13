@@ -31,7 +31,9 @@ torchtitan_repo_dir="$ext_repo_dir"/torchtitan
 # - save checkpoints to SCRATCH,
 # - log to SCRATCH.
 
-export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
+export PYTORCH_ALLOC_CONF='expandable_segments:True'
+# For backward compatibility
+export PYTORCH_CUDA_ALLOC_CONF="$PYTORCH_ALLOC_CONF"
 python -u -m torchrun_jsc \
        --nproc_per_node=gpu \
        --nnodes="$NUM_NODES" \
