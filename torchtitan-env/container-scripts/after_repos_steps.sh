@@ -26,7 +26,7 @@ python -m pip "${_pip_install_args[@]}" 'torchrun_jsc>=0.0.17'
 # We install to a custom temporary location because this requires a
 # lot of space.
 tmp_pip_dir="$scratch_dir"/.tmp-pip
-mkdir -p "tmp_pip_dir"
+mkdir -p "$tmp_pip_dir"
 mktemp -d -p "$tmp_pip_dir"
 env TMPDIR="$tmp_pip_dir" python -m pip "${_pip_install_args[@]}" \
     git+https://github.com/rakkit/grouped_gemm@compile
