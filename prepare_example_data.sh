@@ -11,7 +11,7 @@ if ! ((_activated_container)); then
     exit 1
 fi
 
-if [ -z "$1" ]; then
+if [ "$#" -lt 1 ] || [ -z "$1" ]; then
     echo 'Please pass the directory to put example data into' \
          'as the first argument.'
     exit 1
