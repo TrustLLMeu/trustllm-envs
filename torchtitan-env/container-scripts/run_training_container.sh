@@ -60,7 +60,7 @@ python -u -m torchrun_jsc \
        --job.print_args \
        --training.steps=10 \
        --training.seq_len=4096 \
-       --training.batch_size=1 \
+       --training.local_batch_size=1 \
        --training.global_batch_size=8 \
        --training.mixed_precision_param=bfloat16 \
        --training.mixed_precision_reduce=float32 \
