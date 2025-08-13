@@ -79,7 +79,7 @@ python -u -m torchrun_jsc \
        --model.name=byte_llama2 \
        --model.flavor=7B \
        --model.norm_type=rmsnorm \
-       --model.tokenizer_path="$TOKENIZER_MODEL_FILE" \
+       --model.hf_assets_path="$HF_ASSETS_DIR" \
        --activation_checkpoint.mode=selective \
        --activation_checkpoint.selective_ac_option=op \
        --optimizer.name=AdamW \

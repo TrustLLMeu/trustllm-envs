@@ -70,7 +70,9 @@ export TRAIN_DATA_INNER_NAME=en
 # export EVAL_DATA_PATH="$TRAIN_DATA_PATH"
 # export TEST_DATA_PATH="$EVAL_DATA_PATH"
 
-export TOKENIZER_MODEL_FILE="$root_scratch_dir"/"$project_name"/example-data/t5-small-tokenizer/spiece.model
+# Directory that contains the tokenizer and potentially other files
+# like weights.
+export HF_ASSETS_DIR="$root_scratch_dir"/"$project_name"/example-data/t5-small-tokenizer
 
 export MODEL_CHECKPOINT_DIR="$checkpoint_dir"
 
