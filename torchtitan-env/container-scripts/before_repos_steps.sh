@@ -12,7 +12,9 @@ source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
 
 source "$(get_curr_dir)"/configure_pip_install_variables.sh
 
-python -m pip "${_pip_install_args[@]}" 'torch==2.8.0'
+python -m pip "${_pip_install_args[@]}" --pre torch \
+       --index-url https://download.pytorch.org/whl/nightly/cu129 \
+       --force-reinstall
 
 # Install Rust
 _cpu_arch="$(uname -m)"
