@@ -18,6 +18,14 @@ TRAIN_NUM_WORKERS="${TRAIN_NUM_WORKERS:-0}"
 
 torchtitan_repo_dir="$ext_repo_dir"/torchtitan
 
+# Log version information
+torchtitan_commit="$(git --git-dir="$torchtitan_repo_dir"/.git --work-tree="$torchtitan_repo_dir" rev-parse --verify HEAD)"
+torch_version="$(python -c 'import torch; print(torch.__version__)')"
+python_version="$(python -c 'import platform; print(platform.python_version())')"
+cpu_arch="$(uname -m)"
+printf 'TorchTitan commit: %s\nPyTorch version: %s\nPython version: %s\nCPU architecture: %s' \
+       "$torchtitan_commit" "$torch_version" "$python_version" "$cpu_arch"
+
 # Below is a TorchTitan Llama-2 pretraining example configuration,
 # with major settings being
 # - use variable config values,
