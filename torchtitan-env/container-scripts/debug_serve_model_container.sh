@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Start a training run.
+# Serve a model for inference.
 
 set -euo pipefail
 
