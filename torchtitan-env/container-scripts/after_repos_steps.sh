@@ -23,8 +23,13 @@ python -m pip "${_pip_install_args[@]}" 'torchrun_jsc>=0.0.17'
 
 # Install grouped GEMM for optional MoE functionality. Latest commit
 # of custom branch.
-python -m pip "${_pip_install_args[@]}" \
-       git+https://github.com/rakkit/grouped_gemm@compile
+# We install to a custom temporary location because this requires a
+# lot of space.
+tmp_pip_dir="$scratch_dir"/.tmp-pip
+mktemp -d "$tmp_pip_dir"
+env TMPDIR="$tmp_pip_dir" python -m pip "${_pip_install_args[@]}" \
+    git+https://github.com/rakkit/grouped_gemm@compile
+rm -rf "$tmp_pip_dir"
 
 torchtitan_repo_dir="$ext_repo_dir"/torchtitan
 # Install testing tools.
