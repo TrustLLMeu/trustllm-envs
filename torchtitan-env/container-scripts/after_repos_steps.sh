@@ -34,11 +34,11 @@ rm -rf "$tmp_pip_dir"
 
 torchtitan_repo_dir="$ext_repo_dir"/torchtitan
 # Install testing tools.
-if [ -f "$torchtitan_repo_dir"/dev-requirements.txt ]; then
-    python -m pip "${_pip_install_args[@]}" -r "$torchtitan_repo_dir"/dev-requirements.txt
+if [ -f "$torchtitan_repo_dir"/requirements-dev.txt ]; then
+    python -m pip "${_pip_install_args[@]}" -r "$torchtitan_repo_dir"/requirements-dev.txt
 else
     echo "Could not find" \
-         "\`${torchtitan_repo_dir@Q}/dev-requirements.txt\`." \
+         "\`${torchtitan_repo_dir@Q}/requirements-dev.txt\`." \
          "Please check whether the file was removed."
 fi
 
