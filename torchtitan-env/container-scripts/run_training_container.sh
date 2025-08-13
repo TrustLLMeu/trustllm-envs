@@ -44,7 +44,9 @@ if [ -n "${TRAIN_DATA_INNER_NAME:-}" ]; then
     dataset_inner_name_arg=( --training.dataset_inner_name="$TRAIN_DATA_INNER_NAME" )
 fi
 
-export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
+export PYTORCH_ALLOC_CONF='expandable_segments:True'
+# For backward compatibility
+export PYTORCH_CUDA_ALLOC_CONF="$PYTORCH_ALLOC_CONF"
 python -u -m torchrun_jsc \
        --nproc_per_node=gpu \
        --nnodes="$NUM_NODES" \
