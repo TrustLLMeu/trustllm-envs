@@ -137,7 +137,7 @@ def main():
 
     output_compression = (
         args.output_compression
-        if args.output_compresssion not in ['', 'none']
+        if args.output_compression not in ['', 'none']
         else None
     )
     print(f'coalesced, now writing {args.output_format}')
