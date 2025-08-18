@@ -58,7 +58,7 @@ venv_dir="$scratch_dir"/env_"$(uname -m)"
 data_dir="$scratch_dir"/data
 
 # Which container to build.
-docker_image_uri='docker://docker.io/library/spark:3.5.4-scala2.12-java17-python3-ubuntu'
+docker_image_uri='docker://docker.io/library/spark:4.0.0-scala2.13-java21-python3-ubuntu'
 # Which file to build the container in. The default settings
 # automatically grab the information from the tail of the URI.
 apptainer_build_file="$scratch_dir"/apptainers/build/spark_"$(basename "$docker_image_uri" | tr ':' '_')"_"$(uname -m)".sif
