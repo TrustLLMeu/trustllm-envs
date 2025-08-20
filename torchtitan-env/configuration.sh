@@ -43,8 +43,8 @@ repos=()
 # install` features to install (leave out for default features, see
 # example below); separated by spaces.
 # Low-precision kernel library. No version specified, so just use
-# latest.
-repos+=( 'https://github.com/pytorch/ao.git v0.11.0' )
+# latest HEAD commit due to nightly requirement.
+repos+=( 'https://github.com/pytorch/ao.git af2cf1e3e619cc95e095c57bb517eaad2da5be97' )
 # Fault-tolerance library. Current latest HEAD commit taken because no
 # versions tagged.
 repos+=( 'https://github.com/pytorch/torchft.git 22b8fa1317c83291c497a9a46b4170f6a85823d4' )
