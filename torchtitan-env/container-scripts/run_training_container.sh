@@ -65,7 +65,6 @@ python -u -m torchrun_jsc \
        --training.mixed_precision_param=bfloat16 \
        --training.mixed_precision_reduce=float32 \
        --training.max_norm=1.0 \
-       --training.compile \
        --training.dataset=simple_custom \
        --training.dataset_path="$TRAIN_DATA_PATH" \
        "${dataset_files_arg[@]}" \
@@ -74,6 +73,7 @@ python -u -m torchrun_jsc \
        --training.dataset_num_workers="$TRAIN_NUM_WORKERS" \
        --training.dataset_pin_memory \
        --training.seed=0 \
+       --compile.enabled \
        --parallelism.data_parallel_replicate_degree="$(((NUM_NODES * DEVICES_PER_NODE) / GPUS_PER_REPLICA))" \
        --parallelism.tensor_parallel_degree=1 \
        --model.name=byte_llama2 \

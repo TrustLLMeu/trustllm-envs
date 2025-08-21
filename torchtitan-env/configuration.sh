@@ -51,7 +51,7 @@ repos+=( 'https://github.com/pytorch/torchft.git 22b8fa1317c83291c497a9a46b4170f
 # Main framework. Current latest HEAD commit taken because no versions
 # tagged.
 # This would execute `python -m pip install -e .`
-repos+=( 'https://github.com/TrustLLMeu/torchtitan.git trustllm-0.1' )
+repos+=( 'https://github.com/TrustLLMeu/torchtitan.git trustllm-0.2' )
 # Finetuning framework. Latest version.
 repos+=( 'https://github.com/pytorch/torchtune.git v0.6.1' )
 # For example, this would clone a repo and do a standard
