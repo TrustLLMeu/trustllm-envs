@@ -44,7 +44,7 @@ repos=()
 # example below); separated by spaces.
 # Low-precision kernel library. No version specified, so just use
 # latest HEAD commit due to nightly requirement.
-repos+=( 'https://github.com/pytorch/ao.git af2cf1e3e619cc95e095c57bb517eaad2da5be97' )
+repos+=( 'https://github.com/pytorch/ao.git bc2c83e1a408c5682cd8debc7515eabbddd28fe2' )
 # Fault-tolerance library. Current latest HEAD commit taken because no
 # versions tagged.
 repos+=( 'https://github.com/pytorch/torchft.git 22b8fa1317c83291c497a9a46b4170f6a85823d4' )
