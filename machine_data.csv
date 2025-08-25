@@ -1,6 +1,7 @@
 machine name:root project dir:root scratch dir:project name:container library:GPU CUDA compute capability
 local:~/trustllm/project:~/trustllm/scratch:trustllm:docker:
 jsc:/p/project1:/p/scratch:trustllm-eu:apptainer:7.0;8.0;9.0
+jpb:/p/project1:/p/scratch:trustllm-eu:apptainer:9.0
 jwb:/p/project1:/p/scratch:trustllm-eu:apptainer:8.0
 jwc:/p/project1:/p/scratch:trustllm-eu:apptainer:7.0
 jrc:/p/project1:/p/scratch:trustllm-eu:apptainer:8.0;9.0
