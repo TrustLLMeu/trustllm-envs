@@ -79,7 +79,7 @@ rust_ver=1.88.0
 rust_dir="$scratch_dir"/.rust
 
 # Which container to build.
-docker_image_uri='docker://nvcr.io/nvidia/pytorch:25.06-py3'
+docker_image_uri='docker://nvcr.io/nvidia/pytorch:25.08-py3'
 # Which file to build the container in. The default settings
 # automatically grab the information from the tail of the URI.
 apptainer_build_file="$scratch_dir"/apptainers/build/torchtitan_"$(basename "$docker_image_uri" | tr ':' '_')"_"$(uname -m)".sif
