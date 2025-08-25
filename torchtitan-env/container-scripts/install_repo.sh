@@ -43,9 +43,19 @@ source "$_next_script" \
        __inherit__ "$_next_script" \
        "${args[@]}"
 
+# TorchAO does not support CUDA CC 7.0 anymore, so we temporarily
+# remove it from the envvar.
+if [ "$_repo_uri" = 'https://github.com/pytorch/ao.git' ]; then
+    _old_torch_cuda_arch_list="$TORCH_CUDA_ARCH_LIST"
+    export TORCH_CUDA_ARCH_LIST="$(echo "$TORCH_CUDA_ARCH_LIST" | sed 's/7\.0;\?//')"
+    if [ -z "$TORCH_CUDA_ARCH_LIST" ]; then
+        unset TORCH_CUDA_ARCH_LIST
+    fi
+    python -m pip "${_pip_install_editable_args[@]}" ."$_repo_pip_install_features"
+    export TORCH_CUDA_ARCH_LIST=_old_torch_cuda_arch_list
 # TorchChat does not support our standard installation method, so we
 # hardcode this exception.
-if [ "$_repo_uri" = 'https://github.com/pytorch/torchchat.git' ]; then
+elif [ "$_repo_uri" = 'https://github.com/pytorch/torchchat.git' ]; then
     python -m pip "${_pip_install_args[@]}" -r install/requirements.txt
 else
     python -m pip "${_pip_install_editable_args[@]}" ."$_repo_pip_install_features"
