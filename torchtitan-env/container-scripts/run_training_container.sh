@@ -88,7 +88,7 @@ python -u -m torchrun_jsc \
        --lr_scheduler.warmup_steps=500 \
        --metrics.log_freq=1 \
        --metrics.enable_tensorboard \
-       --checkpoint.enable_checkpoint \
+       --checkpoint.enable \
        --checkpoint.interval=1000 \
        --checkpoint.export_dtype=bfloat16 \
        --checkpoint.async_mode=async
