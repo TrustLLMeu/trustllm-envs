@@ -52,7 +52,7 @@ if [ "$_repo_uri" = 'https://github.com/pytorch/ao.git' ]; then
         unset TORCH_CUDA_ARCH_LIST
     fi
     python -m pip "${_pip_install_editable_args[@]}" ."$_repo_pip_install_features"
-    export TORCH_CUDA_ARCH_LIST=_old_torch_cuda_arch_list
+    export TORCH_CUDA_ARCH_LIST="$_old_torch_cuda_arch_list"
 # TorchChat does not support our standard installation method, so we
 # hardcode this exception.
 elif [ "$_repo_uri" = 'https://github.com/pytorch/torchchat.git' ]; then
