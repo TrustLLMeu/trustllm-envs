@@ -73,7 +73,7 @@ python -u -m torchrun_jsc \
        --training.dataset_num_workers="$TRAIN_NUM_WORKERS" \
        --training.dataset_pin_memory \
        --training.seed=0 \
-       --compile.enabled \
+       --compile.enable \
        --parallelism.data_parallel_replicate_degree="$(((NUM_NODES * DEVICES_PER_NODE) / GPUS_PER_REPLICA))" \
        --parallelism.tensor_parallel_degree=1 \
        --model.name=byte_llama2 \
