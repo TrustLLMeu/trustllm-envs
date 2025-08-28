@@ -80,6 +80,7 @@ python -u -m torchrun_jsc \
        --model.flavor=7B \
        --model.norm_type=rmsnorm \
        --model.hf_assets_path="$HF_ASSETS_DIR" \
+       --model.vocab_size=-1 \
        --activation_checkpoint.mode=selective \
        --activation_checkpoint.selective_ac_option=op \
        --optimizer.name=AdamW \
