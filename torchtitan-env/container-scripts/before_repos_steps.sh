@@ -19,6 +19,7 @@ if [ "$(uname -m)" = aarch64 ]; then
         git clone https://github.com/pytorch/pytorch "$_pytorch_repo_dir"
     fi
     pushd "$_pytorch_repo_dir"
+    git fetch --tags -f
     # `torch.version.git_version` of below nightly.
     git checkout dcc2abce2d00bcbd67de3c9502db51a1aa78f933
     git submodule sync
