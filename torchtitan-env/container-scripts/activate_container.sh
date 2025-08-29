@@ -43,6 +43,13 @@ source "$parent_env_dir"/container-scripts/activate_container.sh \
 # abusing this.
 unset PIP_CONSTRAINT
 
+# Unset various environment variables concerning the container's
+# built-in PyTorch.
+unset PYTORCH_BUILD_NUMBER
+unset PYTORCH_BUILD_VERSION
+unset PYTORCH_HOME
+unset PYTORCH_VERSION
+
 # Put Rust binaries into `PATH`.
 export PATH="$rust_dir"/bin:"$PATH"
 
