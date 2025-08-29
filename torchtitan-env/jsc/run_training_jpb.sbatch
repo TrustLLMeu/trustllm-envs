@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+
+# Run a model training on JUPITER Booster.
+
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=288  # 288 physical cores per node.
+#SBATCH --threads-per-core=1  # Use only physical CPU cores.
+#SBATCH --gres=gpu:4
+#SBATCH --time=00:20:00
+#SBATCH --account=trustllm-eu
+# Currently, only `booster` is available, so use it for every type of job.
+#SBATCH --partition=booster
+
+set -euo pipefail
+
+# Do not use these variables; they may be overwritten. Instead, use
+# `get_curr_file` or `get_curr_dir` after sourcing `get_curr_file.sh`.
+_curr_file="$(scontrol show job "$SLURM_JOB_ID" | grep '^[[:space:]]*Command=' | head -n 1 | cut -d '=' -f 2-)"
+if [ "$_curr_file" = '(null)' ] || [ "$_curr_file" = '/bin/bash' ]; then
+    _curr_file="${BASH_SOURCE[0]:-${(%):-%x}}"
+fi
+_curr_dir="$(dirname "$_curr_file")"
+source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
+
+source "$(get_curr_dir)"/../configuration.sh
+
+export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
+
+export MASTER_ADDR="$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)"
+if [ "$SYSTEMNAME" = juwelsbooster ] \
+       || [ "$SYSTEMNAME" = juwels ] \
+       || [ "$SYSTEMNAME" = jurecadc ] \
+       || [ "$SYSTEMNAME" = jusuf ]; then
+    # Allow communication over InfiniBand cells on JSC machines.
+    MASTER_ADDR="$MASTER_ADDR"i
+fi
+export MASTER_PORT=54123
+
+export GLOO_SOCKET_IFNAME=ib0
+export NCCL_IB_TIMEOUT=20
+# Is slower even with sequence parallelism.
+# export CUDA_DEVICE_MAX_CONNECTIONS=1
+
+export DEVICES_PER_NODE=4
+
+export GPUS_PER_REPLICA="$DEVICES_PER_NODE"
+
+export NUM_NODES="$SLURM_JOB_NUM_NODES"
+export RDZV_ID="$SLURM_JOB_ID"
+
+# We have 288 physical CPU cores on JUPITER Booster nodes, so configure
+# 71 active data workers per GPU in total; this leaves one CPU for the
+# main process.
+# For some reason, setting `num_workers=0` works better and faster.
+export TRAIN_NUM_WORKERS=0
+
+# If using TorchTitan's native dataloader, can be a path to a
+# directory, or a file format supported by HuggingFace `datasets`
+# (e.g., the literal "json").
+export TRAIN_DATA_PATH=json
+# Optional comma-separated list of files to select. Set as empty
+# string ('') to disable.
+export TRAIN_DATA_FILES="$root_scratch_dir"/"$project_name"/example-data/tiny-c4-100k.jsonl
+# Optional name of sub-dataset to use from root dataset (in this case,
+# the "en" subset of C4). Set as empty string ('') to disable.
+export TRAIN_DATA_INNER_NAME=en
+# We simply use the validation set for both evaluation and testing in
+# the example. Of course, this is redundant, but makes it easier to
+# change the example to include a real test set. Also, we need to
+# supply a test set assuming the data argument is given like in the
+# example.
+# export EVAL_DATA_PATH="$TRAIN_DATA_PATH"
+# export TEST_DATA_PATH="$EVAL_DATA_PATH"
+
+# Directory that contains the tokenizer and potentially other files
+# like weights.
+export HF_ASSETS_DIR="$root_scratch_dir"/"$project_name"/example-data/t5-small-tokenizer
+
+export MODEL_CHECKPOINT_DIR="$checkpoint_dir"
+
+srun env -u CUDA_VISIBLE_DEVICES bash "$(get_curr_dir)"/../container_run.sh \
+     bash "$training_script"
+
+pop_curr_file
