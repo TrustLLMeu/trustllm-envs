@@ -40,6 +40,7 @@ if [ "$#" -gt 0 ] && [ "$1" = download ]; then
     _pip_install_upgrade_args=( "${_pip_install_args[@]}" )
     _pip_install_editable_args=( "${_pip_install_args[@]}" )
     _pip_install_unisolated_args=( "${_pip_install_args[@]}" )
+    _pip_install_unisolated_editable_args=( "${_pip_install_args[@]}" )
 elif [ "$#" -gt 0 ] && [ "$1" = offline ]; then
     if ! [ -d "$pip_offline_dir" ]; then
         echo "\`pip\` packages have not been pre-downloaded for offline" \
@@ -58,6 +59,7 @@ elif [ "$#" -gt 0 ] && [ "$1" = offline ]; then
     _pip_install_upgrade_args=( "${_pip_install_args[@]}" )
     _pip_install_editable_args=( "${_pip_install_args[@]}" -e )
     _pip_install_unisolated_args=( "${_pip_install_args[@]}" )
+    _pip_install_unisolated_editable_args=( "${_pip_install_args[@]}" -e )
 else
     _is_installing=1
     _is_offline=0
@@ -67,6 +69,11 @@ else
     _pip_install_unisolated_args=(
         "${_pip_install_args[@]}"
         --no-build-isolation
+    )
+    _pip_install_unisolated_editable_args=(
+        "${_pip_install_args[@]}"
+        --no-build-isolation
+        -e
     )
 fi
 
