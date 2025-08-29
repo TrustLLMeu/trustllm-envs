@@ -31,10 +31,10 @@ if [ "$(uname -m)" = aarch64 ]; then
     tmp_pip_dir="$scratch_dir"/.tmp-pip
     mkdir -p "$tmp_pip_dir"
     mktemp -d -p "$tmp_pip_dir"
+    # Use limited number of `MAX_JOBS` to avoid running out of RAM.
     # If ARM+CUDA, set `USE_PRIORITIZED_TEXT_FOR_LD=1`.
     # TODO Only set this when CUDA is found.
-    # TODO MAX_JOBS=6 is a working alternative to the tmpdir test
-    env TMPDIR="$tmp_pip_dir" USE_PRIORITIZED_TEXT_FOR_LD=1 \
+    env TMPDIR="$tmp_pip_dir" MAX_JOBS=6 USE_PRIORITIZED_TEXT_FOR_LD=1 \
         python -m pip "${_pip_install_unisolated_editable_args[@]}" .
     rm -rf "$tmp_pip_dir"
     popd
