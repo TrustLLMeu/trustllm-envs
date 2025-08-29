@@ -12,9 +12,36 @@ source "$_curr_dir"/../../global-scripts/get_curr_file.sh "$_curr_file"
 
 source "$(get_curr_dir)"/configure_pip_install_variables.sh
 
-python -m pip "${_pip_install_args[@]}" --pre 'torch==2.9.0.dev20250825' \
-       --index-url https://download.pytorch.org/whl/nightly/cu129 \
-       --force-reinstall
+if [ "$(uname -m)" = aarch64 ]; then
+    _pytorch_repo_dir="$ext_repo_dir"/pytorch
+    if ! [ -d "$_pytorch_repo_dir" ]; then
+        mkdir -p "$(dirname "$_pytorch_repo_dir")"
+        git clone https://github.com/pytorch/pytorch "$_pytorch_repo_dir"
+    fi
+    pushd "$_pytorch_repo_dir"
+    # `torch.version.git_version` of below nightly.
+    git checkout dcc2abce2d00bcbd67de3c9502db51a1aa78f933
+    git submodule sync
+    git submodule update --init --recursive
+    python -m pip "${_pip_install_args[@]}" -r requirements.txt
+    make triton
+    # We install to a custom temporary location because this requires a
+    # lot of space.
+    tmp_pip_dir="$scratch_dir"/.tmp-pip
+    mkdir -p "$tmp_pip_dir"
+    mktemp -d -p "$tmp_pip_dir"
+    # If ARM+CUDA, set `USE_PRIORITIZED_TEXT_FOR_LD=1`.
+    # TODO Only set this when CUDA is found.
+    # TODO MAX_JOBS=6 is a working alternative to the tmpdir test
+    env TMPDIR="$tmp_pip_dir" USE_PRIORITIZED_TEXT_FOR_LD=1 \
+        python -m pip "${_pip_install_unisolated_editable_args[@]}" .
+    rm -rf "$tmp_pip_dir"
+    popd
+else
+    python -m pip "${_pip_install_args[@]}" --pre 'torch==2.9.0.dev20250825' \
+           --index-url https://download.pytorch.org/whl/nightly/cu129 \
+           --force-reinstall
+fi
 
 # Install Rust
 _cpu_arch="$(uname -m)"
