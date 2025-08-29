@@ -53,7 +53,8 @@ export RDZV_ID="$SLURM_JOB_ID"
 # We have 48 physical CPU cores on JUWELS Booster nodes, so configure
 # 11 active data workers per GPU in total; this leaves one CPU for the
 # main process.
-export TRAIN_NUM_WORKERS=11
+# For some reason, setting `num_workers=0` works better and faster.
+export TRAIN_NUM_WORKERS=0
 
 # If using TorchTitan's native dataloader, can be a path to a
 # directory, or a file format supported by HuggingFace `datasets`
