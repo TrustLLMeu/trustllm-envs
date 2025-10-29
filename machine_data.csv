@@ -1,10 +1,10 @@
-machine name:root project dir:root scratch dir:project name:container library:GPU CUDA compute capability:physical GPUs per node:physical CPU cores per node
-local:~/trustllm/project:~/trustllm/scratch:trustllm:docker::0:1
-jsc:/p/project1:/p/scratch:trustllm-eu:apptainer:7.0;8.0;9.0:4:48
-jpb:/p/project1:/p/scratch:trustllm-eu:apptainer:9.0:4:288
-jwb:/p/project1:/p/scratch:trustllm-eu:apptainer:8.0:4:48
-jwc:/p/project1:/p/scratch:trustllm-eu:apptainer:7.0:4:48
-jrc:/p/project1:/p/scratch:trustllm-eu:apptainer:8.0;9.0:4:128
-jsf:/p/project1:/p/scratch:trustllm-eu:apptainer:7.0:1:128
-bsc:/gpfs/projects:/gpfs/scratch:ehpc09:apptainer:9.0:4:80
-mn5a:/gpfs/projects:/gpfs/scratch:ehpc09:apptainer:9.0:4:80
+machine name:root project dir:root scratch dir:project name:container library:GPU CUDA compute capability:physical GPUs per node:physical CPU cores per node:CPU RAM per node in GB
+local:~/trustllm/project:~/trustllm/scratch:trustllm:docker::0:1:1
+jsc:/p/project1:/p/scratch:trustllm-eu:apptainer:7.0;8.0;9.0:4:48:96
+jpb:/p/project1:/p/scratch:trustllm-eu:apptainer:9.0:4:288:480
+jwb:/p/project1:/p/scratch:trustllm-eu:apptainer:8.0:4:48:512
+jwc:/p/project1:/p/scratch:trustllm-eu:apptainer:7.0:4:48:96
+jrc:/p/project1:/p/scratch:trustllm-eu:apptainer:8.0;9.0:4:128:512
+jsf:/p/project1:/p/scratch:trustllm-eu:apptainer:7.0:1:128:256
+bsc:/gpfs/projects:/gpfs/scratch:ehpc09:apptainer:9.0:4:80:512
+mn5a:/gpfs/projects:/gpfs/scratch:ehpc09:apptainer:9.0:4:80:512

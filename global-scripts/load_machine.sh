@@ -29,6 +29,7 @@ while read -r line; do
         cuda_compute_capability="$(echo "$line" | cut -d "$_delim" -f 6)"
         gpus_per_node="$(echo "$line" | cut -d "$_delim" -f 7)"
         cpus_per_node="$(echo "$line" | cut -d "$_delim" -f 8)"
+        ram_per_node_gb="$(echo "$line" | cut -d "$_delim" -f 8)"
     fi
 done < "$(get_curr_dir)"/../machine_data.csv
 
