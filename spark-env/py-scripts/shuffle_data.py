@@ -98,7 +98,7 @@ def main():
             f'{round(memory_gb * 0.25)}g',
         ).config(
             'spark.driver.maxResultSize',
-            f'{round(memory_gb * 0.25)}g',
+            f'{round(memory_gb * 0.24)}g',
         )
 
     spark = spark.getOrCreate()
