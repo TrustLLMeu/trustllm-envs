@@ -27,6 +27,8 @@ while read -r line; do
         project_name="$(echo "$line" | cut -d "$_delim" -f 4)"
         container_library="$(echo "$line" | cut -d "$_delim" -f 5)"
         cuda_compute_capability="$(echo "$line" | cut -d "$_delim" -f 6)"
+        gpus_per_node="$(echo "$line" | cut -d "$_delim" -f 7)"
+        cpus_per_node="$(echo "$line" | cut -d "$_delim" -f 8)"
     fi
 done < "$(get_curr_dir)"/../machine_data.csv
 
