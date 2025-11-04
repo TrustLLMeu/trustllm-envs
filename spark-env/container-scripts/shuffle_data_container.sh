@@ -23,6 +23,8 @@ mkdir -p "$(dirname "$OUTPUT_DATA_DIR")"
 INPUT_FORMAT="${INPUT_FORMAT:-parquet}"
 OUTPUT_FORMAT="${OUTPUT_FORMAT:-parquet}"
 OUTPUT_COMPRESSION="${OUTPUT_COMPRESSION:-zstd}"
+NUM_SHARDS="${NUM_SHARDS:-1}"
+SHARD_RANK="${SHARD_RANK:-0}"
 my_spark_cache_dir="${my_spark_cache_dir:-"$cache_dir"}"
 
 export SPARK_LOCAL_DIRS="$my_spark_cache_dir"/spark-"$SLURM_JOB_ID"
@@ -46,7 +48,9 @@ else
            --available-mem-gb "$AVAILABLE_MEM_GB" \
            --input-format "$INPUT_FORMAT" \
            --output-format "$OUTPUT_FORMAT" \
-           --output-compression "$OUTPUT_COMPRESSION"
+           --output-compression "$OUTPUT_COMPRESSION" \
+           --num-shards "$NUM_SHARDS" \
+           --rank "$SHARD_RANK"
 
     kill -s KILL "$master_proc"
 fi
