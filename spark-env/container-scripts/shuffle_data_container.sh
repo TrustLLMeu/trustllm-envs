@@ -25,11 +25,11 @@ OUTPUT_FORMAT="${OUTPUT_FORMAT:-parquet}"
 OUTPUT_COMPRESSION="${OUTPUT_COMPRESSION:-zstd}"
 NUM_SHARDS="${NUM_SHARDS:-1}"
 SHARD_RANK="${SHARD_RANK:-0}"
-my_spark_cache_dir="${my_spark_cache_dir:-"$cache_dir"}"
+MY_SPARK_CACHE_DIR="${MY_SPARK_CACHE_DIR:-"$cache_dir"}"
 
-export SPARK_LOCAL_DIRS="$my_spark_cache_dir"/spark-"$SLURM_JOB_ID"
+export SPARK_LOCAL_DIRS="$MY_SPARK_CACHE_DIR"/spark-"$SLURM_JOB_ID"
 if ((NODE_RANK)); then
-    spark_work_dir="$my_spark_cache_dir"/spark-"$NODE_RANK"-"$SLURM_JOB_ID"
+    spark_work_dir="$MY_SPARK_CACHE_DIR"/spark-"$NODE_RANK"-"$SLURM_JOB_ID"
     spark-class org.apache.spark.deploy.worker.Worker \
                 spark://"$MASTER_ADDR":"$MASTER_PORT" \
                 --memory "$AVAILABLE_MEM_GB"G \
@@ -44,7 +44,7 @@ else
            --dist-input-files-glob="$INPUT_DATA_FILES_GLOB" \
            --output-dir="$OUTPUT_DATA_DIR" \
            --local-dir "$SPARK_LOCAL_DIRS" \
-           --event-dir "$my_spark_cache_dir"/spark-events-"$SLURM_JOB_ID" \
+           --event-dir "$MY_SPARK_CACHE_DIR"/spark-events-"$SLURM_JOB_ID" \
            --available-mem-gb "$AVAILABLE_MEM_GB" \
            --input-format "$INPUT_FORMAT" \
            --output-format "$OUTPUT_FORMAT" \
