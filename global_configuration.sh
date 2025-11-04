@@ -22,6 +22,9 @@ machine_name=jsc
 # - `project_name`
 # - `container_library`
 # - `cuda_compute_capability`
+# - `gpus_per_node`
+# - `cpus_per_node`
+# - `ram_per_node_gb`
 source "$(get_curr_dir)"/global-scripts/load_machine.sh "$machine_name"
 
 # Directory where the environment's permanent files will be set up
