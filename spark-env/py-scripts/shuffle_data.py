@@ -99,6 +99,12 @@ def main():
         'spark.executor.instances',
         str(world_size),
     ).config(
+        'spark.driver.host',
+        os.environ['MASTER_ADDR'],
+    ).config(
+        'spark.driver.port',
+        os.environ['MASTER_PORT'],
+    ).config(
         'spark.local.dir',
         args.local_dir,
     ).config(
