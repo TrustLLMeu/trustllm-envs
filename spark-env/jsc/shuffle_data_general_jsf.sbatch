@@ -59,11 +59,13 @@ export OUTPUT_DATA_PARENT_DIR="${OUTPUT_DATA_PARENT_DIR:-${data_dir}/nemotron-cc
 export OUTPUT_DATA_SPLIT="${OUTPUT_DATA_SPLIT:-train}"
 export OUTPUT_DATA_DIR="${OUTPUT_DATA_DIR:-${OUTPUT_DATA_PARENT_DIR}/${OUTPUT_DATA_SPLIT}-shuffled_shard-${SHARD_RANK}-of-${NUM_SHARDS}_${SLURM_JOB_NUM_NODES}-nodes}"
 # export OUTPUT_DATA_DIR="$data_dir"/my-tiny-c4-t5-small-tok/val
+mkdir -p "$OUTPUT_DATA_PARENT_DIR"
 
 export OUTPUT_FORMAT="${OUTPUT_FORMAT:-json}"
 export OUTPUT_COMPRESSION="${OUTPUT_COMPRESSION:-none}"
 
 export MY_SPARK_CACHE_DIR="${MY_SPARK_CACHE_DIR:-$cache_dir}"
+mkdir -p "$MY_SPARK_CACHE_DIR"
 
 # Clean up previous jobs
 # Declare global array to populate with `add_files_to_delete`.
@@ -72,7 +74,7 @@ add_files_to_delete() {
     # Get all files of jobs that finished running (i.e., not in
     # `squeue`) and add them to the `files_to_delete` array.
 
-    if [ "${#files_to_delete[@]}" -eq 0 ]; then
+    if [ "${#files_to_delete[@]}" -ne 0 ]; then
         echo "Need to manually reset \`files_to_delete\` before" \
              "calling \`add_files_to_delete\`."
         return 1
@@ -93,7 +95,9 @@ add_files_to_delete() {
         done < <(printf '%s' "$unfinished_job_ids")
 
         if [ "$job_is_unfinished" -eq 0 ]; then
-            files_to_delete+=( "$spark_job_id" )
+            while IFS='' read -r -d '' job_file; do
+                files_to_delete+=( "$job_file" )
+            done < <(find "$MY_SPARK_CACHE_DIR" -name "*spark*$spark_job_id" -mindepth 1 -maxdepth 1 -printf '%p\0')
         fi
     done < <(printf '%s' "$spark_job_ids")
     return 0
