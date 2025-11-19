@@ -79,6 +79,9 @@ def main():
     spark = SparkSession.builder.master(
         f'spark://{os.environ["MASTER_ADDR"]}:{os.environ["MASTER_PORT"]}',
     ).config(
+        'spark.executor.instances',
+        str(world_size),
+    ).config(
         'spark.local.dir',
         args.local_dir,
     ).config(
