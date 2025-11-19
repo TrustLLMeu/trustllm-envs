@@ -61,6 +61,8 @@ export OUTPUT_DATA_DIR="${OUTPUT_DATA_DIR:-${OUTPUT_DATA_PARENT_DIR}/${OUTPUT_DA
 # export OUTPUT_DATA_DIR="$data_dir"/my-tiny-c4-t5-small-tok/val
 mkdir -p "$OUTPUT_DATA_PARENT_DIR"
 
+echo shard "$SHARD_RANK"/"$NUM_SHARDS" for "$OUTPUT_DATA_PARENT_DIR"
+
 export OUTPUT_FORMAT="${OUTPUT_FORMAT:-json}"
 export OUTPUT_COMPRESSION="${OUTPUT_COMPRESSION:-none}"
 

@@ -123,6 +123,8 @@ def main():
     if args.num_shards is not None:
         input_files = input_files[args.rank::args.num_shards]
 
+    # spark_conf = spark.sparkContext.getConf().getAll()
+    # print(f'{spark_conf = }')
     print(f'now reading {args.input_format}')
     if args.input_format == 'parquet':
         df = spark.read.parquet(*input_files)

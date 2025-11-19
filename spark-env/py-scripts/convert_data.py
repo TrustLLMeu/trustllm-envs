@@ -121,6 +121,8 @@ def main():
         next_shard_begin = shard_begin + num_files_per_shard
         input_files = input_files[shard_begin:next_shard_begin]
 
+    # spark_conf = spark.sparkContext.getConf().getAll()
+    # print(f'{spark_conf = }')
     print(f'now reading {args.input_format}')
     if args.input_format == 'parquet':
         df = spark.read.parquet(*input_files)
