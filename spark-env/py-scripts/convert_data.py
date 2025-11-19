@@ -112,7 +112,11 @@ def main():
         input_files.extend(sorted(glob.glob(args.dist_input_files_glob)))
 
     if args.num_shards is not None:
-        input_files = input_files[args.rank::args.num_shards]
+        # Integer ceiling division
+        num_files_per_shard = -(len(input_files) // -args.num_shards)
+        shard_begin = args.rank * num_files_per_shard
+        next_shard_begin = shard_begin + num_files_per_shard
+        input_files = input_files[shard_begin:next_shard_begin]
 
     print(f'now reading {args.input_format}')
     if args.input_format == 'parquet':
