@@ -98,10 +98,10 @@ def main():
             f'{math.floor(memory_gb * 0.48)}g',
         ).config(
             'spark.driver.memory',
-            f'{round(memory_gb * 0.25)}g',
+            f'{math.ceil(memory_gb * 0.24)}g',
         ).config(
             'spark.driver.maxResultSize',
-            f'{round(memory_gb * 0.24)}g',
+            f'{math.floor(memory_gb * 0.23)}g',
         )
 
     spark = spark.getOrCreate()
