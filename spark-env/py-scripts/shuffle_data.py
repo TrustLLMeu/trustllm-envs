@@ -3,6 +3,7 @@ import atexit
 import glob
 import math
 import os
+import signal
 import tempfile
 
 from pyspark.sql import SparkSession
@@ -11,6 +12,22 @@ from pyspark.sql import functions as sf
 
 def parse_args():
     parser = ArgumentParser()
+    parser.add_argument(
+        '--master-proc-id',
+        type=int,
+        help=(
+            'Process ID of the Spark master process. '
+            'Used for clean-up purposes.'
+        ),
+    )
+    parser.add_argument(
+        '--worker-proc-id',
+        type=int,
+        help=(
+            'Process ID of the Spark worker process. '
+            'Used for clean-up purposes.'
+        ),
+    )
     parser.add_argument(
         '--dist-input-files',
         help='Colon-separated list of input files to process',
@@ -110,7 +127,14 @@ def main():
         spark.sparkContext.stop()
         spark.stop()
 
+    def close_procs():
+        if args.master_proc_id is not None:
+            os.kill(args.master_proc_id, signal.SIGKILL)
+        if args.worker_proc_id is not None:
+            os.kill(args.worker_proc_id, signal.SIGKILL)
+
     atexit.register(close_client)
+    atexit.register(close_procs)
 
     os.makedirs(os.path.dirname(args.output_dir), exist_ok=True)
 
@@ -164,6 +188,8 @@ def main():
 
     close_client()
     atexit.unregister(close_client)
+    close_procs()
+    atexit.unregister(close_procs)
 
 
 if __name__ == '__main__':

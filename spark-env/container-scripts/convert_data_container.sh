@@ -46,6 +46,8 @@ else
     worker_proc="$!"
 
     python -u "$(get_curr_dir)"/../py-scripts/convert_data.py \
+           --master-proc-id "$master_proc" \
+           --worker-proc-id "$worker_proc" \
            --dist-input-files "$INPUT_DATA_FILES" \
            --dist-input-files-glob "$INPUT_DATA_FILES_GLOB" \
            --output-dir "$OUTPUT_DATA_DIR" \
