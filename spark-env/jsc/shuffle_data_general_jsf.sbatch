@@ -42,12 +42,12 @@ export MASTER_PORT=54123
 # may change (e.g., from resuming a part of array indices due to job
 # failures).
 export NUM_SHARDS="${NUM_SHARDS:-1}"
-export SHARD_RANK="${SHARD_RANK:-"${SLURM_ARRAY_TASK_ID:-0}"}"
+export SHARD_RANK="${SHARD_RANK:-${SLURM_ARRAY_TASK_ID:-0}}"
 
 # Colon-separated list of JSON files to process. Set to empty
 # string ('') if not desired.
 # export INPUT_DATA_FILES="$root_scratch_dir"/"$project_name"/example-data/tiny-c4-100k.jsonl
-export INPUT_DATA_FILES="${INPUT_DATA_FILES:-''}"
+export INPUT_DATA_FILES="${INPUT_DATA_FILES:-}"
 # Glob-expression of JSON files to process. Set to empty string ('')
 # if not desired.
 export INPUT_DATA_FILES_GLOB="${INPUT_DATA_FILES_GLOB:-'/p/data1/trustllmd/ebert1/Nemotron-CC-HQ/*.jsonl'}"
@@ -55,15 +55,15 @@ export INPUT_DATA_FILES_GLOB="${INPUT_DATA_FILES_GLOB:-'/p/data1/trustllmd/ebert
 
 export INPUT_FORMAT="${INPUT_FORMAT:-json}"
 
-export OUTPUT_DATA_PARENT_DIR="${OUTPUT_DATA_PARENT_DIR:-"$data_dir"/nemotron-cc-quality-high-actual-actual}"
+export OUTPUT_DATA_PARENT_DIR="${OUTPUT_DATA_PARENT_DIR:-${data_dir}/nemotron-cc-quality-high-actual-actual}"
 export OUTPUT_DATA_SPLIT="${OUTPUT_DATA_SPLIT:-train}"
-export OUTPUT_DATA_DIR="${OUTPUT_DATA_DIR:-"$OUTPUT_DATA_PARENT_DIR"/"$OUTPUT_DATA_SPLIT"-shuffled_shard-"$SHARD_RANK"-of-"$NUM_SHARDS"_"$SLURM_JOB_NUM_NODES"-nodes}"
+export OUTPUT_DATA_DIR="${OUTPUT_DATA_DIR:-${OUTPUT_DATA_PARENT_DIR}/${OUTPUT_DATA_SPLIT}-shuffled_shard-${SHARD_RANK}-of-${NUM_SHARDS}_${SLURM_JOB_NUM_NODES}-nodes}"
 # export OUTPUT_DATA_DIR="$data_dir"/my-tiny-c4-t5-small-tok/val
 
 export OUTPUT_FORMAT="${OUTPUT_FORMAT:-json}"
 export OUTPUT_COMPRESSION="${OUTPUT_COMPRESSION:-none}"
 
-export MY_SPARK_CACHE_DIR="{MY_SPARK_CACHE_DIR:-$cache_dir}"
+export MY_SPARK_CACHE_DIR="${MY_SPARK_CACHE_DIR:-$cache_dir}"
 
 # Clean up previous jobs
 # Declare global array to populate with `add_files_to_delete`.
