@@ -56,7 +56,7 @@ export OUTPUT_DATA_DIR="$data_dir"/fineweb-2/deu/train-shuffled_"$SLURM_JOB_NUM_
 _curr_dir="$(get_curr_dir)"
 
 srun bash -c "
-    export WORLD_SIZE=\"\$((SLURM_JOB_NUM_NODES - 1))\"; \\
+    export WORLD_SIZE=\"\$SLURM_JOB_NUM_NODES\"; \\
     export NODE_RANK=\"\$SLURM_NODEID\"; \\
     bash ${_curr_dir@Q}/../container_run.sh \\
         bash ${_curr_dir@Q}/../container-scripts/shuffle_data_container.sh

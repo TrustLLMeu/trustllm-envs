@@ -28,8 +28,8 @@ SHARD_RANK="${SHARD_RANK:-0}"
 MY_SPARK_CACHE_DIR="${MY_SPARK_CACHE_DIR:-$cache_dir}"
 
 export SPARK_LOCAL_DIRS="$MY_SPARK_CACHE_DIR"/spark-"$SLURM_JOB_ID"
+spark_work_dir="$MY_SPARK_CACHE_DIR"/spark-"$NODE_RANK"-"$SLURM_JOB_ID"
 if ((NODE_RANK)); then
-    spark_work_dir="$MY_SPARK_CACHE_DIR"/spark-"$NODE_RANK"-"$SLURM_JOB_ID"
     spark-class org.apache.spark.deploy.worker.Worker \
                 spark://"$MASTER_ADDR":"$MASTER_PORT" \
                 --memory "$AVAILABLE_MEM_GB"G \
@@ -38,6 +38,12 @@ else
     spark-class org.apache.spark.deploy.master.Master \
                 --host "$MASTER_ADDR" --port "$MASTER_PORT" &
     master_proc="$!"
+
+    spark-class org.apache.spark.deploy.worker.Worker \
+                spark://"$MASTER_ADDR":"$MASTER_PORT" \
+                --memory "$AVAILABLE_MEM_GB"G \
+                --work-dir "$spark_work_dir" &
+    worker_proc="$!"
 
     python -u "$(get_curr_dir)"/../py-scripts/convert_data.py \
            --dist-input-files "$INPUT_DATA_FILES" \
@@ -53,4 +59,5 @@ else
            --rank "$SHARD_RANK"
 
     kill -s KILL "$master_proc"
+    kill -s KILL "$worker_proc"
 fi
