@@ -40,9 +40,9 @@ else
     master_proc="$!"
 
     python -u "$(get_curr_dir)"/../py-scripts/shuffle_data.py \
-           --dist-input-files="$INPUT_DATA_FILES" \
-           --dist-input-files-glob="$INPUT_DATA_FILES_GLOB" \
-           --output-dir="$OUTPUT_DATA_DIR" \
+           --dist-input-files "$INPUT_DATA_FILES" \
+           --dist-input-files-glob "$INPUT_DATA_FILES_GLOB" \
+           --output-dir "$OUTPUT_DATA_DIR" \
            --local-dir "$SPARK_LOCAL_DIRS" \
            --event-dir "$MY_SPARK_CACHE_DIR"/spark-events-"$SLURM_JOB_ID" \
            --available-mem-gb "$AVAILABLE_MEM_GB" \
